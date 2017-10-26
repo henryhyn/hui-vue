@@ -15,7 +15,7 @@
     "type": "git",
     "url": "git+https://github.com/henryhyn/hui-vue.git"
   },
-  "author": "",
+  "author": "Henry He <henryhyn@163.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/henryhyn/hui-vue/issues"
