@@ -2,7 +2,7 @@
   div
     div 工具栏
     .hui-flex
-      ace-editor.hui-marked-input(:content='content' @input='inputHandler')
+      ace-editor.hui-marked-input(:value='mdContent' @input='inputHandler' @change='changeHandler' @save='saveHandler')
       .hui-marked-output(v-html='compiledMarkdown')
 </template>
 
@@ -14,22 +14,57 @@
   export default {
     data () {
       return {
-        content: ''
+        mdValue: '',
+        mdContent: ''
       };
+    },
+
+    props: {
+      value: String,
+      content: String
     },
 
     components: {AceEditor},
 
     computed: {
       compiledMarkdown () {
-        return marked(this.content || '');
+        return marked(this.mdContent || '');
       }
     },
 
     methods: {
+      saveHandler () {
+        this.$emit('save');
+      },
+
+      changeHandler (val) {
+        this.mdValue = val;
+        this.$emit('input', val);
+      },
+
       inputHandler: _.debounce(function (val) {
-        this.content = val;
+        this.mdContent = val;
       }, 300)
+    },
+
+    mounted () {
+      if (this.value || this.content) {
+        this.mdContent = this.value || this.content;
+      }
+    },
+
+    watch: {
+      value (newVal) {
+        if (newVal !== this.mdValue) {
+          this.mdContent = newVal || '';
+        }
+      },
+
+      content (newVal) {
+        if (newVal !== this.mdValue) {
+          this.mdContent = newVal || '';
+        }
+      }
     }
   };
 </script>
