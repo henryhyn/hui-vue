@@ -7,7 +7,8 @@ export default [
       {index: '/image-upload', icon: 'info-sign', name: '图片直接上传'},
       {index: '/image-crop-upload', icon: 'info-sign', name: '图片剪切上传'},
       {index: '/ace', icon: 'info-sign', name: 'Ace 文本编辑器'},
-      {index: '/quill', icon: 'envelope', name: 'Quill 富文本编辑器'}
+      {index: '/quill', icon: 'envelope', name: 'Quill 富文本编辑器'},
+      {index: '/marked', icon: 'envelope', name: 'MarkDown 编辑器'}
     ]
   }, {
     index: 'commons',

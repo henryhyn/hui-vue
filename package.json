@@ -24,6 +24,9 @@
   "dependencies": {
     "brace": "^0.10.0",
     "katex": "^0.8.3",
+    "lodash": "^4.17.4",
+    "marked": "^0.3.6",
+    "moment": "^2.19.1",
     "quill": "^1.3.3",
     "vue-image-crop-upload": "^2.1.3"
   },

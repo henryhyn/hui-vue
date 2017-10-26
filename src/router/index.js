@@ -4,6 +4,7 @@ import ImageUploadDemo from '@/pages/demos/ImageUploadDemo';
 import ImageCropUploadDemo from '@/pages/demos/ImageCropUploadDemo';
 import AceDemo from '@/pages/demos/AceDemo';
 import QuillDemo from '@/pages/demos/QuillDemo';
+import MarkedDemo from '@/pages/demos/MarkedDemo';
 import Home from '@/pages/commons/Home';
 import About from '@/pages/commons/About';
 import Contact from '@/pages/commons/Contact';
@@ -17,6 +18,7 @@ export default new Router({
     {path: '/image-crop-upload', name: 'ImageCropUploadDemo', component: ImageCropUploadDemo},
     {path: '/ace', name: 'AceDemo', component: AceDemo},
     {path: '/quill', name: 'QuillDemo', component: QuillDemo},
+    {path: '/marked', name: 'MarkedDemo', component: MarkedDemo},
     {path: '/about', name: 'About', component: About},
     {path: '/contact', name: 'Contact', component: Contact}
   ]
