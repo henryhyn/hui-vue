@@ -1,9 +1,11 @@
 {
   "name": "hui-vue",
   "version": "1.0.0",
-  "description": "",
+  "description": "基于 Vue 的中后台 UI 组件库",
   "main": "index.js",
   "scripts": {
+    "prestart": "npm install",
+    "start": "webpack-dev-server --hot --inline --port 9999",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +17,13 @@
   "bugs": {
     "url": "https://github.com/henryhyn/hui-vue/issues"
   },
-  "homepage": "https://github.com/henryhyn/hui-vue#readme"
+  "homepage": "https://github.com/henryhyn/hui-vue#readme",
+  "devDependencies": {
+    "element-ui": "^2.0.0-rc.1",
+    "html-webpack-plugin": "^2.30.1",
+    "vue": "^2.5.2",
+    "vuex": "^3.0.0",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.3"
+  }
 }
