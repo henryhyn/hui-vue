@@ -8,6 +8,7 @@ import MarkedDemo from '@/pages/demos/MarkedDemo';
 import Home from '@/pages/commons/Home';
 import About from '@/pages/commons/About';
 import Contact from '@/pages/commons/Contact';
+import Help from '@/pages/commons/Help';
 
 Vue.use(Router);
 
@@ -20,6 +21,7 @@ export default new Router({
     {path: '/quill', name: 'QuillDemo', component: QuillDemo},
     {path: '/marked', name: 'MarkedDemo', component: MarkedDemo},
     {path: '/about', name: 'About', component: About},
-    {path: '/contact', name: 'Contact', component: Contact}
+    {path: '/contact', name: 'Contact', component: Contact},
+    {path: '/help', name: 'Help', component: Help}
   ]
 });

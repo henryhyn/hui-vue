@@ -7,7 +7,13 @@ export default new Vuex.Store({
   state: {
     settings: {
       isNotCollapsed: localStorage.getItem('isNotCollapsed') + '' === 'true'
-    }
+    },
+    count: 0
+  },
+
+  mutations: {
+    increment: state => state.count++,
+    decrement: state => state.count--
   },
 
   actions: {
