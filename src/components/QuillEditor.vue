@@ -7,8 +7,7 @@
 <script>
   import Quill from 'quill';
   import 'quill/dist/quill.snow.css';
-  // import ImageUpload from 'vue-image-crop-upload/upload-2';
-  import ImageUpload from '@/components/ImageUpload';
+  import ImageUpload from './ImageUpload';
 
   import '@/style/katex.css';
   window.katex = require('katex');
