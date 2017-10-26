@@ -10,10 +10,10 @@
   import _ from 'lodash';
   import marked from 'marked';
   import katex from 'katex';
-  import macros from '@/utils/macros';
+  import macros from '../utils/macros';
   import AceEditor from './AceEditor';
 
-  import '@/style/katex.css';
+  import '../style/katex.css';
 
   const renderer = new marked.Renderer();
   renderer.paragraph = function (text) {
