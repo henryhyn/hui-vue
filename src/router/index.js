@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import EChartDemo from '@/pages/demos/EChartDemo';
 import ImageUploadDemo from '@/pages/demos/ImageUploadDemo';
 import ImageCropUploadDemo from '@/pages/demos/ImageCropUploadDemo';
 import AceDemo from '@/pages/demos/AceDemo';
@@ -15,6 +16,7 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {path: '/', name: 'Home', component: Home},
+    {path: '/e-charts', name: 'EChartDemo', component: EChartDemo},
     {path: '/image-upload', name: 'ImageUploadDemo', component: ImageUploadDemo},
     {path: '/image-crop-upload', name: 'ImageCropUploadDemo', component: ImageCropUploadDemo},
     {path: '/ace', name: 'AceDemo', component: AceDemo},
