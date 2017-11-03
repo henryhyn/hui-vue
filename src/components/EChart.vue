@@ -22,6 +22,14 @@
     mounted: function () {
       this.chart = echarts.init(this.$el);
       this.chart.setOption(this.option);
+    },
+
+    watch: {
+      option (newVal) {
+        if (this.chart) {
+          this.chart.setOption(newVal);
+        }
+      }
     }
   };
 </script>
