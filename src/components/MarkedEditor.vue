@@ -1,13 +1,15 @@
 <template lang='pug'>
-  div
-    div 工具栏
-    .hui-flex
-      ace-editor.hui-marked-input(:value='mdContent' @input='inputHandler' @change='changeHandler' @save='saveHandler')
-      .hui-marked-output(v-html='compiledMarkdown')
+  .hui-marked-editor
+    .toolbar
+      el-button(type='primary' @click='screenFull') 全屏
+    .editor: .inner(ref='editor')
+      ace-editor.input(:value='mdContent' @input='inputHandler' @change='changeHandler' @save='saveHandler')
+      .output(v-html='compiledMarkdown')
 </template>
 
 <script>
   import _ from 'lodash';
+  import screenfull from 'screenfull';
   import marked from 'marked';
   import katex from 'katex';
   import macros from '../utils/macros';
@@ -19,8 +21,8 @@
   renderer.paragraph = function (text) {
     if (text.indexOf('$$') > -1) {
       return '<p style="text-align: center; font-size: 15px">'
-        + katex.renderToString(text.replace(/\$\$/g, '').replace(/<\/?em>/g, '_'), {macros, displayMode: true})
-        + '</p>';
+          + katex.renderToString(text.replace(/\$\$/g, '').replace(/<\/?em>/g, '_'), {macros, displayMode: true})
+          + '</p>';
     } else if (text.indexOf('$') > -1) {
       return '<p>' + text.replace(/\$([^$]+)\$/g, (all, math) => katex.renderToString(math.replace(/<\/?em>/g, '_'), {macros})) + '</p>';
     } else {
@@ -60,6 +62,12 @@
         this.$emit('input', val);
       },
 
+      screenFull () {
+        if (screenfull.enabled) {
+          screenfull.toggle(this.$refs.editor);
+        }
+      },
+
       inputHandler: _.debounce(function (val) {
         this.mdContent = val;
       }, 500)
@@ -89,11 +97,37 @@
 </script>
 
 <style lang='less'>
-  .hui-flex {
+  .hui-marked-editor {
     display: flex;
-  }
+    flex-direction: column;
 
-  .hui-marked-input, .hui-marked-output {
-    flex: 1;
+    .toolbar {
+      margin-bottom: 8px;
+    }
+
+    .editor {
+      flex: 1;
+      position: relative;
+
+      .inner {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        display: flex;
+
+        .input {
+          flex: 1;
+        }
+
+        .output {
+          flex: 1;
+          overflow: scroll;
+          border: 1px solid #e6e6e6;
+          padding: 0 16px;
+        }
+      }
+    }
   }
 </style>

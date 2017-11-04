@@ -1,5 +1,5 @@
 <template lang='pug'>
-  div(:style="{height: '500px'}")
+  div
 </template>
 
 <script>

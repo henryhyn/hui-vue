@@ -1,7 +1,7 @@
 <template lang='pug'>
   section
     h2 MarkDown 编辑器
-    marked-editor
+    marked-editor(:style="{height: '500px'}")
 </template>
 
 <script>
