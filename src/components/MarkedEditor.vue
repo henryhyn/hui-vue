@@ -48,7 +48,9 @@
 
     computed: {
       compiledMarkdown () {
-        return marked(this.mdContent || '');
+        const content = marked(this.mdContent || '');
+        this.$emit('change', content);
+        return content;
       }
     },
 
