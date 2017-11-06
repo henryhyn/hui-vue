@@ -67,7 +67,7 @@
         this.$emit('save');
       },
 
-      changeHandler (val) {
+      inputHandler (val) {
         this.mdValue = val;
         this.$emit('input', val);
       },
@@ -78,7 +78,7 @@
         }
       },
 
-      inputHandler: _.debounce(function (val) {
+      changeHandler: _.debounce(function (val) {
         this.mdContent = val;
       }, 500)
     },

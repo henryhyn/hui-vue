@@ -10,7 +10,7 @@
   export default {
     data () {
       return {
-        _content: '',
+        content: '',
         editor: null
       };
     },
@@ -22,8 +22,7 @@
           return {};
         }
       },
-      value: String,
-      content: String
+      value: String
     },
 
     mounted () {
@@ -49,9 +48,7 @@
           editor.setReadOnly(this.readOnly);
           editor.clearSelection();
 
-          if (this.value || this.content) {
-            editor.setValue(this.value || this.content, 1);
-          }
+          editor.setValue(this.value || '', 1);
 
           editor.commands.addCommand({
             name: 'save',
@@ -60,9 +57,9 @@
           });
 
           editor.on('change', () => {
-            this._content = editor.getValue();
-            this.$emit('change', this._content);
-            this.$emit('input', this._content);
+            this.content = editor.getValue();
+            this.$emit('change', this.content);
+            this.$emit('input', this.content);
           });
         }
       }
@@ -70,13 +67,7 @@
 
     watch: {
       value (newVal) {
-        if (this.editor && newVal !== this._content) {
-          this.editor.setValue(newVal || '', 1);
-        }
-      },
-
-      content (newVal) {
-        if (this.editor && newVal !== this._content) {
+        if (this.editor && newVal !== this.content) {
           this.editor.setValue(newVal || '', 1);
         }
       }
