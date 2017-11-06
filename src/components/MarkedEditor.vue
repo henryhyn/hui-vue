@@ -34,6 +34,7 @@
   export default {
     data () {
       return {
+        _content: '',
         content: ''
       };
     },
@@ -69,6 +70,7 @@
       },
 
       inputHandler (val) {
+        this._content = val;
         this.$emit('input', val);
       },
 
@@ -89,7 +91,7 @@
 
     watch: {
       value (newVal) {
-        if (newVal !== this.content) {
+        if (newVal !== this._content) {
           this.content = newVal || '';
         }
       }
