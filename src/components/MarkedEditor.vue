@@ -3,7 +3,7 @@
     .toolbar
       el-button(type='primary' @click='screenFull') 全屏
     .editor: .inner(ref='editor')
-      ace-editor.input(:value='mdContent' @input='inputHandler' @change='changeHandler' @save='saveHandler')
+      ace-editor.input(:value='content' @input='inputHandler' @change='changeHandler' @save='saveHandler')
       .output(v-html='compiledMarkdown')
 </template>
 
@@ -34,8 +34,7 @@
   export default {
     data () {
       return {
-        mdValue: '',
-        mdContent: ''
+        content: ''
       };
     },
 
@@ -48,17 +47,19 @@
         type: String,
         default: '400px'
       },
-      value: String,
-      content: String
+      value: {
+        type: String,
+        default: ''
+      }
     },
 
     components: {AceEditor},
 
     computed: {
       compiledMarkdown () {
-        const content = marked(this.mdContent || '');
-        this.$emit('change', content);
-        return content;
+        const html = marked(this.content || '');
+        this.$emit('change', html);
+        return html;
       }
     },
 
@@ -68,7 +69,6 @@
       },
 
       inputHandler (val) {
-        this.mdValue = val;
         this.$emit('input', val);
       },
 
@@ -79,27 +79,18 @@
       },
 
       changeHandler: _.debounce(function (val) {
-        this.mdContent = val;
+        this.content = val;
       }, 500)
     },
 
     mounted () {
-      if (this.value || this.content) {
-        this.mdValue = this.value || this.content;
-        this.mdContent = this.value || this.content;
-      }
+      this.content = this.value || '';
     },
 
     watch: {
       value (newVal) {
-        if (newVal !== this.mdValue) {
-          this.mdContent = newVal || '';
-        }
-      },
-
-      content (newVal) {
-        if (newVal !== this.mdValue) {
-          this.mdContent = newVal || '';
+        if (newVal !== this.content) {
+          this.content = newVal || '';
         }
       }
     }
