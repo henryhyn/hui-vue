@@ -1,5 +1,5 @@
 <template lang='pug'>
-  .hui-marked-editor
+  .hui-marked-editor(:style='{width, height}')
     .toolbar
       el-button(type='primary' @click='screenFull') 全屏
     .editor: .inner(ref='editor')
@@ -40,6 +40,14 @@
     },
 
     props: {
+      width: {
+        type: String,
+        default: '100%'
+      },
+      height: {
+        type: String,
+        default: '400px'
+      },
       value: String,
       content: String
     },
