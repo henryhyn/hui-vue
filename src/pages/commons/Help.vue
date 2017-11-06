@@ -117,7 +117,7 @@
 
     methods: {
       ...mapMutations(['increment', 'decrement']),
-      reverseMessage: function () {
+      reverseMessage () {
         this.msg = this.msg.split('').reverse().join('');
       }
     }

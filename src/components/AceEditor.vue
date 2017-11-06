@@ -18,7 +18,7 @@
     props: {
       options: {
         type: Object,
-        default: function () {
+        default () {
           return {};
         }
       },
@@ -26,16 +26,16 @@
       content: String
     },
 
-    mounted: function () {
+    mounted () {
       this.initialize();
     },
 
-    beforeDestroy: function () {
+    beforeDestroy () {
       this.editor = null;
     },
 
     methods: {
-      initialize: function () {
+      initialize () {
         if (this.$el) {
           const editor = this.editor = ace.edit(this.$el);
           const options = this.options;
@@ -69,13 +69,13 @@
     },
 
     watch: {
-      value: function (newVal) {
+      value (newVal) {
         if (this.editor && newVal !== this._content) {
           this.editor.setValue(newVal || '', 1);
         }
       },
 
-      content: function (newVal) {
+      content (newVal) {
         if (this.editor && newVal !== this._content) {
           this.editor.setValue(newVal || '', 1);
         }

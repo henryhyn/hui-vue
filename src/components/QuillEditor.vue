@@ -10,6 +10,7 @@
   import ImageUpload from './ImageUpload';
 
   import '../style/katex.css';
+
   window.katex = require('katex');
 
   const options = {
@@ -53,11 +54,11 @@
 
     components: {ImageUpload},
 
-    mounted: function () {
+    mounted () {
       this.initialize();
     },
 
-    beforeDestroy: function () {
+    beforeDestroy () {
       this.quill = null;
     },
 
@@ -93,13 +94,13 @@
     },
 
     watch: {
-      value: function (newVal) {
+      value (newVal) {
         if (this.quill && newVal !== this._content) {
           this.quill.pasteHTML(newVal || '');
         }
       },
 
-      content: function (newVal) {
+      content (newVal) {
         if (this.quill && newVal !== this._content) {
           this.quill.pasteHTML(newVal || '');
         }
