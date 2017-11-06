@@ -1,6 +1,6 @@
 <template lang='pug'>
   div
-    div(ref='editor' :style="{height: '500px'}")
+    div(ref='editor' :style='{width, height}')
     image-upload(v-model='imageUploadVisible' :url='image.upload.url' :field='image.upload.fieldName' :params='image.upload.params' @crop-upload-success='uploadSuccess')
 </template>
 
@@ -41,15 +41,30 @@
     data () {
       return {
         imageUploadVisible: false,
-        _content: '',
+        content: '',
         quill: null
       };
     },
 
     props: {
-      image: Object,
-      value: String,
-      content: String
+      width: {
+        type: String,
+        default: '100%'
+      },
+      height: {
+        type: String,
+        default: '400px'
+      },
+      value: {
+        type: String,
+        default: ''
+      },
+      image: {
+        type: Object,
+        default () {
+          return {};
+        }
+      }
     },
 
     components: {ImageUpload},
@@ -67,9 +82,7 @@
         if (this.$el) {
           const quill = this.quill = new Quill(this.$refs.editor, options);
 
-          if (this.value || this.content) {
-            quill.pasteHTML(this.value || this.content);
-          }
+          quill.pasteHTML(this.value || '');
 
           quill.getModule('toolbar').addHandler('image', state => {
             if (state) {
@@ -79,8 +92,8 @@
 
           quill.on('text-change', () => {
             const html = this.$refs.editor.children[0].innerHTML;
-            this._content = html === '<p><br></p>' ? '' : html;
-            this.$emit('input', this._content);
+            this.content = html === '<p><br></p>' ? '' : html;
+            this.$emit('input', this.content);
           });
         }
       },
@@ -95,13 +108,7 @@
 
     watch: {
       value (newVal) {
-        if (this.quill && newVal !== this._content) {
-          this.quill.pasteHTML(newVal || '');
-        }
-      },
-
-      content (newVal) {
-        if (this.quill && newVal !== this._content) {
+        if (this.quill && newVal !== this.content) {
           this.quill.pasteHTML(newVal || '');
         }
       }
