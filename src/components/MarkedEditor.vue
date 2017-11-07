@@ -1,5 +1,5 @@
 <template lang='pug'>
-  .hui-marked-editor(:style='{width, height}')
+  .hui-marked-editor(:style='styleObject')
     .toolbar
       el-button(type='primary' @click='screenFull') 全屏
     .editor: .inner(ref='editor')
@@ -14,6 +14,7 @@
   import katex from 'katex';
   import macros from '../utils/macros';
   import AceEditor from './AceEditor';
+  import {Hex} from '../index';
 
   import '../style/katex.css';
 
@@ -21,8 +22,8 @@
   renderer.paragraph = function (text) {
     if (text.indexOf('$$') > -1) {
       return '<p style="text-align: center; font-size: 15px">'
-          + katex.renderToString(text.replace(/\$\$/g, '').replace(/<\/?em>/g, '_'), {macros, displayMode: true})
-          + '</p>';
+        + katex.renderToString(text.replace(/\$\$/g, '').replace(/<\/?em>/g, '_'), {macros, displayMode: true})
+        + '</p>';
     } else if (text.indexOf('$') > -1) {
       return '<p>' + text.replace(/\$([^$]+)\$/g, (all, math) => katex.renderToString(math.replace(/<\/?em>/g, '_'), {macros})) + '</p>';
     } else {
@@ -32,13 +33,6 @@
   marked.setOptions({renderer: renderer, breaks: true, smartypants: true});
 
   export default {
-    data () {
-      return {
-        _content: '',
-        content: ''
-      };
-    },
-
     props: {
       width: {
         type: String,
@@ -52,6 +46,17 @@
         type: String,
         default: ''
       }
+    },
+
+    data () {
+      return {
+        styleObject: {
+          width: Hex.px(this.width),
+          height: Hex.px(this.height)
+        },
+        _content: '',
+        content: ''
+      };
     },
 
     components: {AceEditor},
