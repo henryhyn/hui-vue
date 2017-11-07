@@ -1,7 +1,7 @@
 <template lang='pug'>
   .hui-marked-editor(:style='styleObject')
     .toolbar
-      el-button(v-for='item in toolbar' :key='item.name') {{item.name}}
+      el-button(v-for='item in toolbar' :key='item.name' @click='execute(item.action)') {{item.name}}
       el-button(type='primary' @click='screenFull') 全屏
     .editor: .inner(ref='editor')
       ace-editor.input(:value='content' @input='inputHandler' @change='changeHandler' @save='saveHandler' @init='initHandler')
@@ -55,7 +55,7 @@
         editor: null,
         selection: null,
         session: null,
-        toolbar: functions.toolbar,
+        toolbar: functions.toolbar || [],
         styleObject: {
           width: Hex.px(this.width),
           height: Hex.px(this.height)
@@ -84,12 +84,16 @@
         this.session = editor.getSession();
       },
 
+      execute (action) {
+        this[action]();
+      },
+
       editorKeyBindings () {
-        this.toolbar.forEach(({name, win, mac, method}) => {
+        this.toolbar.forEach(({name, win, mac, action}) => {
           this.editor.commands.addCommand({
             name,
             bindKey: {win, mac},
-            exec: this[method]
+            exec: this[action]
           });
         });
       },
