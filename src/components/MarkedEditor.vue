@@ -1,9 +1,10 @@
 <template lang='pug'>
   .hui-marked-editor(:style='styleObject')
     .toolbar
+      el-button(v-for='item in toolbar' :key='item.name') {{item.name}}
       el-button(type='primary' @click='screenFull') 全屏
     .editor: .inner(ref='editor')
-      ace-editor.input(:value='content' @input='inputHandler' @change='changeHandler' @save='saveHandler')
+      ace-editor.input(:value='content' @input='inputHandler' @change='changeHandler' @save='saveHandler' @init='initHandler')
       .output(v-html='compiledMarkdown')
 </template>
 
@@ -15,6 +16,7 @@
   import macros from '../utils/macros';
   import AceEditor from './AceEditor';
   import {Hex} from '../index';
+  import functions from './functions';
 
   import '../style/katex.css';
 
@@ -50,6 +52,10 @@
 
     data () {
       return {
+        editor: null,
+        selection: null,
+        session: null,
+        toolbar: functions.toolbar,
         styleObject: {
           width: Hex.px(this.width),
           height: Hex.px(this.height)
@@ -58,6 +64,8 @@
         content: ''
       };
     },
+
+    mixins: [{methods: functions.methods}],
 
     components: {AceEditor},
 
@@ -70,6 +78,22 @@
     },
 
     methods: {
+      initHandler (editor) {
+        this.editor = editor;
+        this.selection = editor.getSelection();
+        this.session = editor.getSession();
+      },
+
+      editorKeyBindings () {
+        this.toolbar.forEach(({name, win, mac, method}) => {
+          this.editor.commands.addCommand({
+            name,
+            bindKey: {win, mac},
+            exec: this[method]
+          });
+        });
+      },
+
       saveHandler () {
         this.$emit('save');
       },
@@ -92,6 +116,7 @@
 
     mounted () {
       this.content = this.value || '';
+      this.editorKeyBindings();
     },
 
     watch: {

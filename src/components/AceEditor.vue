@@ -61,6 +61,8 @@
             this.$emit('change', this.content);
             this.$emit('input', this.content);
           });
+
+          this.$emit('init', editor);
         }
       }
     },
