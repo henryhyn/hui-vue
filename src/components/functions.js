@@ -1,9 +1,14 @@
 const Command = 'Cmd';
+const Shift = 'Shift';
+const Alt = 'Alt';
 
 export default {
   toolbar: [
     {name: 'Bold', key: [Command, 'B'], action: 'toggleBold'},
-    {name: 'Italic', key: [Command, 'I'], action: 'toggleItalic'},
+    {name: 'Italic', key: [Shift, Command, 'I'], action: 'toggleItalic'},
+    {name: 'StrikeThrough', key: [Command, Alt, 'T'], action: 'toggleStrikeThrough'},
+    {name: 'UnorderedList', key: [Command, 'L'], action: 'toggleUnorderedList'},
+    {name: 'OrderedList', key: [Command, Alt, 'L'], action: 'toggleOrderedList'},
     {name: 'Heading', key: [Command, 'H'], action: 'toggleHeading'}
   ].map(i => {
     const mac = i.key.join('-');
@@ -38,6 +43,55 @@ export default {
         this.session.replace(range, `*${text}*`);
         this.selection.clearSelection();
       }
+    },
+
+    toggleStrikeThrough () {
+      if (this.selection.isEmpty()) {
+        const {row, column} = this.selection.getCursor();
+        this.editor.insert('~~~~');
+        this.editor.moveCursorTo(row, column + 2);
+        this.editor.focus();
+      } else {
+        const range = this.selection.getRange();
+        const text = this.session.getTextRange(range);
+        this.session.replace(range, `~~${text}~~`);
+        this.selection.clearSelection();
+      }
+    },
+
+    toggleUnorderedList () {
+      const {row} = this.selection.getCursor();
+      const lineText = this.session.getLine(row);
+      const length = lineText.length;
+      const index = lineText.search(/[^-]/);
+      const range = {
+        start: {row, column: 0},
+        end: {row, column: length}
+      };
+      if (index <= 0) {
+        this.session.replace(range, '-\t' + lineText);
+      } else {
+        this.session.replace(range, lineText.replace(/^\s*-\s+/, ''));
+      }
+      this.editor.focus();
+    },
+
+    toggleOrderedList () {
+      const {row} = this.selection.getCursor();
+      const lineText = this.session.getLine(row);
+      const length = lineText.length;
+      const index = lineText.search(/[^\d]/);
+      console.log(lineText, length, index);
+      const range = {
+        start: {row, column: 0},
+        end: {row, column: length}
+      };
+      if (index <= 0) {
+        this.session.replace(range, '1.\t' + lineText);
+      } else {
+        this.session.replace(range, lineText.replace(/^\s*\d+\.\s+/, ''));
+      }
+      this.editor.focus();
     },
 
     toggleHeading () {

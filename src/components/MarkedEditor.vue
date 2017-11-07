@@ -1,7 +1,8 @@
 <template lang='pug'>
   .hui-marked-editor(:style='styleObject')
     .toolbar
-      el-button(v-for='item in toolbar' :key='item.name' @click='execute(item.action)') {{item.name}}
+      el-tooltip(v-for='item in toolbar' :key='item.name' :content='item.win')
+        el-button(@click='execute(item.action)') {{item.name}}
       el-button(type='primary' @click='screenFull') 全屏
     .editor: .inner(ref='editor')
       ace-editor.input(:value='content' @input='inputHandler' @change='changeHandler' @save='saveHandler' @init='initHandler')
