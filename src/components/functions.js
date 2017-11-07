@@ -6,6 +6,7 @@ const Alt = 'Alt';
 
 export default {
   toolbar: [
+    {name: 'Save', key: [Command, 'S'], action: 'toggleSave'},
     {name: 'Bold', key: [Command, 'B'], action: 'toggleBold'},
     {name: 'Italic', key: [Command, 'I'], action: 'toggleItalic'},
     {name: 'StrikeThrough', key: [Command, 'M'], action: 'toggleStrikeThrough'},
@@ -20,6 +21,10 @@ export default {
   }),
 
   methods: {
+    toggleSave() {
+      this.$emit('save');
+    },
+
     toggleBold () {
       if (this.selection.isEmpty()) {
         const {row, column} = this.selection.getCursor();

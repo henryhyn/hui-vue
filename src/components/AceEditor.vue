@@ -50,12 +50,6 @@
 
           editor.setValue(this.value || '', 1);
 
-          editor.commands.addCommand({
-            name: 'save',
-            bindKey: {win: 'Ctrl-S', mac: 'Command-S'},
-            exec: () => this.$emit('save')
-          });
-
           editor.on('change', () => {
             this.content = editor.getValue();
             this.$emit('change', this.content);

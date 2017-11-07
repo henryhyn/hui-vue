@@ -4,7 +4,7 @@
       el-tooltip(v-for='item in toolbar' :key='item.name' :content='item.win')
         el-button(@click='execute(item.action)') {{item.name}}
     .editor: .inner(ref='editor')
-      ace-editor.input(:value='content' @input='inputHandler' @change='changeHandler' @save='saveHandler' @init='initHandler')
+      ace-editor.input(:value='content' @input='inputHandler' @change='changeHandler' @init='initHandler')
       .output(v-html='compiledMarkdown')
 </template>
 
@@ -95,10 +95,6 @@
             exec: this[action]
           });
         });
-      },
-
-      saveHandler () {
-        this.$emit('save');
       },
 
       inputHandler (val) {
