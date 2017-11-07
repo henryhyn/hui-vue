@@ -1,3 +1,5 @@
+import screenfull from 'screenfull';
+
 const Command = 'Cmd';
 const Shift = 'Shift';
 const Alt = 'Alt';
@@ -5,11 +7,12 @@ const Alt = 'Alt';
 export default {
   toolbar: [
     {name: 'Bold', key: [Command, 'B'], action: 'toggleBold'},
-    {name: 'Italic', key: [Shift, Command, 'I'], action: 'toggleItalic'},
-    {name: 'StrikeThrough', key: [Command, Alt, 'T'], action: 'toggleStrikeThrough'},
+    {name: 'Italic', key: [Command, 'I'], action: 'toggleItalic'},
+    {name: 'StrikeThrough', key: [Command, 'M'], action: 'toggleStrikeThrough'},
     {name: 'UnorderedList', key: [Command, 'L'], action: 'toggleUnorderedList'},
-    {name: 'OrderedList', key: [Command, Alt, 'L'], action: 'toggleOrderedList'},
-    {name: 'Heading', key: [Command, 'H'], action: 'toggleHeading'}
+    {name: 'OrderedList', key: [Alt, Command, 'L'], action: 'toggleOrderedList'},
+    {name: 'Heading', key: [Command, 'H'], action: 'toggleHeading'},
+    {name: 'FullScreen', key: [Shift, Command, 'H'], action: 'toggleFullScreen'}
   ].map(i => {
     const mac = i.key.join('-');
     const win = mac.replace('Cmd', 'Ctrl');
@@ -81,7 +84,6 @@ export default {
       const lineText = this.session.getLine(row);
       const length = lineText.length;
       const index = lineText.search(/[^\d]/);
-      console.log(lineText, length, index);
       const range = {
         start: {row, column: 0},
         end: {row, column: length}
@@ -109,6 +111,12 @@ export default {
       };
       this.session.replace(range, heading + lineText);
       this.editor.focus();
+    },
+
+    toggleFullScreen () {
+      if (screenfull.enabled) {
+        screenfull.toggle(this.$refs.editor);
+      }
     }
   }
 };

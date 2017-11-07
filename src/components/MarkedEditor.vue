@@ -3,7 +3,6 @@
     .toolbar
       el-tooltip(v-for='item in toolbar' :key='item.name' :content='item.win')
         el-button(@click='execute(item.action)') {{item.name}}
-      el-button(type='primary' @click='screenFull') 全屏
     .editor: .inner(ref='editor')
       ace-editor.input(:value='content' @input='inputHandler' @change='changeHandler' @save='saveHandler' @init='initHandler')
       .output(v-html='compiledMarkdown')
@@ -11,7 +10,6 @@
 
 <script>
   import _ from 'lodash';
-  import screenfull from 'screenfull';
   import marked from 'marked';
   import katex from 'katex';
   import macros from '../utils/macros';
@@ -106,12 +104,6 @@
       inputHandler (val) {
         this._content = val;
         this.$emit('input', val);
-      },
-
-      screenFull () {
-        if (screenfull.enabled) {
-          screenfull.toggle(this.$refs.editor);
-        }
       },
 
       changeHandler: _.debounce(function (val) {
