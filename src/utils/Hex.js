@@ -69,6 +69,8 @@ Hex.delete = (url, cb) => {
   });
 };
 
+Hex.px = n => /^\d+$/.test(n) ? `${n}px` : n;
+
 Hex.validAny = any => any !== null && any !== undefined;
 Hex.validString = str => Hex.validAny(str) && str && str.toLowerCase() !== 'null' && str.toLowerCase() !== 'undefined' && str.trim().length > 0;
 Hex.validNumber = num => Hex.validAny(num);

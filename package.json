@@ -2,7 +2,7 @@
   "name": "hui-vue",
   "version": "0.1.0",
   "description": "基于 Vue 的中后台 UI 组件库",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "prestart": "npm install",
     "start": "cross-env NODE_ENV=development webpack-dev-server --open --inline --hot --port 9999",
