@@ -2,10 +2,10 @@
   #app
     sider
     #main-body
-      header
+      header.hui-flex-box
         #logo: img(src='../../assets/logo.png')
         a#project-name.link-muted.large.strong(href='/') {{ projectName }}
-        .fill
+        .hui-flex-fill
         #user-name 当前用户
         a#logout.link-muted(href='/logout') 登出
       article: transition(name='el-fade-in-linear' mode='out-in')
@@ -57,7 +57,6 @@
   }
 
   header {
-    display: flex;
     > #logo {
       height: 60px;
       display: inline-block;

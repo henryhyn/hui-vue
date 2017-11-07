@@ -1,3 +1,4 @@
+import 'normalize.css';
 import './style/main.less';
 import './style/glyphicons.less';
 
