@@ -14,6 +14,6 @@ export default {
   },
 
   mounted () {
-    this.$nextTick(this.reload);
+    this.$nextTick(this.getListByPage);
   }
 };
