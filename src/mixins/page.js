@@ -1,7 +1,7 @@
 export default {
   methods: {
     reload () {
-      this.getListByPage();
+      this.getListByPage({params: {}, page: 1});
     },
 
     handleCurrentChange (page) {
@@ -14,8 +14,6 @@ export default {
   },
 
   mounted () {
-    this.$nextTick(function () {
-      this.getListByPage();
-    });
+    this.$nextTick(this.reload);
   }
 };
