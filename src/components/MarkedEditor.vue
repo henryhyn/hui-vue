@@ -3,6 +3,7 @@
     .toolbar
       el-tooltip(v-for='item in toolbar' :key='item.name' :content='item.win')
         el-button(@click='execute(item.action)') {{item.name}}
+      clipboard(:value='content')
     .editor: .inner(ref='editor')
       ace-editor.input(:value='content' @input='inputHandler' @change='changeHandler' @init='initHandler')
       .output(v-html='compiledMarkdown')
@@ -14,6 +15,7 @@
   import katex from 'katex';
   import macros from '../utils/macros';
   import AceEditor from './AceEditor';
+  import Clipboard from './Clipboard';
   import {Hex} from '../index';
   import functions from './functions';
 
@@ -66,7 +68,7 @@
 
     mixins: [{methods: functions.methods}],
 
-    components: {AceEditor},
+    components: {AceEditor, Clipboard},
 
     computed: {
       compiledMarkdown () {

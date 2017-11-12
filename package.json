@@ -23,6 +23,7 @@
   "homepage": "https://github.com/henryhyn/hui-vue#readme",
   "dependencies": {
     "brace": "^0.10.0",
+    "clipboard": "^1.7.1",
     "echarts": "^3.7.2",
     "katex": "^0.8.3",
     "lodash": "^4.17.4",
