@@ -1,3 +1,8 @@
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+
+moment.locale('zh-cn');
+
 const Hex = {};
 
 Hex.toQuery = (object) => Object.keys(object)
@@ -80,5 +85,8 @@ Hex.toString = (idx, lst) => lst[idx];
 
 Hex.empty = () => {
 };
+
+Hex.formatDate = val => moment(val, moment.x).format('YYYY-MM-DD');
+Hex.formatDateTime = val => moment(val, moment.x).format('YYYY-MM-DD HH:mm:ss');
 
 export default Hex;
