@@ -9,7 +9,7 @@
     "prebuild": "rm -frv dist",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --config webpack.production.config.js",
     "lint": "eslint --ext .js,.vue src",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest test --coverage --config .jestrc.js"
   },
   "repository": {
     "type": "git",
@@ -54,6 +54,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.5",
     "html-webpack-plugin": "^2.30.1",
+    "jest": "^21.2.1",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "postcss-loader": "^2.0.8",
