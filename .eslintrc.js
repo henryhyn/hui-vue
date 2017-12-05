@@ -42,6 +42,9 @@ module.exports = {
     'no-extra-parens': 2,
     'no-cond-assign': [2, 'always'],
     'linebreak-style': [2, 'unix'],
+    'eol-last': 2,
+    'padded-blocks': [2, 'never'],
+    'object-curly-spacing': [2, 'always', { objectsInObjects: false }],
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'no-console': process.env.NODE_ENV === 'production' ? 2 : 0
   }

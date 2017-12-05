@@ -32,6 +32,6 @@
       };
     },
 
-    components: {EChart}
+    components: { EChart }
   };
 </script>

@@ -13,8 +13,8 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex';
-  import {config} from '@/utils';
+  import { mapState } from 'vuex';
+  import { config } from '@/utils';
   import Sider from './Sider';
 
   export default {
@@ -26,7 +26,7 @@
 
     computed: mapState(['config']),
 
-    components: {Sider}
+    components: { Sider }
   };
 </script>
 

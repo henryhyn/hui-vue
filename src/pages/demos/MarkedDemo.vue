@@ -8,6 +8,6 @@
   import MarkedEditor from '@/components/MarkedEditor';
 
   export default {
-    components: {MarkedEditor}
+    components: { MarkedEditor }
   };
 </script>

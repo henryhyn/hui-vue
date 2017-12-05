@@ -1,15 +1,15 @@
 export default {
   methods: {
     reload () {
-      this.getListByPage({params: {}, page: 1});
+      this.getListByPage({ params: {}, page: 1 });
     },
 
     handleCurrentChange (page) {
-      this.getListByPage({page});
+      this.getListByPage({ page });
     },
 
     handleSizeChange (pageSize) {
-      this.getListByPage({pageSize});
+      this.getListByPage({ pageSize });
     }
   },
 

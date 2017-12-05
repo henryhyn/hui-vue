@@ -12,8 +12,8 @@
 </template>
 
 <script>
-  import {mapState, mapActions} from 'vuex';
-  import {menus} from '@/utils';
+  import { mapState, mapActions } from 'vuex';
+  import { menus } from '@/utils';
 
   export default {
     data () {
@@ -31,7 +31,7 @@
       ...mapActions(['updateSettings']),
 
       collapse (isNotCollapsed) {
-        this.updateSettings({isNotCollapsed});
+        this.updateSettings({ isNotCollapsed });
       }
     },
 

@@ -5,7 +5,7 @@ import Layout from '@/pages/app/Layout';
 import router from '@/router';
 import store from '@/store';
 
-Vue.use(Element, {size: 'small'});
+Vue.use(Element, { size: 'small' });
 
 /* eslint-disable no-new */
 new Vue({

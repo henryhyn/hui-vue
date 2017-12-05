@@ -23,6 +23,6 @@
       };
     },
 
-    components: {QuillEditor}
+    components: { QuillEditor }
   };
 </script>

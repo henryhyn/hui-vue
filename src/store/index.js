@@ -18,7 +18,7 @@ export default new Vuex.Store({
 
   actions: {
     updateSettings (state, settings) {
-      state.settings = {...state.settings, ...settings};
+      state.settings = { ...state.settings, ...settings };
       Object.keys(settings).forEach(key => {
         localStorage.setItem(key, settings[key]);
       });

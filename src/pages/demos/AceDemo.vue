@@ -16,6 +16,6 @@
       };
     },
 
-    components: {AceEditor}
+    components: { AceEditor }
   };
 </script>

@@ -16,7 +16,7 @@
   import macros from '../utils/macros';
   import AceEditor from './AceEditor';
   import Clipboard from './Clipboard';
-  import {Hex} from '../index';
+  import { Hex } from '../index';
   import functions from './functions';
 
   import '../style/katex.css';
@@ -25,15 +25,15 @@
   renderer.paragraph = function (text) {
     if (text.indexOf('$$') > -1) {
       return '<p style="text-align: center; font-size: 15px">'
-        + katex.renderToString(text.replace(/\$\$/g, '').replace(/<\/?em>/g, '_'), {macros, displayMode: true})
+        + katex.renderToString(text.replace(/\$\$/g, '').replace(/<\/?em>/g, '_'), { macros, displayMode: true })
         + '</p>';
     } else if (text.indexOf('$') > -1) {
-      return '<p>' + text.replace(/\$([^$]+)\$/g, (all, math) => katex.renderToString(math.replace(/<\/?em>/g, '_'), {macros})) + '</p>';
+      return '<p>' + text.replace(/\$([^$]+)\$/g, (all, math) => katex.renderToString(math.replace(/<\/?em>/g, '_'), { macros })) + '</p>';
     } else {
       return '<p>' + text + '</p>';
     }
   };
-  marked.setOptions({renderer: renderer, breaks: true, smartypants: true});
+  marked.setOptions({ renderer: renderer, breaks: true, smartypants: true });
 
   export default {
     props: {
@@ -66,9 +66,9 @@
       };
     },
 
-    mixins: [{methods: functions.methods}],
+    mixins: [{ methods: functions.methods }],
 
-    components: {AceEditor, Clipboard},
+    components: { AceEditor, Clipboard },
 
     computed: {
       compiledMarkdown () {
@@ -90,10 +90,10 @@
       },
 
       editorKeyBindings () {
-        this.toolbar.forEach(({name, win, mac, action}) => {
+        this.toolbar.forEach(({ name, win, mac, action }) => {
           this.editor.commands.addCommand({
             name,
-            bindKey: {win, mac},
+            bindKey: { win, mac },
             exec: this[action]
           });
         });
