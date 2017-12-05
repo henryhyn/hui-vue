@@ -20,6 +20,6 @@
       };
     },
 
-    components: {ImageUpload}
+    components: { ImageUpload }
   };
 </script>

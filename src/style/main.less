@@ -1,0 +1,35 @@
+body {
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-size: 12px;
+}
+
+.hui-hspace {
+  margin-right: 5px;
+}
+
+.hui-flex-box {
+  display: flex;
+}
+
+.hui-flex-fill {
+  flex: 1;
+}
+
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+
+.list-inline {
+  .list-unstyled();
+  margin-top: 0;
+  margin-bottom: 0;
+
+  > li {
+    display: inline-block;
+  }
+
+  > li + li {
+    margin-left: 5px;
+  }
+}

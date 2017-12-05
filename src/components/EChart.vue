@@ -1,5 +1,5 @@
 <template lang='pug'>
-  .hui-e-chart
+  div(:style='{width, height}')
 </template>
 
 <script>
@@ -13,22 +13,35 @@
     },
 
     props: {
+      width: {
+        type: String,
+        default: '100%'
+      },
+      height: {
+        type: String,
+        default: '400px'
+      },
       option: {
         type: Object,
-        required: true
+        default () {
+          return {
+            series: []
+          };
+        }
       }
     },
 
-    mounted: function () {
+    mounted () {
       this.chart = echarts.init(this.$el);
       this.chart.setOption(this.option);
+    },
+
+    watch: {
+      option (newVal) {
+        if (this.chart) {
+          this.chart.setOption(newVal);
+        }
+      }
     }
   };
 </script>
-
-<style lang='less'>
-  .hui-e-chart {
-    width: 100%;
-    height: 400px;
-  }
-</style>

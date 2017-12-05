@@ -1,5 +1,5 @@
 <template lang='pug'>
-  div(:style="{height: '500px'}")
+  div
 </template>
 
 <script>
@@ -10,7 +10,7 @@
   export default {
     data () {
       return {
-        _content: '',
+        content: '',
         editor: null
       };
     },
@@ -18,24 +18,23 @@
     props: {
       options: {
         type: Object,
-        default: function () {
+        default () {
           return {};
         }
       },
-      value: String,
-      content: String
+      value: String
     },
 
-    mounted: function () {
+    mounted () {
       this.initialize();
     },
 
-    beforeDestroy: function () {
+    beforeDestroy () {
       this.editor = null;
     },
 
     methods: {
-      initialize: function () {
+      initialize () {
         if (this.$el) {
           const editor = this.editor = ace.edit(this.$el);
           const options = this.options;
@@ -49,34 +48,22 @@
           editor.setReadOnly(this.readOnly);
           editor.clearSelection();
 
-          if (this.value || this.content) {
-            editor.setValue(this.value || this.content, 1);
-          }
-
-          editor.commands.addCommand({
-            name: 'save',
-            bindKey: {win: 'Ctrl-S', mac: 'Command-S'},
-            exec: () => this.$emit('save')
-          });
+          editor.setValue(this.value || '', 1);
 
           editor.on('change', () => {
-            this._content = editor.getValue();
-            this.$emit('change', this._content);
-            this.$emit('input', this._content);
+            this.content = editor.getValue();
+            this.$emit('change', this.content);
+            this.$emit('input', this.content);
           });
+
+          this.$emit('init', editor);
         }
       }
     },
 
     watch: {
-      value: function (newVal) {
-        if (this.editor && newVal !== this._content) {
-          this.editor.setValue(newVal || '', 1);
-        }
-      },
-
-      content: function (newVal) {
-        if (this.editor && newVal !== this._content) {
+      value (newVal) {
+        if (this.editor && newVal !== this.content) {
           this.editor.setValue(newVal || '', 1);
         }
       }

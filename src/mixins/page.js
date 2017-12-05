@@ -1,21 +1,19 @@
 export default {
   methods: {
     reload () {
-      this.getListByPage();
+      this.getListByPage({ params: {}, page: 1 });
     },
 
     handleCurrentChange (page) {
-      this.getListByPage({page});
+      this.getListByPage({ page });
     },
 
     handleSizeChange (pageSize) {
-      this.getListByPage({pageSize});
+      this.getListByPage({ pageSize });
     }
   },
 
   mounted () {
-    this.$nextTick(function () {
-      this.getListByPage();
-    });
+    this.$nextTick(this.getListByPage);
   }
 };

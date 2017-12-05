@@ -15,15 +15,15 @@ Vue.use(Router);
 
 export default new Router({
   routes: [
-    {path: '/', name: 'Home', component: Home},
-    {path: '/e-charts', name: 'EChartDemo', component: EChartDemo},
-    {path: '/image-upload', name: 'ImageUploadDemo', component: ImageUploadDemo},
-    {path: '/image-crop-upload', name: 'ImageCropUploadDemo', component: ImageCropUploadDemo},
-    {path: '/ace', name: 'AceDemo', component: AceDemo},
-    {path: '/quill', name: 'QuillDemo', component: QuillDemo},
-    {path: '/marked', name: 'MarkedDemo', component: MarkedDemo},
-    {path: '/about', name: 'About', component: About},
-    {path: '/contact', name: 'Contact', component: Contact},
-    {path: '/help', name: 'Help', component: Help}
+    { path: '/', name: 'Home', component: Home },
+    { path: '/e-charts', name: 'EChartDemo', component: EChartDemo },
+    { path: '/image-upload', name: 'ImageUploadDemo', component: ImageUploadDemo },
+    { path: '/image-crop-upload', name: 'ImageCropUploadDemo', component: ImageCropUploadDemo },
+    { path: '/ace', name: 'AceDemo', component: AceDemo },
+    { path: '/quill', name: 'QuillDemo', component: QuillDemo },
+    { path: '/marked', name: 'MarkedDemo', component: MarkedDemo },
+    { path: '/about', name: 'About', component: About },
+    { path: '/contact', name: 'Contact', component: Contact },
+    { path: '/help', name: 'Help', component: Help }
   ]
 });

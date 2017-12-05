@@ -1,17 +1,16 @@
 <template lang='pug'>
   aside
-    el-switch(v-model='settings.isNotCollapsed' active-text='开' inactive-text='关' @change='collapse')
-    nav: el-menu(router unique-opened :default-active='active' :collapse='!settings.isNotCollapsed' background-color='#545c64' text-color='#fff' active-text-color='#ffd04b')
+    nav: el-menu(router unique-opened :default-active='active' :collapse='settings.isCollapsed' background-color='#545c64' text-color='#fff' active-text-color='#ffd04b')
       el-submenu(v-for='menu in menus' :key='menu.index' :index='menu.index')
         template(slot='title')
-          i.glyphicon.hspace(:class='`glyphicon-${menu.icon}`')
+          i(:class='`glyphicon glyphicon-${menu.icon} hui-hspace`')
           span(slot='title') {{menu.name}}
         el-menu-item(v-for='item in menu.children' :key='item.index' :index='item.index') <span :class='`glyphicon glyphicon-${item.icon}`'/> {{item.name}}
 </template>
 
 <script>
-  import {mapState, mapActions} from 'vuex';
-  import {menus} from '@/utils';
+  import { mapState, mapMutations } from 'vuex';
+  import { menus } from '@/utils';
 
   export default {
     data () {
@@ -21,26 +20,26 @@
       };
     },
 
-    computed: {
-      ...mapState(['settings'])
-    },
+    computed: mapState(['settings']),
 
     methods: {
-      ...mapActions(['updateSettings']),
+      ...mapMutations(['addVisitedViews']),
 
-      collapse (isNotCollapsed) {
-        this.updateSettings({isNotCollapsed});
+      initialize () {
+        this.active = '/' + this.$route.path.split('/')[1];
+        const { fullPath, name } = this.$route;
+        this.addVisitedViews({ fullPath, name });
       }
     },
 
     watch: {
       '$route': function () {
-        this.active = '/' + this.$route.path.split('/')[1];
+        this.initialize();
       }
     },
 
-    created () {
-      this.active = '/' + this.$route.path.split('/')[1];
+    mounted () {
+      this.$nextTick(this.initialize);
     }
   };
 </script>

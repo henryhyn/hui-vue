@@ -1,4 +1,6 @@
+coverage
 .idea
 node_modules
 npm-debug.log
-dist
+dist/admin.*
+dist/index.html

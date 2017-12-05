@@ -1,9 +1,12 @@
 <template lang='pug'>
-  div
-    div 工具栏
-    .hui-flex
-      ace-editor.hui-marked-input(:value='mdContent' @input='inputHandler' @change='changeHandler' @save='saveHandler')
-      .hui-marked-output(v-html='compiledMarkdown')
+  .hui-marked-editor(:style='styleObject')
+    .toolbar
+      el-tooltip(v-for='item in toolbar' :key='item.name' :content='item.win')
+        el-button(@click='execute(item.action)') {{item.name}}
+      clipboard(:value='content')
+    .editor: .inner(ref='editor')
+      ace-editor.input(:value='content' @input='inputHandler' @change='changeHandler' @init='initHandler')
+      .output(v-html='compiledMarkdown')
 </template>
 
 <script>
@@ -12,6 +15,9 @@
   import katex from 'katex';
   import macros from '../utils/macros';
   import AceEditor from './AceEditor';
+  import Clipboard from './Clipboard';
+  import { Hex } from '../index';
+  import functions from './functions';
 
   import '../style/katex.css';
 
@@ -19,69 +25,99 @@
   renderer.paragraph = function (text) {
     if (text.indexOf('$$') > -1) {
       return '<p style="text-align: center; font-size: 15px">'
-        + katex.renderToString(text.replace(/\$\$/g, '').replace(/<\/?em>/g, '_'), {macros, displayMode: true})
+        + katex.renderToString(text.replace(/\$\$/g, '').replace(/<\/?em>/g, '_'), { macros, displayMode: true })
         + '</p>';
     } else if (text.indexOf('$') > -1) {
-      return '<p>' + text.replace(/\$([^$]+)\$/g, (all, math) => katex.renderToString(math.replace(/<\/?em>/g, '_'), {macros})) + '</p>';
+      return '<p>' + text.replace(/\$([^$]+)\$/g, (all, math) => katex.renderToString(math.replace(/<\/?em>/g, '_'), { macros })) + '</p>';
     } else {
       return '<p>' + text + '</p>';
     }
   };
-  marked.setOptions({renderer: renderer, breaks: true, smartypants: true});
+  marked.setOptions({ renderer: renderer, breaks: true, smartypants: true });
 
   export default {
+    props: {
+      width: {
+        type: String,
+        default: '100%'
+      },
+      height: {
+        type: String,
+        default: '400px'
+      },
+      value: {
+        type: String,
+        default: ''
+      }
+    },
+
     data () {
       return {
-        mdValue: '',
-        mdContent: ''
+        editor: null,
+        selection: null,
+        session: null,
+        toolbar: functions.toolbar || [],
+        styleObject: {
+          width: Hex.px(this.width),
+          height: Hex.px(this.height)
+        },
+        _content: '',
+        content: ''
       };
     },
 
-    props: {
-      value: String,
-      content: String
-    },
+    mixins: [{ methods: functions.methods }],
 
-    components: {AceEditor},
+    components: { AceEditor, Clipboard },
 
     computed: {
       compiledMarkdown () {
-        return marked(this.mdContent || '');
+        const html = marked(this.content || '');
+        this.$emit('change', html);
+        return html;
       }
     },
 
     methods: {
-      saveHandler () {
-        this.$emit('save');
+      initHandler (editor) {
+        this.editor = editor;
+        this.selection = editor.getSelection();
+        this.session = editor.getSession();
       },
 
-      changeHandler (val) {
-        this.mdValue = val;
+      execute (action) {
+        this[action]();
+      },
+
+      editorKeyBindings () {
+        this.toolbar.forEach(({ name, win, mac, action }) => {
+          this.editor.commands.addCommand({
+            name,
+            bindKey: { win, mac },
+            exec: this[action]
+          });
+        });
+      },
+
+      inputHandler (val) {
+        this._content = val;
         this.$emit('input', val);
       },
 
-      inputHandler: _.debounce(function (val) {
-        this.mdContent = val;
+      changeHandler: _.debounce(function (val) {
+        this.content = val;
       }, 500)
     },
 
     mounted () {
-      if (this.value || this.content) {
-        this.mdValue = this.value || this.content;
-        this.mdContent = this.value || this.content;
-      }
+      this.content = this.value || '';
+      this.editorKeyBindings();
     },
 
     watch: {
       value (newVal) {
-        if (newVal !== this.mdValue) {
-          this.mdContent = newVal || '';
-        }
-      },
-
-      content (newVal) {
-        if (newVal !== this.mdValue) {
-          this.mdContent = newVal || '';
+        if (newVal !== this._content) {
+          this.content = newVal || '';
         }
       }
     }
@@ -89,11 +125,37 @@
 </script>
 
 <style lang='less'>
-  .hui-flex {
+  .hui-marked-editor {
     display: flex;
-  }
+    flex-direction: column;
 
-  .hui-marked-input, .hui-marked-output {
-    flex: 1;
+    .toolbar {
+      margin-bottom: 8px;
+    }
+
+    .editor {
+      flex: 1;
+      position: relative;
+
+      .inner {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        display: flex;
+
+        .input {
+          flex: 1;
+        }
+
+        .output {
+          flex: 1;
+          overflow: scroll;
+          border: 1px solid #e6e6e6;
+          padding: 0 16px;
+        }
+      }
+    }
   }
 </style>

@@ -12,6 +12,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
   // 项目入口. 可以直接用文件夹名称, 默认会找 index.js; 也可以确定是哪个文件名字
   entry: {
+    index: '@/index.js',
     admin: '@/main.js'
   },
 

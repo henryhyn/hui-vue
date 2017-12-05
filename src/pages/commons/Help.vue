@@ -92,7 +92,7 @@
 </template>
 
 <script>
-  import {mapState, mapMutations} from 'vuex';
+  import { mapState, mapMutations } from 'vuex';
   import Card from '@/components/Card';
   import TodoItem from '@/components/TodoItem';
 
@@ -102,22 +102,22 @@
         list: [],
         seen: true,
         todos: [
-          {text: '学习 JavaScript'},
-          {text: '学习 Vue'},
-          {text: '整个牛项目'}
+          { text: '学习 JavaScript' },
+          { text: '学习 Vue' },
+          { text: '整个牛项目' }
         ],
         msg: 'Henry',
         message: '页面加载于 ' + new Date()
       };
     },
 
-    components: {Card, TodoItem},
+    components: { Card, TodoItem },
 
     computed: mapState(['count']),
 
     methods: {
       ...mapMutations(['increment', 'decrement']),
-      reverseMessage: function () {
+      reverseMessage () {
         this.msg = this.msg.split('').reverse().join('');
       }
     }
