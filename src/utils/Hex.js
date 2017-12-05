@@ -96,7 +96,16 @@ Hex.toString = (idx, lst) => lst[idx];
 Hex.empty = () => {
 };
 
+Hex.fromNow = val => moment(val, moment.x).fromNow();
 Hex.formatDate = val => moment(val, moment.x).format('YYYY-MM-DD');
-Hex.formatDateTime = val => moment(val, moment.x).format('YYYY-MM-DD HH:mm:ss');
+Hex.format = val => moment(val, moment.x).format('YYYY-MM-DD HH:mm:ss');
+
+Hex.capitalize = val => {
+  if (!val) {
+    return '';
+  }
+  const value = val.toString();
+  return value.charAt(0).toUpperCase() + value.slice(1);
+};
 
 export default Hex;
