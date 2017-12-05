@@ -2,31 +2,48 @@
   #app
     sider
     #main-body
-      header.hui-flex-box
-        #logo: img(src='../../assets/logo.png')
-        a#project-name.link-muted.large.strong(href='/') {{ projectName }}
-        .hui-flex-fill
-        #user-name 当前用户
-        a#logout.link-muted(href='/logout') 登出
+      header
+        ul#headbar.list-inline.hui-flex-box
+          li: el-tooltip(content='菜单折叠'): hamburger.large.strong(@toggle='toggleCollapse' :active='settings.isCollapsed')
+          li: a.link-muted.large.strong(href='/') {{ projectName }}
+          li.hui-flex-fill
+          li: router-link(v-for='item in settings.visitedViews' :key='item.name' :to='item.fullPath'): el-tag.hui-hspace(:type="$route.fullPath === item.fullPath ? 'success' : 'default'") {{item.name}}
+          li(v-for='item in links' :key='item.href'): a.link-muted(:href='item.href' target='blank') {{item.name}}
+          li: el-dropdown
+            div
+              span.hspace {{ currentUser.userName }}
+              span.glyphicon.glyphicon-menu-down
+            el-dropdown-menu(slot='dropdown')
+              a.link-muted(href='/logout'): el-dropdown-item 登出
       article: transition(name='el-fade-in-linear' mode='out-in')
         router-view
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+  import { mapState, mapMutations } from 'vuex';
   import { config } from '@/utils';
+  import Hamburger from '@/components/Hamburger';
   import Sider from './Sider';
 
   export default {
     data () {
       return {
-        projectName: config.projectName
+        projectName: config.projectName,
+        links: config.links
       };
     },
 
-    computed: mapState(['config']),
+    computed: mapState(['currentUser', 'config', 'settings']),
 
-    components: { Sider }
+    components: { Sider, Hamburger },
+
+    methods: {
+      ...mapMutations(['updateSettings']),
+
+      toggleCollapse () {
+        this.updateSettings({ isCollapsed: !this.settings.isCollapsed });
+      }
+    }
   };
 </script>
 
@@ -52,26 +69,21 @@
         flex: 1;
         overflow-y: scroll;
         padding: 16px;
+        position: relative;
       }
     }
   }
 
-  header {
-    > #logo {
-      height: 60px;
-      display: inline-block;
-      margin-right: 8px;
-      > img {
-        height: 60px;
-      }
-    }
+  #headbar {
+    height: 60px;
+    align-items: center;
 
-    > #project-name, > #user-name, > #logout {
-      margin-left: 16px;
+    li {
       margin-right: 16px;
-      height: 60px;
-      line-height: 60px;
-      display: inline-block;
+
+      &:first-child {
+        margin-left: 16px;
+      }
     }
   }
 </style>

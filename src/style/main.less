@@ -14,3 +14,22 @@ body {
 .hui-flex-fill {
   flex: 1;
 }
+
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+
+.list-inline {
+  .list-unstyled();
+  margin-top: 0;
+  margin-bottom: 0;
+
+  > li {
+    display: inline-block;
+  }
+
+  > li + li {
+    margin-left: 5px;
+  }
+}
