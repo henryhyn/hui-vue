@@ -18,7 +18,10 @@ Hex.get = (url, params, cb) => {
     cb = params;
     params = undefined;
   }
-  axios.get(url, { params }).then(res => {
+  if (params !== undefined) {
+    url = url + '?' + Hex.toQuery(params);
+  }
+  axios.get(url).then(res => {
     cb(res.data);
   });
 };
