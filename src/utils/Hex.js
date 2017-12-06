@@ -1,7 +1,10 @@
+import axios from 'axios';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 
 moment.locale('zh-cn');
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults.headers.common['Accept'] = 'application/json';
 
 const Hex = {};
 
@@ -15,62 +18,26 @@ Hex.get = (url, params, cb) => {
     cb = params;
     params = undefined;
   }
-
-  if (params !== undefined) {
-    url = url + '?' + Hex.toQuery(params);
-  }
-
-  fetch(url, {
-    headers: {
-      'Accept': 'application/json'
-    }
-  }).then(res => {
-    if (res.ok) {
-      res.json().then(cb);
-    }
+  axios.get(url, { params }).then(res => {
+    cb(res.data);
   });
 };
 
 Hex.post = (url, params, cb) => {
-  fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(params),
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    }
-  }).then(res => {
-    if (res.ok) {
-      res.json().then(cb);
-    }
+  axios.post(url, params).then(res => {
+    cb(res.data);
   });
 };
 
 Hex.put = (url, params, cb) => {
-  fetch(url, {
-    method: 'PUT',
-    body: JSON.stringify(params),
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    }
-  }).then(res => {
-    if (res.ok) {
-      res.json().then(cb);
-    }
+  axios.put(url, params).then(res => {
+    cb(res.data);
   });
 };
 
 Hex.delete = (url, cb) => {
-  fetch(url, {
-    method: 'DELETE',
-    headers: {
-      'Accept': 'application/json'
-    }
-  }).then(res => {
-    if (res.ok) {
-      res.json().then(cb);
-    }
+  axios.delete(url).then(res => {
+    cb(res.data);
   });
 };
 
