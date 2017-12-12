@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import EChartDemo from '@/pages/demos/EChartDemo';
 import ImageUploadDemo from '@/pages/demos/ImageUploadDemo';
 import ImageCropUploadDemo from '@/pages/demos/ImageCropUploadDemo';
+import CameraDemo from '@/pages/demos/CameraDemo';
 import AceDemo from '@/pages/demos/AceDemo';
 import QuillDemo from '@/pages/demos/QuillDemo';
 import MarkedDemo from '@/pages/demos/MarkedDemo';
@@ -19,6 +20,7 @@ export default new Router({
     { path: '/e-charts', name: 'EChartDemo', component: EChartDemo },
     { path: '/image-upload', name: 'ImageUploadDemo', component: ImageUploadDemo },
     { path: '/image-crop-upload', name: 'ImageCropUploadDemo', component: ImageCropUploadDemo },
+    { path: '/camera', name: 'CameraDemo', component: CameraDemo },
     { path: '/ace', name: 'AceDemo', component: AceDemo },
     { path: '/quill', name: 'QuillDemo', component: QuillDemo },
     { path: '/marked', name: 'MarkedDemo', component: MarkedDemo },
