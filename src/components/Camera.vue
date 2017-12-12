@@ -43,25 +43,43 @@
       });
     },
 
+    beforeDestroy () {
+      this.close();
+      this.video = null;
+    },
+
     methods: {
       changeHandler (value) {
         value ? this.open() : this.close();
       },
 
       open () {
-        if (this.video) {
-          navigator.mediaDevices.getUserMedia(this.constraints)
-            .then(stream => {
-              this.mediaTrack = stream.getTracks()[0];
-              this.video.src = window.URL.createObjectURL(stream);
-              this.video.onloadedmetadata = this.video.play;
-            });
+        if (!this.video) {
+          return;
         }
+        if (navigator.mediaDevices === undefined) {
+          navigator.mediaDevices = {};
+        }
+        if (navigator.mediaDevices.getUserMedia === undefined) {
+          navigator.mediaDevices.getUserMedia = constraints => {
+            const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+            if (!getUserMedia) {
+              return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+            }
+            return new Promise((resolve, reject) => getUserMedia.call(navigator, constraints, resolve, reject));
+          };
+        }
+        navigator.mediaDevices.getUserMedia(this.constraints)
+          .then(stream => {
+            this.mediaTrack = stream.getTracks()[0];
+            this.video.src = window.URL.createObjectURL(stream);
+            this.video.onloadedmetadata = this.video.play;
+          }).catch(err => this.$message.error(err.name + ': ' + err.message));
       },
 
       close () {
         this.isOpen = false;
-        this.mediaTrack.stop();
+        this.mediaTrack && this.mediaTrack.stop();
       },
 
       photoHandler () {
