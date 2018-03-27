@@ -1,6 +1,6 @@
 <template lang='pug'>
   el-dialog(title='上传图片' :visible.sync='imageUploadVisible')
-    el-upload(ref='upload' drag :auto-upload='false' list-type='picture' :file-list='fileList' :on-success='uploadSuccess' :action='url' :name='field' :data='params')
+    el-upload(ref='upload' drag :auto-upload='false' list-type='picture' :file-list='fileList' :on-success='uploadSuccess' :action='url' :name='field' :data='params' :headers='headers')
       i.el-icon-upload
       .el-upload__text 将文件拖到此处，或<em>点击上传</em>
     div(slot='footer')
@@ -20,6 +20,7 @@
     props: {
       url: String,
       field: String,
+      headers: Object,
       params: Object,
       value: Boolean,
       visible: Boolean
