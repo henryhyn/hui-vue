@@ -45,7 +45,7 @@
 
     h4 组件化应用构建
     card
-    ol: todo-item(:todo='item' v-for='item in todos' key='item')
+    ol: todo-item(:todo='item' v-for='item in todos' :key='item.text')
 
     h3 Button 按钮
     h4 基础用法
