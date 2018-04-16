@@ -10,9 +10,7 @@
           li: router-link(v-for='item in settings.visitedViews' :key='item.name' :to='item.fullPath'): el-tag.hui-hspace(:type="$route.fullPath === item.fullPath ? 'success' : 'default'") {{item.name}}
           li(v-for='item in links' :key='item.href'): a.link-muted(:href='item.href' target='blank') {{item.name}}
           li: el-dropdown
-            div
-              span.hspace {{ currentUser.userName }}
-              span.glyphicon.glyphicon-menu-down
+            span.el-dropdown-link {{ currentUser.userName }}<i class='el-icon-arrow-down el-icon--right'/>
             el-dropdown-menu(slot='dropdown')
               a.link-muted(href='/logout'): el-dropdown-item 登出
       article: transition(name='el-fade-in-linear' mode='out-in')
