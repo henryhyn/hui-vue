@@ -5,7 +5,7 @@
       header
         ul#headbar.list-inline.hui-flex-box
           li: el-tooltip(content='菜单折叠'): hamburger.large.strong(@toggle='toggleCollapse' :active='settings.isCollapsed')
-          li: a.link-muted.large.strong(href='/') {{ projectName }}
+          li: router-link.link-muted.large.strong(to='/') {{ projectName }}
           li.hui-flex-fill
           li: router-link(v-for='item in settings.visitedViews' :key='item.name' :to='item.fullPath'): el-tag.hui-hspace(:type="$route.fullPath === item.fullPath ? 'success' : 'default'") {{item.name}}
           li(v-for='item in links' :key='item.href'): a.link-muted(:href='item.href' target='blank') {{item.name}}
