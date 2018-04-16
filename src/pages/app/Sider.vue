@@ -58,5 +58,9 @@
     &:not(.el-menu--collapse) {
       width: 200px;
     }
+
+    i.glyphicon {
+      font-size: 16px;
+    }
   }
 </style>
