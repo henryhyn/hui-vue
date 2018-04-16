@@ -7,7 +7,7 @@
     "prestart": "npm install",
     "start": "npx webpack-dev-server --mode development --open --inline --hot --port 9999",
     "prebuild": "rm -frv dist",
-    "build": "npx webpack --mode production --progress --hide-modules",
+    "build": "npx webpack --mode production --progress --hide-modules --config webpack.production.config.js",
     "lint": "eslint --ext .js,.vue src",
     "test": "jest test --coverage --config .jestrc.js"
   },
