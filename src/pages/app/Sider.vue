@@ -4,8 +4,11 @@
       el-submenu(v-for='menu in menus' :key='menu.index' :index='menu.index')
         template(slot='title')
           i(:class='`glyphicon glyphicon-${menu.icon} hui-hspace`')
-          span(slot='title') {{menu.name}}
-        el-menu-item(v-for='item in menu.children' :key='item.index' :index='item.index') <span :class='`glyphicon glyphicon-${item.icon}`'/> {{item.name}}
+          span {{menu.name}}
+        el-menu-item(v-for='item in menu.children' :key='item.index' :index='item.index')
+          template(slot='title')
+            i(:class='`glyphicon glyphicon-${item.icon} hui-hspace`')
+            span {{item.name}}
 </template>
 
 <script>
