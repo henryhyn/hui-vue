@@ -78,4 +78,12 @@ Hex.capitalize = val => {
   return value.charAt(0).toUpperCase() + value.slice(1);
 };
 
+Hex.uniq = (lst = []) => Array.from(new Set(lst));
+
+// Array.map 的简易版本: 提取一个集合里指定的属性值
+Hex.pluck = (lst = [], key = '') => (lst || []).map(obj => obj[key]);
+
+// 字符串拆分的加强版, 仅保留有效的字符串
+Hex.split = (text, regex = /[ ,，、；;\t\r\n]/) => (text || '').split(regex).map(i => i.trim()).filter(Hex.validString);
+
 export default Hex;
