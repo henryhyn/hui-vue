@@ -7,3 +7,9 @@
 ```
 npm install hui-vue
 ```
+
+## 开发
+
+```
+npm start
+```

@@ -10,7 +10,7 @@ Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key]);
 });
 
-Vue.use(Element, { size: 'small' });
+Vue.use(Element, { size: 'medium' });
 
 /* eslint-disable no-new */
 new Vue({

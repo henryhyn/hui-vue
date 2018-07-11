@@ -1,7 +1,10 @@
+import axios from 'axios';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 
 moment.locale('zh-cn');
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults.headers.common['Accept'] = 'application/json';
 
 const Hex = {};
 
@@ -15,62 +18,29 @@ Hex.get = (url, params, cb) => {
     cb = params;
     params = undefined;
   }
-
   if (params !== undefined) {
     url = url + '?' + Hex.toQuery(params);
   }
-
-  fetch(url, {
-    headers: {
-      'Accept': 'application/json'
-    }
-  }).then(res => {
-    if (res.ok) {
-      res.json().then(cb);
-    }
+  axios.get(url).then(res => {
+    cb(res.data);
   });
 };
 
 Hex.post = (url, params, cb) => {
-  fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(params),
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    }
-  }).then(res => {
-    if (res.ok) {
-      res.json().then(cb);
-    }
+  axios.post(url, params).then(res => {
+    cb(res.data);
   });
 };
 
 Hex.put = (url, params, cb) => {
-  fetch(url, {
-    method: 'PUT',
-    body: JSON.stringify(params),
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    }
-  }).then(res => {
-    if (res.ok) {
-      res.json().then(cb);
-    }
+  axios.put(url, params).then(res => {
+    cb(res.data);
   });
 };
 
 Hex.delete = (url, cb) => {
-  fetch(url, {
-    method: 'DELETE',
-    headers: {
-      'Accept': 'application/json'
-    }
-  }).then(res => {
-    if (res.ok) {
-      res.json().then(cb);
-    }
+  axios.delete(url).then(res => {
+    cb(res.data);
   });
 };
 
@@ -107,5 +77,13 @@ Hex.capitalize = val => {
   const value = val.toString();
   return value.charAt(0).toUpperCase() + value.slice(1);
 };
+
+Hex.uniq = (lst = []) => Array.from(new Set(lst));
+
+// Array.map 的简易版本: 提取一个集合里指定的属性值
+Hex.pluck = (lst = [], key = '') => (lst || []).map(obj => obj[key]);
+
+// 字符串拆分的加强版, 仅保留有效的字符串
+Hex.split = (text, regex = /[ ,，、；;\t\r\n]/) => (text || '').split(regex).map(i => i.trim()).filter(Hex.validString);
 
 export default Hex;

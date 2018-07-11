@@ -70,6 +70,8 @@ module.exports = {
     }
   },
 
+  devtool: '#eval-source-map',
+
   plugins: [
     new ExtractTextPlugin('[name].css'),
     // 添加我们的插件会自动生成一个 html 文件
