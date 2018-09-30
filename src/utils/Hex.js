@@ -71,6 +71,7 @@ Hex.empty = () => {
 Hex.fromNow = val => dayjs(val).fromNow();
 Hex.formatDate = val => dayjs(val).format('YYYY-MM-DD');
 Hex.format = val => dayjs(val).format('YYYY-MM-DD HH:mm:ss');
+Hex.diff = (val1, val2, unit) => dayjs(val1).diff(val2, unit);
 
 Hex.capitalize = val => {
   if (!val) {
