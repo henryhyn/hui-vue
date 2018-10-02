@@ -154,6 +154,7 @@
           overflow: scroll;
           border: 1px solid #e6e6e6;
           padding: 0 16px;
+          background-color: white;
 
           img {
             max-width: 100% !important;
