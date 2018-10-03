@@ -2,7 +2,7 @@
   import { Hex } from '../index';
 
   const formatInline = ({ self, metas }) => {
-    self.name.replace(/([~*]+)(.*?)\1/g, (match, brace, name, offset) => {
+    self.name.replace(/([~*`]+)(.*?)\1/g, (match, brace, name, offset) => {
       let tag = 'span';
       let style = {};
       if (brace === '**') {
@@ -10,6 +10,9 @@
       }
       if (brace === '*') {
         tag = 'em';
+      }
+      if (brace === '`') {
+        tag = 'code';
       }
       if (brace === '~~') {
         style = {
