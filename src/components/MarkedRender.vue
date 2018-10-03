@@ -1,8 +1,8 @@
 <script>
   import { Hex } from '../index';
 
-  const formatStrong = ({ text, metas }) => {
-    text.replace(/([~*]+)(.*?)\1/g, (match, brace, name, offset) => {
+  const formatInline = ({ self, metas }) => {
+    self.name.replace(/([~*]+)(.*?)\1/g, (match, brace, name, offset) => {
       let tag = 'span';
       let style = {};
       if (brace === '**') {
@@ -25,9 +25,17 @@
     });
   };
 
-  const renderBlock = (h, { text, metas }) => {
+  const formatBlock = ({ text, self }) => {
+    text.replace(/(#+)\s*(.*)/g, (match, brace, name) => {
+      self.tag = 'h' + brace.length;
+      self.name = name;
+    });
+  };
+
+  const renderInline = (h, { self, metas }) => {
     const children = [];
     let lastIndex = 0;
+    const text = self.name;
     metas.forEach(meta => {
       children.push(text.substring(lastIndex, meta.offset));
       const { tag, style, name } = meta;
@@ -38,15 +46,24 @@
     return children;
   };
 
+  const renderBlock = (h, { self }, children) => {
+    return h(self.tag, children);
+  };
+
   export default {
     props: ['content'],
 
     functional: true,
 
     render(h, { props }) {
-      const blocks = props.content.split('\n').filter(Hex.validString).map(text => ({ text, metas: [] }));
-      blocks.forEach(formatStrong);
-      return blocks.map(block => h('p', renderBlock(h, block)));
+      const blocks = props.content.split('\n').filter(Hex.validString).map(text => ({
+        text,
+        self: { tag: 'p', name: text },
+        metas: []
+      }));
+      blocks.forEach(formatBlock);
+      blocks.forEach(formatInline);
+      return blocks.map(block => renderBlock(h, block, renderInline(h, block)));
     }
   };
 </script>
