@@ -35,19 +35,14 @@
   const renderInline = (h, { self, metas }) => {
     const children = [];
     let lastIndex = 0;
-    const text = self.name;
     metas.forEach(meta => {
-      children.push(text.substring(lastIndex, meta.offset));
+      children.push(self.name.substring(lastIndex, meta.offset));
       const { tag, style, name } = meta;
       children.push(h(tag, { style }, name));
       lastIndex = meta.offset + meta.length;
     });
-    children.push(text.substring(lastIndex));
+    children.push(self.name.substring(lastIndex));
     return children;
-  };
-
-  const renderBlock = (h, { self }, children) => {
-    return h(self.tag, children);
   };
 
   export default {
@@ -63,7 +58,7 @@
       }));
       blocks.forEach(formatBlock);
       blocks.forEach(formatInline);
-      return blocks.map(block => renderBlock(h, block, renderInline(h, block)));
+      return blocks.map(block => h(block.self.tag, renderInline(h, block)));
     }
   };
 </script>
