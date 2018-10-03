@@ -29,9 +29,13 @@
   };
 
   const formatBlock = ({ text, self }) => {
-    text.replace(/(#+)\s*(.*)/g, (match, brace, name) => {
+    text.replace(/^(#+)\s*(.*)$/g, (match, brace, name) => {
       self.tag = 'h' + brace.length;
       self.name = name;
+    });
+    text.replace(/^-{3,}$/g, () => {
+      self.tag = 'hr';
+      self.name = '';
     });
   };
 
@@ -54,7 +58,7 @@
     functional: true,
 
     render(h, { props }) {
-      const blocks = props.content.split('\n').filter(Hex.validString).map(text => ({
+      const blocks = props.content.split(/[\r\n]/).filter(Hex.validString).map(text => ({
         text,
         self: { tag: 'p', name: text },
         metas: []
