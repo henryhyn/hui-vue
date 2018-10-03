@@ -23,6 +23,9 @@
       }
       metas.push({ tag, style, name, offset, length: match.length });
     });
+    self.name.replace(/!\[\]\((.*?)\)/g, (match, src, offset) => {
+      metas.push({ tag: 'img', attrs: { src }, offset, length: match.length });
+    });
   };
 
   const formatBlock = ({ text, self }) => {
@@ -37,8 +40,8 @@
     let lastIndex = 0;
     metas.forEach(meta => {
       children.push(self.name.substring(lastIndex, meta.offset));
-      const { tag, style, name } = meta;
-      children.push(h(tag, { style }, name));
+      const { tag, style, attrs, name } = meta;
+      children.push(h(tag, { style, attrs }, name));
       lastIndex = meta.offset + meta.length;
     });
     children.push(self.name.substring(lastIndex));
