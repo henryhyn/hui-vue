@@ -5,25 +5,11 @@
     self.name.replace(/([~*`]+)(.*?)\1/g, (match, brace, name, offset) => {
       let tag = 'span';
       let style = {};
-      if (brace === '**') {
-        tag = 'strong';
-      }
-      if (brace === '*') {
-        tag = 'em';
-      }
-      if (brace === '`') {
-        tag = 'code';
-      }
-      if (brace === '~~') {
-        style = {
-          textDecoration: 'underline'
-        };
-      }
-      if (brace === '~') {
-        style = {
-          textDecoration: 'line-through'
-        };
-      }
+      brace === '**' && (tag = 'strong');
+      brace === '*' && (tag = 'em');
+      brace === '`' && (tag = 'code');
+      brace === '~~' && (style.textDecoration = 'underline');
+      brace === '~' && (style.textDecoration = 'line-through');
       metas.push({ tag, style, name, offset, length: match.length });
     });
     self.name.replace(/!\[\]\((.*?)\)/g, (match, src, offset) => {
