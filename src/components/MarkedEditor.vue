@@ -6,7 +6,7 @@
       clipboard(:value='content')
     .editor: .inner(ref='editor')
       ace-editor.input(:value='content' @input='inputHandler' @change='changeHandler' @init='initHandler')
-      .output(v-html='compiledMarkdown')
+      .output.post-body(v-html='compiledMarkdown')
 </template>
 
 <script>
@@ -150,11 +150,13 @@
         }
 
         .output {
-          flex: 1;
+          width: 620px;
           overflow: scroll;
           border: 1px solid #e6e6e6;
-          padding: 0 16px;
+          padding: 40px;
           background-color: white;
+          font-size: 16px;
+          line-height: 1.6;
 
           img {
             max-width: 100% !important;
