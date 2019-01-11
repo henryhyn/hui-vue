@@ -1,3 +1,8 @@
+import katex from 'katex';
+import macros from './macros';
+
+/* eslint-disable */
+
 function escape(html, encode) {
   if (encode) {
     if (escape.escapeTest.test(html)) {
@@ -170,6 +175,7 @@ const block = {
   newline: /^\n+/,
   code: /^( {4}[^\n]+\n*)+/,
   fences: /^ {0,3}(`{3,}|~{3,})([^`\n]*)\n(?:|([\s\S]*?)\n)(?: {0,3}\1[~`]* *(?:\n+|$)|$)/,
+  math: /^(\${2,})([\s\S]+?)\1\n?/,
   hr: /^ {0,3}((?:- *){3,}|(?:_ *){3,}|(?:\* *){3,})(?:\n+|$)/,
   heading: /^ *(#{1,6}) *([^\n]+?) *(?:#+ *)?(?:\n+|$)/,
   nptable: /^ *([^|\n ].*\|.*)\n *([-:]+ *\|[-| :]*)(?:\n((?:.*[^>\n ].*(?:\n|$))*)\n*|$)/,
@@ -251,9 +257,10 @@ const inline = {
   strong: /^__([^\s_])__(?!_)|^\*\*([^\s*])\*\*(?!\*)|^__([^\s][\s\S]*?[^\s])__(?!_)|^\*\*([^\s][\s\S]*?[^\s])\*\*(?!\*)/,
   em: /^_([^\s_])_(?!_)|^\*([^\s*"<\[])\*(?!\*)|^_([^\s][\s\S]*?[^\s_])_(?!_|[^\spunctuation])|^_([^\s_][\s\S]*?[^\s])_(?!_|[^\spunctuation])|^\*([^\s"<\[][\s\S]*?[^\s*])\*(?!\*)|^\*([^\s*"<\[][\s\S]*?[^\s])\*(?!\*)/,
   code: /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/,
+  math: /^(\$+)([^$]|[^$][\s\S]*?[^$])\1(?!\$)/,
   br: /^( {2,}|\\)\n(?!\s*$)/,
   del: /^~+(?=\S)([\s\S]*?\S)~+/,
-  text: /^(`+|[^`])[\s\S]*?(?=[\\<!\[`*]|\b_| {2,}\n|$)/
+  text: /^(`+|[^`])[\s\S]*?(?=[\\<!\[`$*]|\b_| {2,}\n|$)/
 };
 
 inline._punctuation = '!"#$%&\'()*+,\\-./:;<=>?@\\[^_{|}~';
@@ -292,6 +299,7 @@ inline.reflink = edit(inline.reflink)
 class BlockLexer {
   constructor(options = {}) {
     this.tokens = [];
+    this.tokens.links = Object.create(null);
     this.options = options;
     this.rules = block;
   }
@@ -302,11 +310,11 @@ class BlockLexer {
         .replace(/\t/g, '    ')
         .replace(/\u00a0/g, ' ')
         .replace(/\u2424/g, '\n')
-        .replace(/^ +$/gm, '')
       , true);
   }
 
   token(src, top) {
+    src = src.replace(/^ +$/gm, '');
     var next,
       loose,
       cap,
@@ -354,6 +362,16 @@ class BlockLexer {
           type: 'code',
           lang: cap[2] ? cap[2].trim() : cap[2],
           text: cap[3] || ''
+        });
+        continue;
+      }
+
+      // math
+      if (cap = this.rules.math.exec(src)) {
+        src = src.substring(cap[0].length);
+        this.tokens.push({
+          type: 'math',
+          text: cap[2] || ''
         });
         continue;
       }
@@ -755,6 +773,13 @@ class InlineLexer {
         continue;
       }
 
+      // math
+      if (cap = this.rules.math.exec(src)) {
+        src = src.substring(cap[0].length);
+        out += this.renderer.mathspan(cap[2]);
+        continue;
+      }
+
       // br
       if (cap = this.rules.br.exec(src)) {
         src = src.substring(cap[0].length);
@@ -959,6 +984,9 @@ class Parser {
         return this.renderer.code(this.token.text,
           this.token.lang,
           this.token.escaped);
+      }
+      case 'math': {
+        return this.renderer.math(this.token.text);
       }
       case 'table': {
         var header = '',
@@ -1166,6 +1194,16 @@ class Renderer {
     return '<code>' + text + '</code>';
   }
 
+  mathspan(math) {
+    return katex.renderToString(math, { macros });
+  }
+
+  math(math) {
+    return '<p style="text-align: center; font-size: 15px">'
+      + katex.renderToString(math, { macros, displayMode: true })
+      + '</p>\n';
+  }
+
   br() {
     return this.options.xhtml ? '<br/>' : '<br>';
   }
@@ -1238,3 +1276,5 @@ class Marked {
 }
 
 export default Marked;
+
+/* eslint-enable */
