@@ -17,8 +17,6 @@
   import { Hex } from '../index';
   import functions from './functions';
 
-  import '../style/katex.css';
-
   const marked = new Marked();
 
   export default {

@@ -9,8 +9,6 @@
   import 'quill/dist/quill.snow.css';
   import ImageUpload from './ImageUpload';
 
-  import '../style/katex.css';
-
   window.katex = require('katex');
 
   const options = {
