@@ -1098,7 +1098,7 @@ class Renderer {
     if (!lang) {
       return '<pre><code>'
         + (escaped ? code : escape(code, true))
-        + '</code></pre>';
+        + '</code></pre>\n';
     }
 
     return '<pre><code class="'
@@ -1253,7 +1253,7 @@ class Marked {
       gfm: true,
       headerIds: true,
       headerPrefix: '',
-      highlight: (code, lang) => hljs.highlight(lang, code).value,
+      highlight: (code, lang) => lang ? hljs.highlight(lang, code).value : hljs.highlightAuto(code).value,
       langPrefix: 'language-',
       mangle: false,
       pedantic: false,
