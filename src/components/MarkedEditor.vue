@@ -6,34 +6,18 @@
       clipboard(:value='content')
     .editor: .inner(ref='editor')
       ace-editor.input(:value='content' @input='inputHandler' @change='changeHandler' @init='initHandler')
-      .output(v-html='compiledMarkdown')
+      .output.post-body(v-html='compiledMarkdown')
 </template>
 
 <script>
   import _ from 'lodash';
-  import marked from 'marked';
-  import katex from 'katex';
-  import macros from '../utils/macros';
+  import Marked from '../utils/marked';
   import AceEditor from './AceEditor';
   import Clipboard from './Clipboard';
   import { Hex } from '../index';
   import functions from './functions';
 
-  import '../style/katex.css';
-
-  const renderer = new marked.Renderer();
-  renderer.paragraph = function (text) {
-    if (text.indexOf('$$') > -1) {
-      return '<p style="text-align: center; font-size: 15px">'
-        + katex.renderToString(text.replace(/\$\$/g, '').replace(/<\/?em>/g, '_'), { macros, displayMode: true })
-        + '</p>';
-    } else if (text.indexOf('$') > -1) {
-      return '<p>' + text.replace(/\$([^$]+)\$/g, (all, math) => katex.renderToString(math.replace(/<\/?em>/g, '_'), { macros })) + '</p>';
-    } else {
-      return '<p>' + text + '</p>';
-    }
-  };
-  marked.setOptions({ renderer: renderer, breaks: true, smartypants: true });
+  const marked = new Marked();
 
   export default {
     props: {
@@ -72,7 +56,7 @@
 
     computed: {
       compiledMarkdown () {
-        const html = marked(this.content || '');
+        const html = marked.convert(this.content || '');
         this.$emit('change', html);
         return html;
       }
@@ -150,10 +134,13 @@
         }
 
         .output {
-          flex: 1;
+          width: 620px;
           overflow: scroll;
           border: 1px solid #e6e6e6;
-          padding: 0 16px;
+          padding: 40px;
+          background-color: white;
+          font-size: 16px;
+          line-height: 1.6;
 
           img {
             max-width: 100% !important;

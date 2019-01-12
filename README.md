@@ -13,3 +13,22 @@ npm install hui-vue
 ```
 npm start
 ```
+
+## 发布
+
+```
+npm run build
+npm version patch
+npm publish
+```
+
+## 演示
+
+```
+git checkout gh-pages
+git merge master
+npm run build
+cp -fa dist/admin.* .
+git commit -a -m 'update'
+git push
+```

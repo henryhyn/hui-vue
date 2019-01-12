@@ -1,8 +1,10 @@
 import axios from 'axios';
-import moment from 'moment';
-import 'moment/locale/zh-cn';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
-moment.locale('zh-cn');
+dayjs.locale('zh-cn');
+dayjs.extend(relativeTime);
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
@@ -66,9 +68,10 @@ Hex.toString = (idx, lst) => lst[idx];
 Hex.empty = () => {
 };
 
-Hex.fromNow = val => moment(val, moment.x).fromNow();
-Hex.formatDate = val => moment(val, moment.x).format('YYYY-MM-DD');
-Hex.format = val => moment(val, moment.x).format('YYYY-MM-DD HH:mm:ss');
+Hex.fromNow = val => dayjs(val).fromNow();
+Hex.formatDate = val => dayjs(val).format('YYYY-MM-DD');
+Hex.format = val => dayjs(val).format('YYYY-MM-DD HH:mm:ss');
+Hex.diff = (val1, val2, unit) => dayjs(val1).diff(val2, unit);
 
 Hex.capitalize = val => {
   if (!val) {
