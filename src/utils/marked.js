@@ -1,3 +1,4 @@
+import hljs from 'highlight.js';
 import katex from 'katex';
 import macros from './macros';
 
@@ -1252,7 +1253,7 @@ class Marked {
       gfm: true,
       headerIds: true,
       headerPrefix: '',
-      highlight: null,
+      highlight: (code, lang) => hljs.highlight(lang, code).value,
       langPrefix: 'language-',
       mangle: false,
       pedantic: false,
