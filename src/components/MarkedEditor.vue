@@ -3,16 +3,19 @@
     .toolbar
       el-tooltip(v-for='item in toolbar' :key='item.name' :content='item.win')
         el-button(@click='execute(item.action)') {{item.name}}
+      el-button(@click='imageUploadVisible=true') Image
       clipboard(:value='content')
     .editor: .inner(ref='editor')
       ace-editor.input(:value='content' @input='inputHandler' @change='changeHandler' @init='initHandler')
       .output.post-body(v-html='compiledMarkdown')
+    image-upload(v-model='imageUploadVisible' :url='image.upload.url' :field='image.upload.fieldName' :params='image.upload.params' @crop-upload-success='uploadSuccess')
 </template>
 
 <script>
   import _ from 'lodash';
   import Marked from '../utils/marked';
   import AceEditor from './AceEditor';
+  import ImageUpload from './ImageUpload';
   import Clipboard from './Clipboard';
   import { Hex } from '../index';
   import functions from './functions';
@@ -21,6 +24,21 @@
 
   export default {
     props: {
+      image: {
+        type: Object,
+        default () {
+          return {
+            upload: {
+              url: '',
+              fieldName: 'file',
+              params: {}
+            },
+            uploadHandler (res) {
+              return res.data;
+            }
+          };
+        }
+      },
       width: {
         type: String,
         default: '100%'
@@ -37,6 +55,7 @@
 
     data () {
       return {
+        imageUploadVisible: false,
         editor: null,
         selection: null,
         session: null,
@@ -52,7 +71,7 @@
 
     mixins: [{ methods: functions.methods }],
 
-    components: { AceEditor, Clipboard },
+    components: { AceEditor, ImageUpload, Clipboard },
 
     computed: {
       compiledMarkdown () {
@@ -71,6 +90,12 @@
 
       execute (action) {
         this[action]();
+      },
+
+      uploadSuccess (res) {
+        const url = this.image.uploadHandler(res);
+        this.editor.insert(`![](${url})\n`);
+        this.editor.focus();
       },
 
       editorKeyBindings () {
