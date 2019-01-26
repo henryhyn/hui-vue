@@ -68,6 +68,7 @@ Hex.toString = (idx, lst) => lst[idx];
 Hex.empty = () => {
 };
 
+Hex.dateNow = () => dayjs().format('YYYY-MM-DD dddd');
 Hex.fromNow = val => dayjs(val).fromNow();
 Hex.formatDate = val => dayjs(val).format('YYYY-MM-DD');
 Hex.format = val => dayjs(val).format('YYYY-MM-DD HH:mm:ss');

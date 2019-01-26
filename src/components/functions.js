@@ -1,4 +1,5 @@
 import screenfull from 'screenfull';
+import { Hex } from '../index';
 
 const Command = 'Cmd';
 const Shift = 'Shift';
@@ -13,6 +14,7 @@ export default {
     { name: 'UnorderedList', key: [Command, 'L'], action: 'toggleUnorderedList' },
     { name: 'OrderedList', key: [Alt, Command, 'L'], action: 'toggleOrderedList' },
     { name: 'Heading', key: [Command, 'H'], action: 'toggleHeading' },
+    { name: 'Date', key: ['F5'], action: 'toggleDate' },
     { name: 'FullScreen', key: [Shift, Command, 'H'], action: 'toggleFullScreen' }
   ].map(i => {
     const mac = i.key.join('-');
@@ -115,6 +117,11 @@ export default {
         end: { row, column: length }
       };
       this.session.replace(range, heading + lineText);
+      this.editor.focus();
+    },
+
+    toggleDate () {
+      this.editor.insert(`#### ${Hex.dateNow()}\n`);
       this.editor.focus();
     },
 
