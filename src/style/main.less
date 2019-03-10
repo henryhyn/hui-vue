@@ -2,12 +2,15 @@
 @import "~quill/dist/quill.snow.css";
 @import "glyphicons";
 @import "katex.css";
+@import "misc.css";
+@import "fn";
 
 body {
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   font-size: 12px;
 }
 
+// 亲密性, 横向和纵向的距离, 参考: https://ant.design/docs/spec/proximity-cn
 .hui-hspace {
   margin-right: 5px;
 }
@@ -30,6 +33,47 @@ body {
 
 .hui-vskipp {
   margin-bottom: 16px !important;
+}
+
+.hui-mask {
+  color: white;
+  background-color: black;
+  .opacity(.70);
+}
+
+// 盒子
+.hui-fixed-box {
+  position: relative;
+  .hui-fixed-top, .hui-fixed-right-top, .hui-fixed-left-bottom, .hui-fixed-bottom, .hui-fixed-left-top, .hui-fixed-right-bottom {
+    position: absolute;
+    padding: 8px;
+  }
+  .hui-fixed-top {
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  .hui-fixed-left-top {
+    top: 0;
+    left: 0;
+  }
+  .hui-fixed-right-top {
+    top: 0;
+    right: 0;
+  }
+  .hui-fixed-bottom {
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .hui-fixed-left-bottom {
+    bottom: 0;
+    left: 0;
+  }
+  .hui-fixed-right-bottom {
+    bottom: 0;
+    right: 0;
+  }
 }
 
 .hui-flex-box {
@@ -55,6 +99,26 @@ body {
   }
 
   > li + li {
-    margin-left: 10px;
+    margin-left: 5px;
+  }
+
+  &.separated {
+    li + li:before {
+      margin-right: 5px;
+      color: gray;
+    }
+  }
+
+  &.by-vbar li + li:before {
+    content: "|";
+  }
+  &.by-slash li + li:before {
+    content: "/";
+  }
+  &.by-gt li + li:before {
+    content: ">";
+  }
+  &.by-middot li + li:before {
+    content: "\00b7";
   }
 }
