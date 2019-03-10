@@ -6,6 +6,7 @@ const SRC_PATH = path.resolve(ROOT_PATH, 'src');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist');
 const TEM_PATH = path.resolve(ROOT_PATH, 'templates');
 
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -37,12 +38,10 @@ module.exports = {
       }
     }, {
       test: /\.vue$/,
-      loader: 'vue-loader',
-      options: {
-        loaders: {
-          less: ExtractTextPlugin.extract({fallback: 'vue-style-loader', use: 'css-loader!postcss-loader!less-loader'})
-        }
-      }
+      loader: 'vue-loader'
+    }, {
+      test: /\.pug$/,
+      loader: 'pug-plain-loader'
     }, {
       test: /\.js$/,
       loader: 'babel-loader',
@@ -73,6 +72,7 @@ module.exports = {
   devtool: '#eval-source-map',
 
   plugins: [
+    new VueLoaderPlugin(),
     new ExtractTextPlugin('[name].css'),
     // 添加我们的插件会自动生成一个 html 文件
     new HtmlWebpackPlugin({
