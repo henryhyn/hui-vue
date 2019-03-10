@@ -2,7 +2,6 @@
 @import "~quill/dist/quill.snow.css";
 @import "glyphicons";
 @import "katex.css";
-@import "misc.css";
 @import "fn";
 
 body {
@@ -99,7 +98,7 @@ body {
   }
 
   > li + li {
-    margin-left: 5px;
+    margin-left: 8px;
   }
 
   &.separated {
@@ -121,4 +120,44 @@ body {
   &.by-middot li + li:before {
     content: "\00b7";
   }
+}
+
+/* 属性 -webkit-box-orient 会被过滤掉, 处理方法: https://github.com/cssnano/cssnano/issues/357 */
+/* 实现单行、多行文本溢出显示省略号, 参考: http://www.daqianduan.com/6179.html */
+.nowrap {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nowrap2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.nowrap3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.nowrap4 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.nowrap5 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
 }
