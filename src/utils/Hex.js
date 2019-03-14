@@ -73,6 +73,18 @@ Hex.fromNow = val => dayjs(val).fromNow();
 Hex.formatDate = val => dayjs(val).format('YYYY-MM-DD');
 Hex.format = val => dayjs(val).format('YYYY-MM-DD HH:mm:ss');
 Hex.diff = (val1, val2, unit) => dayjs(val1).diff(val2, unit);
+Hex.formatNumber = num => {
+  if (num >= 1e7) {
+    return `${(num / 1e7).toFixed(0)}kw+`;
+  }
+  if (num >= 1e4) {
+    return `${(num / 1e4).toFixed(0)}w+`;
+  }
+  if (num >= 1e3) {
+    return `${(num / 1e3).toFixed(0)}k+`;
+  }
+  return num;
+};
 
 Hex.capitalize = val => {
   if (!val) {
