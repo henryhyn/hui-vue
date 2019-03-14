@@ -5,5 +5,6 @@ filters.format = Hex.format;
 filters.formatDate = Hex.formatDate;
 filters.fromNow = Hex.fromNow;
 filters.capitalize = Hex.capitalize;
+filters.formatNumber = Hex.formatNumber;
 
 export default filters;
