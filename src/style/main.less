@@ -6,7 +6,7 @@
 
 body {
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 // 亲密性, 横向和纵向的距离, 参考: https://ant.design/docs/spec/proximity-cn
@@ -97,8 +97,14 @@ body {
     display: inline-block;
   }
 
-  > li + li {
-    margin-left: 8px;
+  > li:not(:last-child) {
+    margin-right: 8px;
+  }
+
+  &.toolbar {
+    li {
+      margin-bottom: 8px;
+    }
   }
 
   &.separated {
@@ -130,34 +136,26 @@ body {
   white-space: nowrap;
 }
 
-.nowrap2 {
+.ellipsisLn(@line) {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: @line;
+}
+
+.nowrap2 {
+  .ellipsisLn(2);
 }
 
 .nowrap3 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  .ellipsisLn(3);
 }
 
 .nowrap4 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
+  .ellipsisLn(4);
 }
 
 .nowrap5 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
+  .ellipsisLn(5);
 }
