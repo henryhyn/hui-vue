@@ -2,6 +2,7 @@ import hljs from 'highlight.js';
 import katex from 'katex';
 import macros from './macros';
 
+// 基于 v0.6.0 88a8561 重构
 /* eslint-disable */
 
 function escape(html, encode) {

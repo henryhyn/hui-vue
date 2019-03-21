@@ -1,10 +1,10 @@
 <template lang='pug'>
   .hui-marked-editor(:style='styleObject')
-    .toolbar
-      el-tooltip(v-for='item in toolbar' :key='item.name' :content='item.win')
+    ul.list-inline.toolbar
+      li(v-for='item in toolbar' :key='item.name'): el-tooltip(:content='item.win')
         el-button(@click='execute(item.action)') {{item.name}}
-      el-button(@click='imageUploadVisible=true') Image
-      clipboard(:value='content')
+      li: el-button(@click='imageUploadVisible=true') Image
+      li: clipboard(:value='content')
     .editor: .inner(ref='editor')
       ace-editor.input(:value='content' @input='inputHandler' @change='changeHandler' @init='initHandler')
       .output.post-body(v-html='compiledMarkdown')
