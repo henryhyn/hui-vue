@@ -13,7 +13,7 @@
     },
 
     methods: {
-      clickHandler () {
+      clickHandler() {
         this.$emit('toggle');
       }
     }

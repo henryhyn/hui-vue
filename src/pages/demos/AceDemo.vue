@@ -10,7 +10,7 @@
   import AceEditor from '@/components/AceEditor';
 
   export default {
-    data () {
+    data() {
       return {
         content: ''
       };

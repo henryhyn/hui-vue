@@ -24,7 +24,7 @@
   import Sider from './Sider';
 
   export default {
-    data () {
+    data() {
       return {
         projectName: config.projectName,
         links: config.links
@@ -38,7 +38,7 @@
     methods: {
       ...mapMutations(['updateSettings']),
 
-      toggleCollapse () {
+      toggleCollapse() {
         this.updateSettings({ isCollapsed: !this.settings.isCollapsed });
       }
     }

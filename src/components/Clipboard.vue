@@ -17,23 +17,23 @@
       }
     },
 
-    data () {
+    data() {
       return {
         clipboard: null
       };
     },
 
-    mounted () {
+    mounted() {
       this.$nextTick(this.initialize);
     },
 
-    beforeDestroy () {
+    beforeDestroy() {
       this.clipboard.destroy();
       this.clipboard = null;
     },
 
     methods: {
-      initialize () {
+      initialize() {
         const clipboard = this.clipboard = new Clipboard(this.$el);
         clipboard.on('success', e => {
           this.$message.success('复制成功!');

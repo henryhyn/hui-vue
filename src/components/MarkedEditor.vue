@@ -26,14 +26,14 @@
     props: {
       image: {
         type: Object,
-        default () {
+        default() {
           return {
             upload: {
               url: '',
               fieldName: 'file',
               params: {}
             },
-            uploadHandler (res) {
+            uploadHandler(res) {
               return res.data;
             }
           };
@@ -53,7 +53,7 @@
       }
     },
 
-    data () {
+    data() {
       return {
         imageUploadVisible: false,
         editor: null,
@@ -74,7 +74,7 @@
     components: { AceEditor, ImageUpload, Clipboard },
 
     computed: {
-      compiledMarkdown () {
+      compiledMarkdown() {
         const html = marked.convert(this.content || '');
         this.$emit('change', html);
         return html;
@@ -82,23 +82,23 @@
     },
 
     methods: {
-      initHandler (editor) {
+      initHandler(editor) {
         this.editor = editor;
         this.selection = editor.getSelection();
         this.session = editor.getSession();
       },
 
-      execute (action) {
+      execute(action) {
         this[action]();
       },
 
-      uploadSuccess (res) {
+      uploadSuccess(res) {
         const url = this.image.uploadHandler(res);
         this.editor.insert(`![](${url})\n`);
         this.editor.focus();
       },
 
-      editorKeyBindings () {
+      editorKeyBindings() {
         this.toolbar.forEach(({ name, win, mac, action }) => {
           this.editor.commands.addCommand({
             name,
@@ -108,7 +108,7 @@
         });
       },
 
-      inputHandler (val) {
+      inputHandler(val) {
         this._content = val;
         this.$emit('input', val);
       },
@@ -118,13 +118,13 @@
       }, 500)
     },
 
-    mounted () {
+    mounted() {
       this.content = this.value || '';
       this.editorKeyBindings();
     },
 
     watch: {
-      value (newVal) {
+      value(newVal) {
         if (newVal !== this._content) {
           this.content = newVal || '';
         }

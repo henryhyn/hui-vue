@@ -9,7 +9,7 @@
   import ImageUpload from 'vue-image-crop-upload/upload-2';
 
   export default {
-    data () {
+    data() {
       return {
         image: {
           url: '',

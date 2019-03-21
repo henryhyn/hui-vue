@@ -16,7 +16,7 @@
   import { menus } from '@/utils';
 
   export default {
-    data () {
+    data() {
       return {
         menus,
         active: '/'
@@ -28,7 +28,7 @@
     methods: {
       ...mapMutations(['addVisitedViews']),
 
-      initialize () {
+      initialize() {
         this.active = '/' + this.$route.path.split('/')[1];
         const { fullPath, name } = this.$route;
         this.addVisitedViews({ fullPath, name });
@@ -41,7 +41,7 @@
       }
     },
 
-    mounted () {
+    mounted() {
       this.$nextTick(this.initialize);
     }
   };

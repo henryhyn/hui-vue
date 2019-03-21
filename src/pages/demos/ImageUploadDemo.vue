@@ -9,7 +9,7 @@
   import ImageUpload from '@/components/ImageUpload';
 
   export default {
-    data () {
+    data() {
       return {
         image: {
           url: '',

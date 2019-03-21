@@ -10,7 +10,7 @@
 
 <script>
   export default {
-    data () {
+    data() {
       return {
         fileList: [],
         imageUploadVisible: false
@@ -27,31 +27,31 @@
     },
 
     methods: {
-      uploadHandler () {
+      uploadHandler() {
         this.$refs.upload.submit();
       },
 
-      uploadSuccess (res) {
+      uploadSuccess(res) {
         this.$emit('crop-upload-success', res);
         this.imageUploadVisible = false;
       }
     },
 
     watch: {
-      imageUploadVisible (newVal) {
+      imageUploadVisible(newVal) {
         this.$emit('input', newVal);
         if (!newVal) {
           this.fileList = [];
         }
       },
 
-      value (newVal) {
+      value(newVal) {
         if (newVal !== this.imageUploadVisible) {
           this.imageUploadVisible = newVal;
         }
       },
 
-      visible (newVal) {
+      visible(newVal) {
         if (newVal !== this.imageUploadVisible) {
           this.imageUploadVisible = newVal;
         }

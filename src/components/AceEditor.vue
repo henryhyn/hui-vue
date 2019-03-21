@@ -8,7 +8,7 @@
   import 'brace/theme/monokai';
 
   export default {
-    data () {
+    data() {
       return {
         content: '',
         editor: null
@@ -18,23 +18,23 @@
     props: {
       options: {
         type: Object,
-        default () {
+        default() {
           return {};
         }
       },
       value: String
     },
 
-    mounted () {
+    mounted() {
       this.initialize();
     },
 
-    beforeDestroy () {
+    beforeDestroy() {
       this.editor = null;
     },
 
     methods: {
-      initialize () {
+      initialize() {
         if (this.$el) {
           const editor = this.editor = ace.edit(this.$el);
           const options = this.options;
@@ -62,7 +62,7 @@
     },
 
     watch: {
-      value (newVal) {
+      value(newVal) {
         if (this.editor && newVal !== this.content) {
           this.editor.setValue(newVal || '', 1);
         }

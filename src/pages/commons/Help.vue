@@ -97,7 +97,7 @@
   import TodoItem from '@/components/TodoItem';
 
   export default {
-    data () {
+    data() {
       return {
         list: [],
         seen: true,
@@ -117,7 +117,7 @@
 
     methods: {
       ...mapMutations(['increment', 'decrement']),
-      reverseMessage () {
+      reverseMessage() {
         this.msg = this.msg.split('').reverse().join('');
       }
     }
