@@ -8,7 +8,7 @@ const TEM_PATH = path.resolve(ROOT_PATH, 'templates');
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   // 项目入口. 可以直接用文件夹名称, 默认会找 index.js; 也可以确定是哪个文件名字
@@ -48,13 +48,23 @@ module.exports = {
       exclude: /node_modules/
     }, {
       test: /\.css$/,
-      use: ExtractTextPlugin.extract({use: 'css-loader!postcss-loader'})
+      use: [{
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+          hmr: process.env.NODE_ENV === 'development'
+        }
+      }, 'css-loader', 'postcss-loader']
     }, {
       test: /\.less$/,
-      use: ExtractTextPlugin.extract({use: 'css-loader!postcss-loader!less-loader'})
+      use: [{
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+          hmr: process.env.NODE_ENV === 'development'
+        }
+      }, 'css-loader', 'postcss-loader', 'less-loader']
     }, {
       test: /\.(ttf|eot|woff|woff2)$/,
-      loader: 'url-loader?limit=40000'
+      loader: 'url-loader?limit=60000'
     }, {
       test: /\.(png|jpg|gif|svg)$/,
       loader: 'url-loader?limit=20000'
@@ -73,7 +83,7 @@ module.exports = {
 
   plugins: [
     new VueLoaderPlugin(),
-    new ExtractTextPlugin('[name].css'),
+    new MiniCssExtractPlugin('[name].css'),
     // 添加我们的插件会自动生成一个 html 文件
     new HtmlWebpackPlugin({
       template: path.resolve(TEM_PATH, 'index.html'),

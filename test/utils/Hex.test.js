@@ -23,3 +23,9 @@ test('字符串拆分', () => {
   expect(Hex.split(null)).toEqual([]);
   expect(Hex.split('')).toEqual([]);
 });
+
+test('数组合并', () => {
+  const a = [{ x: 1, z: 2, y: 3 }, { x: 2, y: 3, z: 3 }];
+  const b = [{ x: 1, y: 2 }, { x: 2, z: 2 }];
+  expect(Hex.mergeBy('x', a, b)).toEqual([{ x: 1, z: 2, y: 2 }, { x: 2, y: 3, z: 2 }]);
+});

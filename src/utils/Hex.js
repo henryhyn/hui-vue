@@ -10,11 +10,28 @@ axios.defaults.headers.common['Accept'] = 'application/json';
 
 const Hex = {};
 
-Hex.toQuery = (object) => Object.keys(object)
-  .filter(key => Hex.validAny(object[key]))
-  .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(object[key])}`)
-  .join('&');
+// 浏览器检测
+Hex.getExplore = () => {
+  const sys = Object.create(null);
+  const ua = navigator.userAgent.toLowerCase();
+  /* eslint-disable */
+  let s;
+  (s = ua.match(/rv:([\d.]+)\) like gecko/)) ? sys.ie = s[1] :
+    (s = ua.match(/msie ([\d.]+)/)) ? sys.ie = s[1] :
+      (s = ua.match(/edge\/([\d.]+)/)) ? sys.edge = s[1] :
+        (s = ua.match(/firefox\/([\d.]+)/)) ? sys.firefox = s[1] :
+          (s = ua.match(/(?:opera|opr).([\d.]+)/)) ? sys.opera = s[1] :
+            (s = ua.match(/chrome\/([\d.]+)/)) ? sys.chrome = s[1] :
+              (s = ua.match(/version\/([\d.]+).*safari/)) ? sys.safari = s[1] : 0;
+  /* eslint-enable */
+  return sys;
+};
 
+// 基于 axios 的 Restful 请求
+Hex.toQuery = params => Object.keys(params)
+  .filter(key => Hex.validAny(params[key]))
+  .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+  .join('&');
 Hex.get = (url, params, cb) => {
   if (cb === undefined) {
     cb = params;
@@ -23,28 +40,11 @@ Hex.get = (url, params, cb) => {
   if (params !== undefined) {
     url = url + '?' + Hex.toQuery(params);
   }
-  axios.get(url).then(res => {
-    cb(res.data);
-  });
+  axios.get(url).then(({ data }) => cb(data));
 };
-
-Hex.post = (url, params, cb) => {
-  axios.post(url, params).then(res => {
-    cb(res.data);
-  });
-};
-
-Hex.put = (url, params, cb) => {
-  axios.put(url, params).then(res => {
-    cb(res.data);
-  });
-};
-
-Hex.delete = (url, cb) => {
-  axios.delete(url).then(res => {
-    cb(res.data);
-  });
-};
+Hex.post = (url, params, cb) => axios.post(url, params).then(({ data }) => cb(data));
+Hex.put = (url, params, cb) => axios.put(url, params).then(({ data }) => cb(data));
+Hex.delete = (url, cb) => axios.delete(url).then(({ data }) => cb(data));
 
 Hex.px = n => /^\d+$/.test(n) ? `${n}px` : n;
 
@@ -101,5 +101,15 @@ Hex.pluck = (lst = [], key = '') => (lst || []).map(obj => obj[key]);
 
 // 字符串拆分的加强版, 仅保留有效的字符串
 Hex.split = (text, regex = /[ ,，、；;\t\r\n]/) => (text || '').split(regex).map(i => i.trim()).filter(Hex.validString);
+
+Hex.mergeBy = (path, ...data) => {
+  const obj = [].concat(...data).reduce((dict, item) => {
+    const key = item[path];
+    dict[key] || (dict[key] = []);
+    dict[key].push(item);
+    return dict;
+  }, Object.create(null));
+  return Object.values(obj).map(arr => Object.assign({}, ...arr));
+};
 
 export default Hex;
