@@ -59,6 +59,7 @@ Hex.isPhoneNum = str => /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14
 Hex.isUrl = str => /[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/i.test(str);
 
 Hex.validAny = any => any !== null && any !== undefined;
+Hex.validArray = arr => Array.isArray(arr) && arr.length > 0;
 Hex.validString = str => Hex.validAny(str) && str && str.toLowerCase() !== 'null' && str.toLowerCase() !== 'undefined' && str.trim().length > 0;
 Hex.validNumber = num => Hex.validAny(num);
 Hex.validId = num => Hex.validAny(num) && num > 0;
@@ -110,6 +111,17 @@ Hex.mergeBy = (path, ...data) => {
     return dict;
   }, Object.create(null));
   return Object.values(obj).map(arr => Object.assign({}, ...arr));
+};
+
+Hex.sortedCategory = (categories, comparator, cb) => {
+  if (!Hex.validArray(categories)) {
+    return;
+  }
+  categories.sort(comparator);
+  categories.forEach(category => {
+    cb(category);
+    Hex.sortedCategory(category.children, comparator, cb);
+  });
 };
 
 export default Hex;
