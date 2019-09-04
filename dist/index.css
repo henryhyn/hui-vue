@@ -2853,6 +2853,9 @@ body {
 .hui-vskipp {
   margin-bottom: 16px !important;
 }
+.hui-pad {
+  padding: 8px;
+}
 .hui-mask {
   color: white;
   background-color: black;
@@ -2900,8 +2903,22 @@ body {
 .hui-flex-box {
   display: flex;
 }
-.hui-flex-fill {
+.hui-flex-box .hui-flex-fill {
   flex: 1;
+}
+.hui-scroll-box {
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+}
+a.link-muted {
+  text-decoration: none;
+  color: black;
+}
+a.link-muted:hover {
+  color: gray;
 }
 .list-unstyled {
   padding-left: 0;
@@ -2938,6 +2955,20 @@ body {
 .list-inline.by-middot li + li:before {
   content: "\00b7";
 }
+.card-inline {
+  display: inline-block;
+  margin-right: 16px;
+  margin-bottom: 16px;
+  vertical-align: top;
+}
+.clearfix::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.pull-right {
+  float: right;
+}
 /* 属性 -webkit-box-orient 会被过滤掉, 处理方法: https://github.com/cssnano/cssnano/issues/357 */
 /* 实现单行、多行文本溢出显示省略号, 参考: http://www.daqianduan.com/6179.html */
 .nowrap {
@@ -2972,5 +3003,24 @@ body {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 5;
+}
+.small {
+  font-size: smaller;
+  color: gray;
+}
+.large {
+  font-size: large;
+}
+.strong {
+  font-weight: bold;
+}
+.center {
+  text-align: center;
+}
+.pointer {
+  cursor: pointer;
+}
+::-webkit-scrollbar {
+  display: none;
 }
 

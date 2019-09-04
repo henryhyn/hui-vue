@@ -103,6 +103,13 @@ Hex.pluck = (lst = [], key = '') => (lst || []).map(obj => obj[key]);
 // 字符串拆分的加强版, 仅保留有效的字符串
 Hex.split = (text, regex = /[ ,，、；;\t\r\n]/) => (text || '').split(regex).map(i => i.trim()).filter(Hex.validString);
 
+Hex.toMap = (arr, key, val) => {
+  (arr || []).reduce((dict, item) => {
+    dict[item[key]] = item[val];
+    return dict;
+  }, Object.create(null));
+};
+
 Hex.mergeBy = (path, ...data) => {
   const obj = [].concat(...data).reduce((dict, item) => {
     const key = item[path];

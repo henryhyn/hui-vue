@@ -34,6 +34,10 @@ body {
   margin-bottom: 16px !important;
 }
 
+.hui-pad {
+  padding: 8px;
+}
+
 .hui-mask {
   color: white;
   background-color: black;
@@ -43,32 +47,39 @@ body {
 // 盒子
 .hui-fixed-box {
   position: relative;
+
   .hui-fixed-top, .hui-fixed-right-top, .hui-fixed-left-bottom, .hui-fixed-bottom, .hui-fixed-left-top, .hui-fixed-right-bottom {
     position: absolute;
     padding: 8px;
   }
+
   .hui-fixed-top {
     top: 0;
     left: 0;
     right: 0;
   }
+
   .hui-fixed-left-top {
     top: 0;
     left: 0;
   }
+
   .hui-fixed-right-top {
     top: 0;
     right: 0;
   }
+
   .hui-fixed-bottom {
     bottom: 0;
     left: 0;
     right: 0;
   }
+
   .hui-fixed-left-bottom {
     bottom: 0;
     left: 0;
   }
+
   .hui-fixed-right-bottom {
     bottom: 0;
     right: 0;
@@ -77,10 +88,27 @@ body {
 
 .hui-flex-box {
   display: flex;
+
+  .hui-flex-fill {
+    flex: 1;
+  }
 }
 
-.hui-flex-fill {
-  flex: 1;
+.hui-scroll-box {
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+}
+
+a.link-muted {
+  text-decoration: none;
+  color: black;
+
+  &:hover {
+    color: gray;
+  }
 }
 
 .list-unstyled {
@@ -117,15 +145,35 @@ body {
   &.by-vbar li + li:before {
     content: "|";
   }
+
   &.by-slash li + li:before {
     content: "/";
   }
+
   &.by-gt li + li:before {
     content: ">";
   }
+
   &.by-middot li + li:before {
     content: "\00b7";
   }
+}
+
+.card-inline {
+  display: inline-block;
+  margin-right: 16px;
+  margin-bottom: 16px;
+  vertical-align: top;
+}
+
+.clearfix::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.pull-right {
+  float: right;
 }
 
 /* 属性 -webkit-box-orient 会被过滤掉, 处理方法: https://github.com/cssnano/cssnano/issues/357 */
@@ -158,4 +206,29 @@ body {
 
 .nowrap5 {
   .ellipsisLn(5);
+}
+
+.small {
+  font-size: smaller;
+  color: gray;
+}
+
+.large {
+  font-size: large;
+}
+
+.strong {
+  font-weight: bold;
+}
+
+.center {
+  text-align: center;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
