@@ -184,15 +184,15 @@ const block = {
   blockquote: /^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/,
   list: /^( {0,3})(bull) [\s\S]+?(?:hr|def|\n{2,}(?! )(?!\1bull )\n*|\s*$)/,
   html: '^ {0,3}(?:' // optional indentation
-  + '<(script|pre|style)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)' // (1)
-  + '|comment[^\\n]*(\\n+|$)' // (2)
-  + '|<\\?[\\s\\S]*?\\?>\\n*' // (3)
-  + '|<![A-Z][\\s\\S]*?>\\n*' // (4)
-  + '|<!\\[CDATA\\[[\\s\\S]*?\\]\\]>\\n*' // (5)
-  + '|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:\\n{2,}|$)' // (6)
-  + '|<(?!script|pre|style)([a-z][\\w-]*)(?:attribute)*? */?>(?=\\h*\\n)[\\s\\S]*?(?:\\n{2,}|$)' // (7) open tag
-  + '|</(?!script|pre|style)[a-z][\\w-]*\\s*>(?=\\h*\\n)[\\s\\S]*?(?:\\n{2,}|$)' // (7) closing tag
-  + ')',
+    + '<(script|pre|style)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)' // (1)
+    + '|comment[^\\n]*(\\n+|$)' // (2)
+    + '|<\\?[\\s\\S]*?\\?>\\n*' // (3)
+    + '|<![A-Z][\\s\\S]*?>\\n*' // (4)
+    + '|<!\\[CDATA\\[[\\s\\S]*?\\]\\]>\\n*' // (5)
+    + '|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:\\n{2,}|$)' // (6)
+    + '|<(?!script|pre|style)([a-z][\\w-]*)(?:attribute)*? */?>(?=\\h*\\n)[\\s\\S]*?(?:\\n{2,}|$)' // (7) open tag
+    + '|</(?!script|pre|style)[a-z][\\w-]*\\s*>(?=\\h*\\n)[\\s\\S]*?(?:\\n{2,}|$)' // (7) closing tag
+    + ')',
   def: /^ {0,3}\[(label)\]: *\n? *<?([^\s>]+)>?(?:(?: +\n? *| *\n *)(title))? *(?:\n+|$)/,
   table: /^ *\|(.+)\n *\|?( *[-:]+[-| :]*)(?:\n((?: *[^>\n ].*(?:\n|$))*)\n*|$)/,
   lheading: /^([^\n]+)\n *(=|-){2,} *(?:\n+|$)/,
@@ -243,16 +243,22 @@ block.blockquote = edit(block.blockquote)
   .replace('paragraph', block.paragraph)
   .getRegex();
 
+block.paragraph = edit(block.paragraph)
+  .replace('(?!', '(?!'
+    + block.fences.source.replace('\\1', '\\2') + '|'
+    + block.list.source.replace('\\1', '\\3') + '|')
+  .getRegex();
+
 const inline = {
   escape: /^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/,
   autolink: /^<(scheme:[^\s\x00-\x1f<>]*|email)>/,
   url: /^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/,
   tag: '^comment'
-  + '|^</[a-zA-Z][\\w:-]*\\s*>' // self-closing tag
-  + '|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>' // open tag
-  + '|^<\\?[\\s\\S]*?\\?>' // processing instruction, e.g. <?php ?>
-  + '|^<![a-zA-Z]+\\s[\\s\\S]*?>' // declaration, e.g. <!DOCTYPE html>
-  + '|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>', // CDATA section
+    + '|^</[a-zA-Z][\\w:-]*\\s*>' // self-closing tag
+    + '|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>' // open tag
+    + '|^<\\?[\\s\\S]*?\\?>' // processing instruction, e.g. <?php ?>
+    + '|^<![a-zA-Z]+\\s[\\s\\S]*?>' // declaration, e.g. <!DOCTYPE html>
+    + '|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>', // CDATA section
   link: /^!?\[(label)\]\(href(?:\s+(title))?\s*\)/,
   reflink: /^!?\[(label)\]\[(?!\s*\])((?:\\[\[\]]?|[^\[\]\\])+)\]/,
   nolink: /^!?\[(?!\s*\])((?:\[[^\[\]]*\]|\\[\[\]]|[^\[\]])*)\](?:\[\])?/,
@@ -296,6 +302,22 @@ inline.link = edit(inline.link)
 
 inline.reflink = edit(inline.reflink)
   .replace('label', inline._label)
+  .getRegex();
+
+inline.escape = edit(inline.escape)
+  .replace('])', '~|])')
+  .getRegex();
+
+inline._extended_email = /[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/;
+inline._backpedal = /(?:[^?!.,:;*_~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_~)]+(?!$))+/;
+
+inline.text = edit(inline.text)
+  .replace(']|', '~]|')
+  .replace('|$', '|https?://|ftp://|www\\.|[a-zA-Z0-9.!#$%&\'*+/=?^_`{\\|}~-]+@|$')
+  .getRegex();
+
+inline.url = edit(inline.url, 'i')
+  .replace('email', inline._extended_email)
   .getRegex();
 
 class BlockLexer {
@@ -567,7 +589,7 @@ class BlockLexer {
             ? 'paragraph'
             : 'html',
           pre: !this.options.sanitizer
-          && (cap[1] === 'pre' || cap[1] === 'script' || cap[1] === 'style'),
+            && (cap[1] === 'pre' || cap[1] === 'script' || cap[1] === 'style'),
           text: cap[0]
         });
         continue;
@@ -1262,7 +1284,7 @@ class Marked {
       sanitizer: null,
       silent: false,
       smartLists: false,
-      smartypants: false,
+      smartypants: true,
       tables: true,
       xhtml: false,
       ...options
@@ -1272,8 +1294,12 @@ class Marked {
   }
 
   convert(src) {
-    this.blockLexer.lex(src);
-    return this.parser.parse(this.blockLexer.tokens);
+    try {
+      this.blockLexer.lex(src);
+      return this.parser.parse(this.blockLexer.tokens);
+    } catch (e) {
+      return `<p>An error occurred:</p><pre>${escape(e.message + '', true)}</pre>`;
+    }
   }
 }
 
