@@ -5,22 +5,24 @@
         el-button(@click='execute(item.action)') {{item.name}}
       li: el-button(@click='imageUploadVisible=true') Image
       li: clipboard(:value='content')
+      li: el-autocomplete(v-model='wxStyleKey' placeholder='导出富文本' :fetch-suggestions='querySearch' clearable)
+        el-button(slot='append' icon='el-icon-document-copy' @click='exportHandler')
     .editor: .inner(ref='editor')
       ace-editor.input(:value='content' @input='inputHandler' @change='changeHandler' @init='initHandler')
-      .output.post-body(v-html='compiledMarkdown')
+      .output.post-body(v-html='compiledMarkdown' ref='output')
     image-upload(v-model='imageUploadVisible' :url='image.upload.url' :field='image.upload.fieldName' :params='image.upload.params' @crop-upload-success='uploadSuccess')
 </template>
 
 <script>
   import _ from 'lodash';
+  import juice from 'juice';
   import Marked from '../utils/marked';
   import AceEditor from './AceEditor';
   import ImageUpload from './ImageUpload';
   import Clipboard from './Clipboard';
   import { Hex } from '../index';
   import functions from './functions';
-
-  const marked = new Marked();
+  import { normal, wxStyles } from './styled';
 
   export default {
     props: {
@@ -55,7 +57,10 @@
 
     data() {
       return {
+        wxStyleKey: null,
+        wxStyleMap: Hex.toMap(wxStyles, 'value', 'wxStyle'),
         imageUploadVisible: false,
+        marked: null,
         editor: null,
         selection: null,
         session: null,
@@ -75,7 +80,17 @@
 
     computed: {
       compiledMarkdown() {
-        const html = marked.convert(this.content || '');
+        if (!this.marked) {
+          return '';
+        }
+        this.marked.options.wxFmt = !!this.wxStyleKey;
+        let html = this.marked.convert(this.content || '');
+        if (this.wxStyleKey) {
+          const custom = this.wxStyleMap[this.wxStyleKey];
+          html = juice.inlineContent(html, normal + custom, {
+            inlinePseudoElements: true
+          });
+        }
         this.$emit('change', html);
         return html;
       }
@@ -108,6 +123,27 @@
         });
       },
 
+      querySearch(query, cb) {
+        cb(wxStyles);
+      },
+
+      exportHandler() {
+        const clipboardDiv = this.$refs.output;
+        clipboardDiv.focus();
+        window.getSelection().removeAllRanges();
+        const range = document.createRange();
+        range.setStartBefore(clipboardDiv.firstChild);
+        range.setEndAfter(clipboardDiv.lastChild);
+        window.getSelection().addRange(range);
+        if (document.execCommand('copy')) {
+          this.$message({
+            message: '复制成功!',
+            type: 'success'
+          });
+        }
+        window.getSelection().removeAllRanges();
+      },
+
       inputHandler(val) {
         this._content = val;
         this.$emit('input', val);
@@ -119,8 +155,11 @@
     },
 
     mounted() {
-      this.content = this.value || '';
-      this.editorKeyBindings();
+      this.$nextTick(() => {
+        this.marked = new Marked();
+        this.content = this.value || '';
+        this.editorKeyBindings();
+      });
     },
 
     watch: {
@@ -137,10 +176,6 @@
   .hui-marked-editor {
     display: flex;
     flex-direction: column;
-
-    .toolbar {
-      margin-bottom: 8px;
-    }
 
     .editor {
       flex: 1;
@@ -164,13 +199,6 @@
           border: 1px solid #e6e6e6;
           padding: 40px;
           background-color: white;
-          font-size: 16px;
-          line-height: 1.6;
-
-          img {
-            max-width: 100% !important;
-            height: auto !important;
-          }
         }
       }
     }

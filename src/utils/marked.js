@@ -990,6 +990,7 @@ class Parser {
   parse(src) {
     this.inline = new InlineLexer(src.links, this.options);
     this.tokens = src.reverse();
+    this.slugger.seen = {};
 
     let out = '';
     while (this.next()) {
@@ -1178,7 +1179,9 @@ class Renderer {
         + this.options.headerPrefix
         + slugger.slug(raw)
         + '">'
+        + (this.options.wxFmt ? '<span>' : '')
         + text
+        + (this.options.wxFmt ? '</span>' : '')
         + '</h'
         + level
         + '>\n';
@@ -1316,6 +1319,7 @@ class Marked {
       smartLists: false,
       smartypants: true,
       xhtml: false,
+      wxFmt: false,
       ...options
     };
     this.blockLexer = new BlockLexer(this.options);

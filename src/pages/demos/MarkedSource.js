@@ -1,3 +1,4 @@
+export default `
 # Marked 测试文件
 
 ## 造轮子
@@ -44,28 +45,28 @@
 
 ## 代码
 
-行内代码 `npm run test`.
+行内代码 \`npm run test\`.
 
 行间代码
 
-```c
+\`\`\`c
 for(int i=0; i<n; i++) {
   sum += i;
 }
-```
+\`\`\`
 
-```
+\`\`\`
 for(int i=0; i<n; i++) {
   sum += i;
 }
-```
+\`\`\`
 
 ## 数学公式
 
 行内公式 $a^2+b^2=c^2 (a<b)$, 勾股定理.
 
 $$x_{1,2}=
-\frac{-b\pm\sqrt{b^2-4ac}}{2a}$$
+\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}$$
 
 ## 表格
 
@@ -74,3 +75,4 @@ $$x_{1,2}=
 | t | s |
 | t | s |
 | t | s |
+`;
