@@ -198,6 +198,7 @@ const block = {
   code: /^( {4}[^\n]+\n*)+/,
   fences: /^ {0,3}(`{3,}|~{3,})([^`~\n]*)\n(?:|([\s\S]*?)\n)(?: {0,3}\1[~`]* *(?:\n+|$)|$)/,
   math: /^(\${2,})([\s\S]+?)\1\n?/,
+  aligntext: /^\[([\s\S]+?)(\]?)\]\n?/,
   hr: /^ {0,3}((?:- *){3,}|(?:_ *){3,}|(?:\* *){3,})(?:\n+|$)/,
   heading: /^ {0,3}(#{1,6}) +([^\n]*?)(?: +#+)? *(?:\n+|$)/,
   nptable: /^ *([^|\n ].*\|.*)\n *([-:]+ *\|[-| :]*)(?:\n((?:.*[^>\n ].*(?:\n|$))*)\n*|$)/,
@@ -416,6 +417,17 @@ class BlockLexer {
         this.tokens.push({
           type: 'math',
           text: cap[2] || ''
+        });
+        continue;
+      }
+
+      // align text
+      if (cap = this.rules.aligntext.exec(src)) {
+        src = src.substring(cap[0].length);
+        this.tokens.push({
+          type: 'aligntext',
+          text: cap[1] || '',
+          right: cap[2].length > 0
         });
         continue;
       }
@@ -1116,6 +1128,9 @@ class Parser {
         // TODO parse inline content if parameter markdown=1
         return this.renderer.html(this.token.text);
       }
+      case 'aligntext': {
+        return this.renderer.aligntext(this.inline.output(this.token.text), this.token.right);
+      }
       case 'paragraph': {
         return this.renderer.paragraph(this.inline.output(this.token.text));
       }
@@ -1210,6 +1225,12 @@ class Renderer {
       + 'disabled="" type="checkbox"'
       + (this.options.xhtml ? ' /' : '')
       + '> ';
+  }
+
+  aligntext(text, right) {
+    const direction = right ? 'right' : 'center';
+    const content = text.replace(/\s*\r?\n/g, '<br/>');
+    return `<p style='text-align: ${direction}'>${content}</p>\n`;
   }
 
   paragraph(text) {

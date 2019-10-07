@@ -2831,6 +2831,145 @@ Darcula color scheme from the JetBrains family of IDEs
 .glyphicon-menu-up:before {
   content: "\e260";
 }
+.post-body {
+  font-size: 16px;
+  font-family: -apple-system-font, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif;
+  line-height: 1.6;
+}
+.post-body h2 {
+  counter-increment: section;
+  counter-reset: subsection;
+}
+.post-body h2:before {
+  content: "§" counter(section) " ";
+}
+.post-body h3 {
+  counter-increment: subsection;
+  counter-reset: subsubsection;
+}
+.post-body h3:before {
+  content: counter(section) "." counter(subsection) " ";
+}
+.post-body h4 {
+  counter-increment: subsubsection;
+}
+.post-body h4:before {
+  content: counter(section) "." counter(subsection) "." counter(subsubsection) " ";
+}
+.post-body h1,
+.post-body h2,
+.post-body h3,
+.post-body h4,
+.post-body h5,
+.post-body h6 {
+  font-weight: bold;
+}
+.post-body h1 {
+  margin-top: 28px;
+  margin-bottom: 14px;
+  font-size: 28px;
+}
+.post-body h2 {
+  margin-top: 24px;
+  margin-bottom: 12px;
+  font-size: 24px;
+}
+.post-body h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+.post-body h4 {
+  margin-top: 18px;
+  margin-bottom: 9px;
+  font-size: 18px;
+}
+.post-body h5,
+.post-body h6 {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+.post-body p,
+.post-body ul,
+.post-body ol,
+.post-body blockquote,
+.post-body pre,
+.post-body table {
+  margin: 8px 0;
+}
+.post-body p {
+  text-align: justify;
+}
+.post-body ul,
+.post-body ol {
+  padding-left: 2em;
+}
+.post-body li {
+  margin: 5px 0;
+}
+.post-body blockquote {
+  border-left-width: 5px;
+  border-left-style: solid;
+  border-left-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #6a737d;
+  padding: 2px 10px;
+}
+.post-body pre {
+  padding: 10px;
+  background-color: #000;
+  color: #eaeaea;
+}
+.post-body pre code {
+  display: -webkit-box !important;
+  overflow: auto;
+  overflow-scrolling: touch;
+}
+.post-body p code,
+.post-body li code {
+  font-size: 14px;
+  padding: 2px 4px;
+  border-radius: 3px;
+  background-color: rgba(27, 31, 35, 0.05);
+  color: #1e6bb8;
+}
+.post-body img {
+  display: block;
+  margin: 0 auto;
+  border-radius: 5px;
+  max-width: 100% !important;
+  height: auto !important;
+}
+.post-body a {
+  text-decoration: none;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #1e6bb8;
+  color: #1e6bb8;
+}
+.post-body table {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+.post-body tr:nth-child(2n) {
+  background-color: #fbfbfb;
+}
+.post-body th,
+.post-body td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #eee;
+}
+.post-body th {
+  border-top: 1px solid #ddd;
+  text-align: center;
+  font-weight: bold;
+  background-color: #f6f6f6;
+}
 body {
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   font-size: 14px;
@@ -2938,6 +3077,9 @@ a.link-muted:hover {
 }
 .list-inline.toolbar li {
   margin-bottom: 8px;
+}
+.list-inline.separated li:not(:last-child) {
+  margin-right: 5px;
 }
 .list-inline.separated li + li:before {
   margin-right: 5px;
