@@ -6,22 +6,6 @@
 @import "fn";
 @import "blog";
 
-/* 防止用户自定义背景颜色对网页的影响，添加让用户可以自定义字体 */
-html {
-  color: #333;
-  background: #fff;
-  -webkit-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  text-rendering: optimizelegibility;
-
-  *, *:before, *:after {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-  }
-}
-
 // 字体/字号以 Element 为标准, 参考 https://element.eleme.cn/#/zh-CN/component/typography
 body {
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;

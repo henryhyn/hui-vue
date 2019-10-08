@@ -36,6 +36,7 @@ export default `
   }
 
   li ul, li ol {
+    margin-top: 0;
     margin-bottom: 0;
   }
 
@@ -71,11 +72,15 @@ export default `
     color: #1abc9c;
   }
 
+  strong {
+    color: #1abc9c;
+  }
+
   img {
     display: block;
     margin: 0 auto;
     border: 0;
-    border-radius: 5px;
+    border-radius: 3px;
     max-width: 100% !important;
     height: auto !important;
   }
@@ -95,7 +100,7 @@ export default `
 
   hr {
     border: none;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px dashed #ddd;
     height: 10px;
   }
 

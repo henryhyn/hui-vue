@@ -2901,6 +2901,7 @@ Darcula color scheme from the JetBrains family of IDEs
 }
 .post-body li ul,
 .post-body li ol {
+  margin-top: 0;
   margin-bottom: 0;
 }
 .post-body blockquote {
@@ -2932,11 +2933,14 @@ Darcula color scheme from the JetBrains family of IDEs
   background-color: #fbfbfb;
   color: #1abc9c;
 }
+.post-body strong {
+  color: #1abc9c;
+}
 .post-body img {
   display: block;
   margin: 0 auto;
   border: 0;
-  border-radius: 5px;
+  border-radius: 3px;
   max-width: 100% !important;
   height: auto !important;
 }
@@ -2953,7 +2957,7 @@ Darcula color scheme from the JetBrains family of IDEs
 }
 .post-body hr {
   border: none;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px dashed #ddd;
   height: 10px;
 }
 .post-body table {
@@ -2975,22 +2979,6 @@ Darcula color scheme from the JetBrains family of IDEs
   text-align: center;
   font-weight: bold;
   background-color: #fbfbfb;
-}
-/* 防止用户自定义背景颜色对网页的影响，添加让用户可以自定义字体 */
-html {
-  color: #333;
-  background: #fff;
-  -webkit-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  text-rendering: optimizelegibility;
-}
-html *,
-html *:before,
-html *:after {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
 }
 body {
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;

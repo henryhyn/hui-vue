@@ -198,7 +198,7 @@ const block = {
   code: /^( {4}[^\n]+\n*)+/,
   fences: /^ {0,3}(`{3,}|~{3,})([^`~\n]*)\n(?:|([\s\S]*?)\n)(?: {0,3}\1[~`]* *(?:\n+|$)|$)/,
   math: /^(\${2,})([\s\S]+?)\1\n?/,
-  aligntext: /^\[([\s\S]+?)(\]?)\]\n?/,
+  aligntext: /^\[([\s\S]+?)(\]?)\]\n/,
   hr: /^ {0,3}((?:- *){3,}|(?:_ *){3,}|(?:\* *){3,})(?:\n+|$)/,
   heading: /^ {0,3}(#{1,6}) +([^\n]*?)(?: +#+)? *(?:\n+|$)/,
   nptable: /^ *([^|\n ].*\|.*)\n *([-:]+ *\|[-| :]*)(?:\n((?:.*[^>\n ].*(?:\n|$))*)\n*|$)/,
@@ -1355,7 +1355,7 @@ class Marked {
       this.blockLexer.lex(src);
       return this.parser.parse(this.blockLexer.tokens);
     } catch (e) {
-      return `<p>An error occurred:</p><pre>${escape(e.message + '', true)}</pre>`;
+      return `<p>An error occurred:</p><pre>${escape(e.message + '', true)}</pre><small>${new Date()}</small>`;
     }
   }
 }
