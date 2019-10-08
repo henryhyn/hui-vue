@@ -1,7 +1,8 @@
+// 主要参考 https://github.com/sofish/typo.css
 .post-body {
+  font-family: PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
   font-size: 16px;
-  font-family: -apple-system-font, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif;
-  line-height: 1.6;
+  line-height: 1.8;
 
   h2 {
     counter-increment: section;
@@ -31,40 +32,30 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
+    margin-top: 1.2em;
+    margin-bottom: 1em;
+    line-height: 1.35;
   }
 
   h1 {
-    margin-top: 28px;
-    margin-bottom: 14px;
     font-size: 28px;
   }
 
   h2 {
-    margin-top: 24px;
-    margin-bottom: 12px;
     font-size: 24px;
   }
 
   h3 {
-    margin-top: 20px;
-    margin-bottom: 10px;
     font-size: 20px;
   }
 
   h4 {
-    margin-top: 18px;
-    margin-bottom: 9px;
     font-size: 18px;
   }
 
-  h5, h6 {
-    margin-top: 16px;
-    margin-bottom: 8px;
-    font-size: 16px;
-  }
-
-  p, ul, ol, blockquote, pre, table {
-    margin: 8px 0;
+  p, ul, ol, dl, blockquote, pre, form, hr, table {
+    margin-top: 1em;
+    margin-bottom: 1em;
   }
 
   p {
@@ -75,28 +66,31 @@
     padding-left: 2em;
   }
 
-  li {
-    margin: 5px 0;
+  li ul, li ol {
+    margin-bottom: 0;
   }
 
   blockquote {
     border-left-width: 5px;
     border-left-style: solid;
-    border-left-color: rgba(0, 0, 0, 0.4);
-    background-color: rgba(0, 0, 0, 0.05);
-    color: #6a737d;
-    padding: 2px 10px;
+    border-left-color: #1abc9c;
+    background-color: #fbfbfb;
+    color: #666;
+    padding: 1px 20px;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   pre {
-    padding: 10px;
+    padding: 10px 16px;
     background-color: #000;
     color: #eaeaea;
   }
 
   pre code {
-    display: -webkit-box !important;
+    display: block;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
     overflow-scrolling: touch;
   }
 
@@ -104,13 +98,14 @@
     font-size: 14px;
     padding: 2px 4px;
     border-radius: 3px;
-    background-color: rgba(27, 31, 35, .05);
-    color: #1e6bb8;
+    background-color: #fbfbfb;
+    color: #1abc9c;
   }
 
   img {
     display: block;
     margin: 0 auto;
+    border: 0;
     border-radius: 5px;
     max-width: 100% !important;
     height: auto !important;
@@ -120,32 +115,40 @@
     text-decoration: none;
     border-bottom-width: 1px;
     border-bottom-style: solid;
-    border-bottom-color: #1e6bb8;
-    color: #1e6bb8;
+    border-bottom-color: #1abc9c;
+    color: #1abc9c;
+  }
+
+  a:hover {
+    border-bottom-color: #666;
+    color: #666;
+  }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid #ddd;
+    height: 10px;
   }
 
   table {
     width: 100%;
+    table-layout: fixed;
     border: 1px solid #ddd;
     border-collapse: collapse;
     border-spacing: 0;
-    table-layout: fixed;
-  }
-
-  tr:nth-child(2n) {
-    background-color: #fbfbfb;
   }
 
   th, td {
-    padding: 8px 10px;
+    padding: 6px 12px;
     border-bottom: 1px solid #ddd;
-    border-right: 1px solid #eee;
+    border-right: 1px solid #ddd;
+    color: #666;
   }
 
   th {
     border-top: 1px solid #ddd;
     text-align: center;
     font-weight: bold;
-    background-color: #f6f6f6;
+    background-color: #fbfbfb;
   }
 }

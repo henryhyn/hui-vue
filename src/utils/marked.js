@@ -1309,6 +1309,9 @@ class Renderer {
       return text;
     }
 
+    if (this.options.wxFmt) {
+      href += '?x-oss-process=style/wx';
+    }
     var out = '<img src="' + href + '" alt="' + text + '"';
     if (title) {
       out += ' title="' + title + '"';

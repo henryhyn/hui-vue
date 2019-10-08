@@ -15,6 +15,7 @@ export default {
     { name: 'OrderedList', key: [Alt, Command, 'L'], action: 'toggleOrderedList' },
     { name: 'Heading', key: [Command, 'H'], action: 'toggleHeading' },
     { name: 'Date', key: ['F5'], action: 'toggleDate' },
+    { name: 'Image', key: ['F6'], action: 'insertImage' },
     { name: 'FullScreen', key: [Shift, Command, 'H'], action: 'toggleFullScreen' }
   ].map(i => {
     const mac = i.key.join('-');
@@ -123,6 +124,10 @@ export default {
     toggleDate() {
       this.editor.insert(`#### ${Hex.dateNow()}\n`);
       this.editor.focus();
+    },
+
+    insertImage() {
+      this.imageUploadVisible = true;
     },
 
     toggleFullScreen() {

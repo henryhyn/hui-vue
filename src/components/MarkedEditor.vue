@@ -3,7 +3,6 @@
     ul.list-inline.toolbar
       li(v-for='item in toolbar' :key='item.name'): el-tooltip(:content='item.win')
         el-button(@click='execute(item.action)') {{item.name}}
-      li: el-button(@click='imageUploadVisible=true') Image
       li: clipboard(:value='content')
       li: el-autocomplete(v-model='wxStyleKey' placeholder='导出富文本' :fetch-suggestions='querySearch' clearable)
         el-button(slot='append' icon='el-icon-document-copy' @click='exportHandler')
@@ -137,7 +136,7 @@
         window.getSelection().addRange(range);
         if (document.execCommand('copy')) {
           this.$message({
-            message: '复制成功!',
+            message: '导出成功!',
             type: 'success'
           });
         }

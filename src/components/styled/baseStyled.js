@@ -34,6 +34,7 @@ export default (colors = {
   }
 
   p code, li code {
+    background-color: ${colors.secondary};
     color: ${colors.primary};
   }
   
