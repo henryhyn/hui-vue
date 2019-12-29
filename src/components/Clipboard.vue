@@ -1,5 +1,6 @@
 <template lang='pug'>
-  el-button(:data-clipboard-text='value' icon='el-icon-tickets') {{label}}
+  el-button(:data-clipboard-text='value' icon='el-icon-tickets' :type='type' v-if='!!label') {{label}}
+  el-button(:data-clipboard-text='value' icon='el-icon-tickets' :type='type' v-else)
 </template>
 
 <script>
@@ -7,9 +8,13 @@
 
   export default {
     props: {
+      type: {
+        type: String,
+        default: 'default'
+      },
       label: {
         type: String,
-        default: '复制'
+        default: null
       },
       value: {
         type: String,

@@ -38,7 +38,7 @@ export default (colors = {
     color: ${colors.primary};
   }
   
-  strong {
+  strong, em {
     color: ${colors.primary};
   }  
 `;

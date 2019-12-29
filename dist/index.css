@@ -10,9 +10,6 @@ Darcula color scheme from the JetBrains family of IDEs
   overflow-x: auto;
   padding: 0.5em;
   background: #2b2b2b;
-}
-
-.hljs {
   color: #bababa;
 }
 
@@ -77,7 +74,7 @@ Darcula color scheme from the JetBrains family of IDEs
 }
 
 /*!
- * Quill Editor v1.3.6
+ * Quill Editor v1.3.7
  * https://quilljs.com/
  * Copyright (c) 2014, Jason Chen
  * Copyright (c) 2013, salesforce.com
@@ -3050,10 +3047,12 @@ body {
   right: 0;
 }
 .hui-flex-box {
+  display: -webkit-box;
   display: flex;
 }
 .hui-flex-box .hui-flex-fill {
-  flex: 1;
+  -webkit-box-flex: 1;
+          flex: 1;
 }
 .hui-scroll-box {
   position: absolute;
