@@ -1,6 +1,7 @@
 <template lang='pug'>
   .hui-marked-editor(:style='styleObject')
     ul.list-inline.toolbar
+      li: slot(name='prepend')
       li(v-for='item in toolbar' :key='item.name'): el-tooltip(:content='item.win')
         el-button(@click='execute(item.action)') {{item.name}}
       li: clipboard(:value='content')

@@ -3052,7 +3052,7 @@ body {
 }
 .hui-flex-box .hui-flex-fill {
   -webkit-box-flex: 1;
-          flex: 1;
+  flex: 1;
 }
 .hui-scroll-box {
   position: absolute;

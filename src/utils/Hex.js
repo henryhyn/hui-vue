@@ -108,6 +108,17 @@ Hex.toMap = (arr, key, val) => (arr || []).reduce((dict, item) => {
   return dict;
 }, Object.create(null));
 
+// 计算累和
+Hex.sum = arr => (arr || []).reduce((total, value) => total + value);
+Hex.sumBy = (arr, key) => (arr || []).reduce((total, item) => total + item[key]);
+Hex.max = arr => (arr || []).reduce((t, v) => t > v ? t : v);
+Hex.min = arr => (arr || []).reduce((t, v) => t < v ? t : v);
+Hex.groupBy = (arr, key) => (arr || []).reduce((dict, item) => {
+  const k = item[key];
+  dict[k] || (dict[k] = []);
+  dict[k].push(item);
+  return dict;
+}, Object.create(null));
 Hex.mergeBy = (path, ...data) => {
   const obj = [].concat(...data).reduce((dict, item) => {
     const key = item[path];

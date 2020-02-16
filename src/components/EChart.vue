@@ -32,8 +32,11 @@
     },
 
     mounted() {
-      this.chart = echarts.init(this.$el);
-      this.chart.setOption(this.option);
+      this.$nextTick(() => {
+        this.chart = echarts.init(this.$el);
+        this.chart.setOption(this.option);
+        this.chart.on('click', 'series', params => this.$emit('clickSeries', params));
+      });
     },
 
     watch: {
