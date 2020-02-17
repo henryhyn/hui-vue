@@ -39,11 +39,12 @@ test('reduce', () => {
 
 test('分组', () => {
   const arr = [
-    { name: "YZW", age: 27 },
-    { area: "GZ", name: "TYJ", age: 25 },
-    { name: "AAA", age: 23 },
-    { area: "FS", name: "BBB", age: 21 },
-    { area: "SZ", name: "CCC", age: 19 }
+    { name: 'YZW', age: 27 },
+    { area: 'GZ', name: 'TYJ', age: 25 },
+    { name: 'AAA', age: 23 },
+    { area: 'FS', name: 'BBB', age: 21 },
+    { area: 'SZ', name: 'CCC', age: 19 }
   ];
+  expect(Hex.sumBy(arr, 'age')).toEqual(Hex.sum(Hex.map(arr, 'age')));
   expect(Hex.groupBy(arr, 'area')[undefined]).toEqual([{ name: 'YZW', age: 27 }, { name: 'AAA', age: 23 }]);
 });
