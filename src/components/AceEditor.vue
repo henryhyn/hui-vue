@@ -5,6 +5,7 @@
 <script>
   import ace from 'brace';
   import 'brace/mode/markdown';
+  import 'brace/mode/mysql';
   import 'brace/theme/monokai';
 
   export default {
@@ -21,6 +22,10 @@
         default() {
           return {};
         }
+      },
+      mode: {
+        type: String,
+        default: 'markdown'
       },
       value: String
     },
@@ -41,7 +46,7 @@
           editor.$blockScrolling = Infinity;
           editor.getSession().setUseSoftTabs(true);
           editor.getSession().setUseWrapMode(true);
-          editor.getSession().setMode('ace/mode/markdown');
+          editor.getSession().setMode(`ace/mode/${this.mode}`);
           editor.setTheme('ace/theme/monokai');
           editor.setOptions(options);
           editor.setHighlightActiveLine(true);
