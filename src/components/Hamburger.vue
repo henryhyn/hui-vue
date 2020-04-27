@@ -1,6 +1,7 @@
 <template lang='pug'>
   div(@click='clickHandler')
-    span.glyphicon.glyphicon-menu-hamburger.hamburger(:class="{'active': active}")
+    el-tooltip(:content=`active?'展开':'折叠'`)
+      i.pointer(:class=`active?'el-icon-s-unfold':'el-icon-s-fold'`)
 </template>
 
 <script>
@@ -19,16 +20,3 @@
     }
   };
 </script>
-
-<style lang='less'>
-  .hamburger {
-    cursor: pointer;
-    transform: rotate(0deg);
-    transition: .38s;
-    transform-origin: 50% 50%;
-
-    &.active {
-      transform: rotate(90deg);
-    }
-  }
-</style>
