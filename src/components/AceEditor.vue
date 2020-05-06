@@ -6,6 +6,7 @@
   import ace from 'brace';
   import 'brace/mode/markdown';
   import 'brace/mode/mysql';
+  import 'brace/mode/json';
   import 'brace/theme/monokai';
 
   export default {
