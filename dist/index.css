@@ -3075,6 +3075,10 @@ a.link-muted {
 a.link-muted:hover {
   color: gray;
 }
+a.link-primary {
+  text-decoration: none;
+  color: #409EFF;
+}
 .list-unstyled {
   padding-left: 0;
   list-style: none;

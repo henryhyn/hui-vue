@@ -72,6 +72,7 @@ Hex.empty = () => {
 Hex.dateNow = () => dayjs().format('YYYY-MM-DD dddd');
 Hex.fromNow = val => dayjs(val).fromNow();
 Hex.formatDate = val => dayjs(val).format('YYYY-MM-DD');
+Hex.formatWeek = val => dayjs(val).format('YYYY-MM-DD dddd');
 Hex.format = val => dayjs(val).format('YYYY-MM-DD HH:mm:ss');
 Hex.diff = (val1, val2, unit) => dayjs(val1).diff(val2, unit);
 Hex.formatNumber = num => {
