@@ -1,6 +1,6 @@
 // 主要参考 https://github.com/sofish/typo.css
 .post-body {
-  font-family: PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+  font-family: "Salesforce Sans Web", Helvetica, sans-serif, "Quip Glyphs";
   font-size: 16px;
   line-height: 1.8;
 
@@ -66,7 +66,7 @@
     padding-left: 2em;
   }
 
-  li ul, li ol {
+  li ul, li ol, li p, td p {
     margin-top: 0;
     margin-bottom: 0;
   }
@@ -84,6 +84,7 @@
 
   pre {
     padding: 10px 16px;
+    border-radius: 5px;
     background-color: #000;
     color: #eaeaea;
   }
@@ -138,22 +139,76 @@
   table {
     width: 100%;
     table-layout: fixed;
-    border: 1px solid #ddd;
+    border: 2px solid #ddd;
     border-collapse: collapse;
     border-spacing: 0;
   }
 
   th, td {
     padding: 6px 12px;
-    border-bottom: 1px solid #ddd;
-    border-right: 1px solid #ddd;
+    border-bottom: 2px solid #ddd;
+    border-right: 2px solid #ddd;
     color: #666;
   }
 
   th {
-    border-top: 1px solid #ddd;
+    border-top: 2px solid #ddd;
     text-align: center;
     font-weight: bold;
     background-color: #fbfbfb;
+  }
+}
+
+.post-body {
+  ul[data-type="todo_list"] {
+    padding-left: 0;
+  }
+
+  li[data-type="todo_item"] {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .todo-checkbox {
+    border: 2px solid black;
+    height: 0.9em;
+    width: 0.9em;
+    box-sizing: border-box;
+    margin-right: 10px;
+    margin-top: 0.4rem;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: pointer;
+    border-radius: 0.2em;
+    background-color: transparent;
+    transition: 0.4s background;
+  }
+
+  .todo-content {
+    flex: 1;
+
+    > p:last-of-type {
+      margin-bottom: 0;
+    }
+
+    > ul[data-type="todo_list"] {
+      margin: .5rem 0;
+    }
+  }
+
+  li[data-done="true"] {
+    > .todo-content {
+      > p {
+        text-decoration: line-through;
+      }
+    }
+
+    > .todo-checkbox {
+      background-color: black;
+    }
+  }
+
+  li[data-done="false"] {
+    text-decoration: none;
   }
 }

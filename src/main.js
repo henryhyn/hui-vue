@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Element from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import '@/style/main.less';
-import Layout from '@/pages/app/Layout';
+import App from '@/pages/app/App';
 import router from '@/router';
 import store from '@/store';
 import { filters } from '@/index';
@@ -18,6 +18,6 @@ new Vue({
   el: '#app',
   router,
   store,
-  render: h => h(Layout)
+  render: h => h(App)
 });
 /* eslint-enable no-new */

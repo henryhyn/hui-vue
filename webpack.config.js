@@ -65,7 +65,7 @@ module.exports = {
       }, 'css-loader', 'postcss-loader', 'less-loader']
     }, {
       test: /\.(ttf|eot|woff|woff2)$/,
-      loader: 'url-loader?limit=60000'
+      loader: 'url-loader?limit=90000'
     }, {
       test: /\.(png|jpg|gif|svg)$/,
       loader: 'url-loader?limit=20000'
