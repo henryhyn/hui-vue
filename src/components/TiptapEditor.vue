@@ -148,8 +148,8 @@
     Placeholder,
     TrailingNode
   } from 'tiptap-extensions';
-  import Doc from '@/components/Doc';
-  import Title from '@/components/Title';
+  import Doc from './Doc';
+  import Title from './Title';
   import python from 'highlight.js/lib/languages/python';
   import java from 'highlight.js/lib/languages/java';
   import javascript from 'highlight.js/lib/languages/javascript';
@@ -165,6 +165,7 @@
         searchTerm: null,
         replaceWith: null,
         keepInBounds: true,
+        content: null,
         editor: null
       };
     },
@@ -240,9 +241,10 @@
         }
         this.editor = new Editor({
           autoFocus: true,
-          content: this.value,
+          content: this.value || '',
           onUpdate: ({ getHTML }) => {
-            this.$emit('input', getHTML());
+            this.content = getHTML();
+            this.$emit('input', this.content);
           },
           extensions: [
             new Doc(),
@@ -293,6 +295,14 @@
             })
           ]
         });
+      }
+    },
+
+    watch: {
+      value(newVal) {
+        if (this.editor && newVal !== this.content) {
+          this.editor.setContent(newVal || '');
+        }
       }
     },
 
