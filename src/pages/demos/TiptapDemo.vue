@@ -8,7 +8,7 @@
   export default {
     data() {
       return {
-        content: '<p>Hello world!</p>'
+        content: '<h1>Hello world!</h1><p><ki src="a^2+b^2=c^2"></ki></p>'
       };
     },
 

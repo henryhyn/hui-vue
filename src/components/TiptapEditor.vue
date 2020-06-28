@@ -32,7 +32,7 @@
                 i.fa.fa-redo
             el-tooltip(placement='top' content='水平线')
               el-button(@click='commands.horizontal_rule' type='text')
-                i.fa.fa-ellipsis-h
+                i.fa.fa-minus
             el-tooltip(placement='top' content='插图')
               el-button(@click='showImagePrompt(commands.image)' type='text')
                 i.fa.fa-image
@@ -72,6 +72,12 @@
             el-tooltip(placement='top' content='代码')
               el-button(:class="{ 'is-active': isActive.code() }" @click='commands.code' type='text')
                 i.fa.fa-code
+            el-tooltip(placement='top' content='行内公式')
+              el-button(:class="{ 'is-active': isActive.katex_inline() }" @click='commands.katex_inline' type='text')
+                i.fa.fa-subscript
+            el-tooltip(placement='top' content='行间公式')
+              el-button(:class="{ 'is-active': isActive.katex_block() }" @click='commands.katex_block' type='text')
+                i.fa.fa-square-root-alt
             el-tooltip(placement='top' content='正文')
               el-button(:class="{ 'is-active': isActive.paragraph() }" @click='commands.paragraph' type='text')
                 i.fa.fa-paragraph
@@ -117,6 +123,7 @@
           editor-content.post-body(:editor='editor' @keyup.esc.native='hideMenu' @keydown.meta.83.native.prevent="$emit('save')")
         el-aside#comment(width='301px')
           p 评论
+    image-upload(v-model='imageUploadVisible' :url='image.upload.url' :field='image.upload.fieldName' :params='image.upload.params' @crop-upload-success='uploadSuccess')
 </template>
 
 <script>
@@ -148,17 +155,22 @@
     Placeholder,
     TrailingNode
   } from 'tiptap-extensions';
-  import Doc from './Doc';
-  import Title from './Title';
+  import Doc from './extensions/Doc';
+  import Title from './extensions/Title';
+  import KatexInline from './extensions/KatexInline';
+  import KatexBlock from './extensions/KatexBlock';
+  import ImageUpload from './ImageUpload';
   import python from 'highlight.js/lib/languages/python';
   import java from 'highlight.js/lib/languages/java';
   import javascript from 'highlight.js/lib/languages/javascript';
 
   export default {
-    components: { EditorContent, EditorMenuBar },
+    components: { EditorContent, EditorMenuBar, ImageUpload },
 
     data() {
       return {
+        imageUploadVisible: false,
+        imageCommand: null,
         linkVisible: false,
         linkUrl: null,
         findVisible: false,
@@ -178,16 +190,30 @@
       image: {
         type: Object,
         default() {
-          return {};
+          return {
+            upload: {
+              url: '',
+              fieldName: 'file',
+              params: {}
+            },
+            uploadHandler(res) {
+              return res.data;
+            }
+          };
         }
       }
     },
 
     methods: {
       showImagePrompt(command) {
-        const src = prompt('Enter the url of your image here');
+        this.imageUploadVisible = true;
+        this.imageCommand = command;
+      },
+
+      uploadSuccess(res) {
+        const src = this.image.uploadHandler(res);
         if (src !== null) {
-          command({ src });
+          this.imageCommand({ src });
         }
       },
 
@@ -249,13 +275,15 @@
           extensions: [
             new Doc(),
             new Title(),
+            new KatexInline(),
+            new KatexBlock(),
             new Placeholder({
               showOnlyCurrent: false,
               emptyNodeText: node => {
                 if (node.type.name === 'title') {
                   return '标题';
                 }
-                return '正文...';
+                return '¶';
               }
             }),
             new Blockquote(),
@@ -264,7 +292,7 @@
               languages: { python, java, javascript }
             }),
             new HardBreak(),
-            new Heading({ levels: [1, 2, 3] }),
+            new Heading({ levels: [1, 2, 3, 4, 5, 6] }),
             new Image(),
             new HorizontalRule(),
             new ListItem(),
@@ -289,10 +317,7 @@
             new TableHeader(),
             new TableCell(),
             new TableRow(),
-            new TrailingNode({
-              node: 'paragraph',
-              notAfter: ['paragraph']
-            })
+            new TrailingNode()
           ]
         });
       }
@@ -401,16 +426,20 @@
       background: rgba(255, 213, 0, 0.5);
     }
 
-    *.is-empty:nth-child(1),
-    *.is-empty:nth-child(2) {
-      &::before {
-        content: attr(data-empty-text);
-        float: left;
-        color: #aaa;
-        pointer-events: none;
-        height: 0;
-        font-style: italic;
+    .katex {
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.05);
       }
+    }
+
+    *.is-empty:not(hr)::before {
+      content: attr(data-empty-text);
+      float: left;
+      color: #aaa;
+      pointer-events: none;
+      height: 0;
     }
   }
 </style>
