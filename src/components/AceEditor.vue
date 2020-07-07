@@ -32,11 +32,13 @@
     },
 
     mounted() {
-      this.initialize();
+      this.$nextTick(this.initialize);
     },
 
     beforeDestroy() {
-      this.editor = null;
+      if (this.editor) {
+        this.editor.destroy();
+      }
     },
 
     methods: {

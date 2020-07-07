@@ -104,13 +104,13 @@ Hex.pluck = (lst = [], key = '') => (lst || []).map(obj => obj[key]);
 // 字符串拆分的加强版, 仅保留有效的字符串
 Hex.split = (text, regex = /[ ,，、；;\t\r\n]/) => (text || '').split(regex).map(i => i.trim()).filter(Hex.validString);
 
-Hex.toMap = (arr, key, val) => (arr || []).reduce((dict, item) => {
+Hex.toMap = (arr, key, val, init = Object.create(null)) => (arr || []).reduce((dict, item) => {
   dict[item[key]] = item[val];
   return dict;
-}, Object.create(null));
+}, init);
 
 // 计算累和
-Hex.sum = arr => (arr || []).reduce((total, value) => total + value);
+Hex.sum = arr => (arr || []).reduce((total, value) => total + value, 0);
 Hex.sumBy = (arr, key) => (arr || []).reduce((total, item) => total + item[key], 0);
 Hex.max = arr => (arr || []).reduce((t, v) => t > v ? t : v);
 Hex.min = arr => (arr || []).reduce((t, v) => t < v ? t : v);
