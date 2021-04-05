@@ -47,6 +47,7 @@
           const editor = this.editor = ace.edit(this.$el);
           const options = this.options;
           editor.$blockScrolling = Infinity;
+          editor.getSession().setTabSize(2);
           editor.getSession().setUseSoftTabs(true);
           editor.getSession().setUseWrapMode(true);
           editor.getSession().setMode(`ace/mode/${this.mode}`);
