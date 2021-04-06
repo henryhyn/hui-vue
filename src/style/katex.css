@@ -123,12 +123,13 @@
   line-height: 1.2;
   text-indent: 0;
   text-rendering: auto;
+  border-color: currentColor;
 }
 .katex * {
   -ms-high-contrast-adjust: none !important;
 }
 .katex .katex-version::after {
-  content: "0.11.1";
+  content: "0.13.0";
 }
 .katex .katex-mathml {
   position: absolute;
@@ -149,6 +150,8 @@
   position: relative;
   display: inline-block;
   white-space: nowrap;
+  width: -webkit-min-content;
+  width: -moz-min-content;
   width: min-content;
 }
 .katex .strut {
@@ -169,7 +172,7 @@
 .katex .texttt {
   font-family: KaTeX_Typewriter;
 }
-.katex .mathdefault {
+.katex .mathnormal {
   font-family: KaTeX_Math;
   font-style: italic;
 }
@@ -231,6 +234,7 @@
 .katex .vlist-t {
   display: inline-table;
   table-layout: fixed;
+  border-collapse: collapse;
 }
 .katex .vlist-r {
   display: table-row;
@@ -261,6 +265,22 @@
   font-size: 1px;
   width: 2px;
   min-width: 2px;
+}
+.katex .vbox {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: baseline;
+}
+.katex .hbox {
+  display: inline-flex;
+  flex-direction: row;
+  width: 100%;
+}
+.katex .thinbox {
+  display: inline-flex;
+  flex-direction: row;
+  width: 0;
+  max-width: 0;
 }
 .katex .msupsub {
   text-align: left;
@@ -959,6 +979,9 @@
 .katex .x-arrow-pad {
   padding: 0 0.5em;
 }
+.katex .cd-arrow-pad {
+  padding: 0 0.55556em 0 0.27778em;
+}
 .katex .x-arrow,
 .katex .mover,
 .katex .munder {
@@ -982,6 +1005,42 @@
 .katex .sout {
   border-bottom-style: solid;
   border-bottom-width: 0.08em;
+}
+.katex .angl {
+  box-sizing: border-content;
+  border-top: 0.049em solid;
+  border-right: 0.049em solid;
+  margin-right: 0.03889em;
+}
+.katex .anglpad {
+  padding: 0 0.03889em 0 0.03889em;
+}
+.katex .eqn-num::before {
+  counter-increment: katexEqnNo;
+  content: "(" counter(katexEqnNo) ")";
+}
+.katex .mml-eqn-num::before {
+  counter-increment: mmlEqnNo;
+  content: "(" counter(mmlEqnNo) ")";
+}
+.katex .mtr-glue {
+  width: 50%;
+}
+.katex .cd-vert-arrow {
+  display: inline-block;
+  position: relative;
+}
+.katex .cd-label-left {
+  display: inline-block;
+  position: absolute;
+  right: calc(50% + 0.3em);
+  text-align: left;
+}
+.katex .cd-label-right {
+  display: inline-block;
+  position: absolute;
+  left: calc(50% + 0.3em);
+  text-align: right;
 }
 .katex-display {
   display: block;
@@ -1007,5 +1066,9 @@
 }
 .katex-display.fleqn > .katex {
   text-align: left;
+  padding-left: 2em;
+}
+body {
+  counter-reset: katexEqnNo mmlEqnNo;
 }
 
