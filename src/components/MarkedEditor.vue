@@ -1,6 +1,6 @@
 <template lang='pug'>
   .hui-marked-editor(:style='styleObject')
-    ul.list-inline.toolbar
+    ul.list-inline
       li: slot(name='prepend')
       li(v-for='item in toolbar' :key='item.name'): el-tooltip(:content='item.win')
         el-button(@click='execute(item.action)') {{item.name}}
@@ -41,6 +41,10 @@
           };
         }
       },
+      stretch: {
+        type: Boolean,
+        default: false
+      },
       width: {
         type: String,
         default: '100%'
@@ -65,10 +69,6 @@
         selection: null,
         session: null,
         toolbar: functions.toolbar || [],
-        styleObject: {
-          width: Hex.px(this.width),
-          height: Hex.px(this.height)
-        },
         _content: '',
         content: ''
       };
@@ -79,6 +79,23 @@
     components: { AceEditor, ImageUpload, Clipboard },
 
     computed: {
+      styleObject() {
+        if (this.stretch) {
+          return {
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0
+          };
+        } else {
+          return {
+            width: Hex.px(this.width),
+            height: Hex.px(this.height)
+          };
+        }
+      },
+
       compiledMarkdown() {
         if (!this.marked) {
           return '';
