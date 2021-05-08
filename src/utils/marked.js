@@ -1273,12 +1273,12 @@ class Renderer {
   }
 
   mathspan(math) {
-    return katex.renderToString(math, { macros });
+    return katex.renderToString(math, { macros, output: 'html', throwOnError: false });
   }
 
   math(math) {
     return '<p style="text-align: center; font-size: 15px">'
-      + katex.renderToString(math, { macros, displayMode: true })
+      + katex.renderToString(math, { macros, output: 'html', throwOnError: false, displayMode: true })
       + '</p>\n';
   }
 
@@ -1339,7 +1339,7 @@ class Marked {
       pedantic: false,
       sanitize: false,
       sanitizer: null,
-      silent: true,
+      silent: false,
       smartLists: false,
       smartypants: true,
       xhtml: false,
