@@ -1339,7 +1339,7 @@ class Marked {
       pedantic: false,
       sanitize: false,
       sanitizer: null,
-      silent: false,
+      silent: true,
       smartLists: false,
       smartypants: true,
       xhtml: false,
