@@ -14,9 +14,26 @@
 
 ---
 
+## 二级标题
+
+### 三级标题
+
+#### 四级标题
+
+##### 五级标题
+
+###### 六级标题
+
+## 文本对齐
+
+[居中对齐]
+
+[诗歌排版需要右对齐
+--- By Henry]]
+
 ## 插图
 
-![](img.jpg)
+![](https://res.wx.qq.com/mpres/zh_CN/htmledition/pages/login/loginpage/images/bg_banner4273fb.png)
 
 ## 超级链接
 
@@ -63,4 +80,6 @@ $$x_{1,2}=
 
 | a | b |
 |:-:|:-|
-| t | s |
+| t | 国家 |
+| t | 中华 |
+| t | 人民 |

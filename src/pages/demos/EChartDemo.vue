@@ -9,7 +9,7 @@
   import EChart from '@/components/EChart';
 
   export default {
-    data () {
+    data() {
       return {
         option: {
           title: {

@@ -5,10 +5,12 @@
 <script>
   import ace from 'brace';
   import 'brace/mode/markdown';
+  import 'brace/mode/mysql';
+  import 'brace/mode/json';
   import 'brace/theme/monokai';
 
   export default {
-    data () {
+    data() {
       return {
         content: '',
         editor: null
@@ -18,30 +20,37 @@
     props: {
       options: {
         type: Object,
-        default () {
+        default() {
           return {};
         }
+      },
+      mode: {
+        type: String,
+        default: 'markdown'
       },
       value: String
     },
 
-    mounted () {
-      this.initialize();
+    mounted() {
+      this.$nextTick(this.initialize);
     },
 
-    beforeDestroy () {
-      this.editor = null;
+    beforeDestroy() {
+      if (this.editor) {
+        this.editor.destroy();
+      }
     },
 
     methods: {
-      initialize () {
+      initialize() {
         if (this.$el) {
           const editor = this.editor = ace.edit(this.$el);
           const options = this.options;
           editor.$blockScrolling = Infinity;
+          editor.getSession().setTabSize(2);
           editor.getSession().setUseSoftTabs(true);
           editor.getSession().setUseWrapMode(true);
-          editor.getSession().setMode('ace/mode/markdown');
+          editor.getSession().setMode(`ace/mode/${this.mode}`);
           editor.setTheme('ace/theme/monokai');
           editor.setOptions(options);
           editor.setHighlightActiveLine(true);
@@ -62,7 +71,7 @@
     },
 
     watch: {
-      value (newVal) {
+      value(newVal) {
         if (this.editor && newVal !== this.content) {
           this.editor.setValue(newVal || '', 1);
         }

@@ -22,7 +22,7 @@
       }
     },
 
-    data () {
+    data() {
       return {
         isOpen: false,
         video: null,
@@ -37,23 +37,23 @@
       };
     },
 
-    mounted () {
+    mounted() {
       this.$nextTick(() => {
         this.video = document.querySelector('video');
       });
     },
 
-    beforeDestroy () {
+    beforeDestroy() {
       this.close();
       this.video = null;
     },
 
     methods: {
-      changeHandler (value) {
+      changeHandler(value) {
         value ? this.open() : this.close();
       },
 
-      open () {
+      open() {
         if (!this.video) {
           return;
         }
@@ -77,12 +77,12 @@
           }).catch(err => this.$message.error(err.name + ': ' + err.message));
       },
 
-      close () {
+      close() {
         this.isOpen = false;
         this.mediaTrack && this.mediaTrack.stop();
       },
 
-      photoHandler () {
+      photoHandler() {
         const canvas = document.querySelector('canvas');
         const ctx = canvas.getContext('2d');
         ctx.drawImage(this.video, 0, 0, this.width, this.height);

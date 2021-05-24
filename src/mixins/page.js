@@ -1,19 +1,19 @@
 export default {
   methods: {
-    reload () {
+    reload() {
       this.getListByPage({ params: {}, page: 1 });
     },
 
-    handleCurrentChange (page) {
+    handleCurrentChange(page) {
       this.getListByPage({ page });
     },
 
-    handleSizeChange (pageSize) {
+    handleSizeChange(pageSize) {
       this.getListByPage({ pageSize });
     }
   },
 
-  mounted () {
+  mounted() {
     this.$nextTick(this.getListByPage);
   }
 };

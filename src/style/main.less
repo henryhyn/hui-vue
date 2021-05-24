@@ -1,12 +1,19 @@
+@charset "UTF-8";
 @import "~highlight.js/styles/darcula.css";
+@import "~quill/dist/quill.snow.css";
 @import "glyphicons";
+@import "fontawesome.css";
 @import "katex.css";
+@import "fn";
+@import "blog";
 
+// 字体/字号以 Element 为标准, 参考 https://element.eleme.cn/#/zh-CN/component/typography
 body {
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-  font-size: 12px;
+  font-size: 14px;
 }
 
+// 亲密性, 横向和纵向的距离, 参考: https://ant.design/docs/spec/proximity-cn
 .hui-hspace {
   margin-right: 5px;
 }
@@ -31,12 +38,87 @@ body {
   margin-bottom: 16px !important;
 }
 
+.hui-pad {
+  padding: 8px;
+}
+
+.hui-mask {
+  color: white;
+  background-color: black;
+  .opacity(.70);
+}
+
+// 盒子
+.hui-fixed-box {
+  position: relative;
+
+  .hui-fixed-top, .hui-fixed-right-top, .hui-fixed-left-bottom, .hui-fixed-bottom, .hui-fixed-left-top, .hui-fixed-right-bottom {
+    position: absolute;
+    padding: 8px;
+  }
+
+  .hui-fixed-top {
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .hui-fixed-left-top {
+    top: 0;
+    left: 0;
+  }
+
+  .hui-fixed-right-top {
+    top: 0;
+    right: 0;
+  }
+
+  .hui-fixed-bottom {
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .hui-fixed-left-bottom {
+    bottom: 0;
+    left: 0;
+  }
+
+  .hui-fixed-right-bottom {
+    bottom: 0;
+    right: 0;
+  }
+}
+
+// 参考: element/packages/theme-chalk/src/container.scss
 .hui-flex-box {
   display: flex;
 }
 
 .hui-flex-fill {
   flex: 1;
+}
+
+.hui-scroll-box {
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+}
+
+a.link-muted {
+  text-decoration: none;
+  color: black;
+
+  &:hover {
+    color: gray;
+  }
+}
+
+a.link-primary {
+  text-decoration: none;
+  color: #409EFF;
 }
 
 .list-unstyled {
@@ -53,7 +135,114 @@ body {
     display: inline-block;
   }
 
-  > li + li {
-    margin-left: 10px;
+  > li:not(:last-child) {
+    margin-right: 8px;
   }
+
+  &.toolbar {
+    li {
+      margin-bottom: 8px;
+    }
+  }
+
+  &.separated {
+    li:not(:last-child) {
+      margin-right: 5px;
+    }
+
+    li + li:before {
+      margin-right: 5px;
+      color: gray;
+    }
+  }
+
+  &.by-vbar li + li:before {
+    content: "|";
+  }
+
+  &.by-slash li + li:before {
+    content: "/";
+  }
+
+  &.by-gt li + li:before {
+    content: ">";
+  }
+
+  &.by-middot li + li:before {
+    content: "\00b7";
+  }
+}
+
+.card-inline {
+  display: inline-block;
+  margin-right: 16px;
+  margin-bottom: 16px;
+  vertical-align: top;
+}
+
+.clearfix::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.pull-right {
+  float: right;
+}
+
+/* 属性 -webkit-box-orient 会被过滤掉, 处理方法: https://github.com/cssnano/cssnano/issues/357 */
+/* 实现单行、多行文本溢出显示省略号, 参考: http://www.daqianduan.com/6179.html */
+.nowrap {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ellipsisLn(@line) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @line;
+}
+
+.nowrap2 {
+  .ellipsisLn(2);
+}
+
+.nowrap3 {
+  .ellipsisLn(3);
+}
+
+.nowrap4 {
+  .ellipsisLn(4);
+}
+
+.nowrap5 {
+  .ellipsisLn(5);
+}
+
+.small {
+  font-size: smaller;
+  color: gray;
+}
+
+.large {
+  font-size: large;
+}
+
+.strong {
+  font-weight: bold;
+}
+
+.center {
+  text-align: center;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }

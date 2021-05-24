@@ -1,4 +1,5 @@
 import screenfull from 'screenfull';
+import { Hex } from '../index';
 
 const Command = 'Cmd';
 const Shift = 'Shift';
@@ -13,6 +14,8 @@ export default {
     { name: 'UnorderedList', key: [Command, 'L'], action: 'toggleUnorderedList' },
     { name: 'OrderedList', key: [Alt, Command, 'L'], action: 'toggleOrderedList' },
     { name: 'Heading', key: [Command, 'H'], action: 'toggleHeading' },
+    { name: 'Date', key: ['F5'], action: 'toggleDate' },
+    { name: 'Image', key: ['F6'], action: 'insertImage' },
     { name: 'FullScreen', key: [Shift, Command, 'H'], action: 'toggleFullScreen' }
   ].map(i => {
     const mac = i.key.join('-');
@@ -21,11 +24,11 @@ export default {
   }),
 
   methods: {
-    toggleSave () {
+    toggleSave() {
       this.$emit('save');
     },
 
-    toggleBold () {
+    toggleBold() {
       if (this.selection.isEmpty()) {
         const { row, column } = this.selection.getCursor();
         this.editor.insert('****');
@@ -39,7 +42,7 @@ export default {
       }
     },
 
-    toggleItalic () {
+    toggleItalic() {
       if (this.selection.isEmpty()) {
         const { row, column } = this.selection.getCursor();
         this.editor.insert('**');
@@ -53,7 +56,7 @@ export default {
       }
     },
 
-    toggleStrikeThrough () {
+    toggleStrikeThrough() {
       if (this.selection.isEmpty()) {
         const { row, column } = this.selection.getCursor();
         this.editor.insert('~~~~');
@@ -67,7 +70,7 @@ export default {
       }
     },
 
-    toggleUnorderedList () {
+    toggleUnorderedList() {
       const { row } = this.selection.getCursor();
       const lineText = this.session.getLine(row);
       const length = lineText.length;
@@ -84,7 +87,7 @@ export default {
       this.editor.focus();
     },
 
-    toggleOrderedList () {
+    toggleOrderedList() {
       const { row } = this.selection.getCursor();
       const lineText = this.session.getLine(row);
       const length = lineText.length;
@@ -101,7 +104,7 @@ export default {
       this.editor.focus();
     },
 
-    toggleHeading () {
+    toggleHeading() {
       const { row } = this.selection.getCursor();
       const lineText = this.session.getLine(row);
       const length = lineText.length;
@@ -118,7 +121,16 @@ export default {
       this.editor.focus();
     },
 
-    toggleFullScreen () {
+    toggleDate() {
+      this.editor.insert(`#### ${Hex.dateNow()}\n`);
+      this.editor.focus();
+    },
+
+    insertImage() {
+      this.imageUploadVisible = true;
+    },
+
+    toggleFullScreen() {
       if (screenfull.enabled) {
         screenfull.toggle(this.$refs.editor);
       }

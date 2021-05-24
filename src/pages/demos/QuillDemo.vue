@@ -10,7 +10,7 @@
   import QuillEditor from '@/components/QuillEditor';
 
   export default {
-    data () {
+    data() {
       return {
         image: {
           upload: {

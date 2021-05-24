@@ -17,15 +17,15 @@ export default new Vuex.Store({
   },
 
   mutations: {
-    increment (state) {
+    increment(state) {
       state.count++;
     },
 
-    decrement (state) {
+    decrement(state) {
       state.count--;
     },
 
-    addVisitedViews (state, route) {
+    addVisitedViews(state, route) {
       const { visitedViews } = state.settings;
       if (visitedViews.some(v => v.fullPath === route.fullPath)) {
         return;
@@ -40,7 +40,7 @@ export default new Vuex.Store({
       localStorage.setItem('visitedViews', JSON.stringify(state.settings.visitedViews));
     },
 
-    updateSettings (state, settings) {
+    updateSettings(state, settings) {
       state.settings = { ...state.settings, ...settings };
       Object.keys(settings).forEach(key => {
         localStorage.setItem(key, JSON.stringify(settings[key]));

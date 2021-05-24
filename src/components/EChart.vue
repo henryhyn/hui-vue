@@ -6,7 +6,7 @@
   import echarts from 'echarts';
 
   export default {
-    data () {
+    data() {
       return {
         chart: null
       };
@@ -23,7 +23,7 @@
       },
       option: {
         type: Object,
-        default () {
+        default() {
           return {
             series: []
           };
@@ -31,13 +31,16 @@
       }
     },
 
-    mounted () {
-      this.chart = echarts.init(this.$el);
-      this.chart.setOption(this.option);
+    mounted() {
+      this.$nextTick(() => {
+        this.chart = echarts.init(this.$el);
+        this.chart.setOption(this.option);
+        this.chart.on('click', 'series', params => this.$emit('clickSeries', params));
+      });
     },
 
     watch: {
-      option (newVal) {
+      option(newVal) {
         if (this.chart) {
           this.chart.setOption(newVal);
         }

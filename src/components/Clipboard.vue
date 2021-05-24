@@ -1,5 +1,6 @@
 <template lang='pug'>
-  el-button(:data-clipboard-text='value' icon='el-icon-tickets') {{label}}
+  el-button(:data-clipboard-text='value' icon='el-icon-tickets' :type='type' v-if='!!label') {{label}}
+  el-button(:data-clipboard-text='value' icon='el-icon-tickets' :type='type' v-else)
 </template>
 
 <script>
@@ -7,9 +8,13 @@
 
   export default {
     props: {
+      type: {
+        type: String,
+        default: 'default'
+      },
       label: {
         type: String,
-        default: '复制'
+        default: null
       },
       value: {
         type: String,
@@ -17,23 +22,23 @@
       }
     },
 
-    data () {
+    data() {
       return {
         clipboard: null
       };
     },
 
-    mounted () {
+    mounted() {
       this.$nextTick(this.initialize);
     },
 
-    beforeDestroy () {
+    beforeDestroy() {
       this.clipboard.destroy();
       this.clipboard = null;
     },
 
     methods: {
-      initialize () {
+      initialize() {
         const clipboard = this.clipboard = new Clipboard(this.$el);
         clipboard.on('success', e => {
           this.$message.success('复制成功!');

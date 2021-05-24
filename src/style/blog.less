@@ -1,0 +1,214 @@
+// 主要参考 https://github.com/sofish/typo.css
+.post-body {
+  font-family: "Salesforce Sans Web", Helvetica, sans-serif, "Quip Glyphs";
+  font-size: 16px;
+  line-height: 1.8;
+
+  h2 {
+    counter-increment: section;
+    counter-reset: subsection;
+  }
+
+  h2:before {
+    content: "§" counter(section) " ";
+  }
+
+  h3 {
+    counter-increment: subsection;
+    counter-reset: subsubsection;
+  }
+
+  h3:before {
+    content: counter(section) "." counter(subsection) " ";
+  }
+
+  h4 {
+    counter-increment: subsubsection;
+  }
+
+  h4:before {
+    content: counter(section) "." counter(subsection) "." counter(subsubsection) " ";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    margin-top: 1.2em;
+    margin-bottom: 1em;
+    line-height: 1.35;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  h4 {
+    font-size: 18px;
+  }
+
+  p, ul, ol, dl, blockquote, pre, form, hr, table {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  p {
+    text-align: justify;
+  }
+
+  ul, ol {
+    padding-left: 2em;
+  }
+
+  li ul, li ol, li p, td p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  blockquote {
+    border-left-width: 5px;
+    border-left-style: solid;
+    border-left-color: #1abc9c;
+    background-color: #f3f5f7;
+    color: #666;
+    padding: 1px 20px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  pre {
+    padding: 10px 16px;
+    border-radius: 5px;
+    background-color: #000;
+    color: #eaeaea;
+  }
+
+  pre code {
+    display: block;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+  }
+
+  p code, li code {
+    font-size: 14px;
+    padding: 2px 4px;
+    border-radius: 3px;
+    background-color: rgba(27, 31, 35, .05);
+    color: #1abc9c;
+  }
+
+  strong {
+    color: #1abc9c;
+  }
+
+  img {
+    display: block;
+    margin: 0 auto;
+    border: 0;
+    border-radius: 3px;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  a {
+    text-decoration: none;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #1abc9c;
+    color: #1abc9c;
+  }
+
+  a:hover {
+    border-bottom-color: #666;
+    color: #666;
+  }
+
+  hr {
+    border: none;
+    border-bottom: 1px dashed #ddd;
+    height: 10px;
+  }
+
+  table {
+    width: 100%;
+    table-layout: fixed;
+    border: 2px solid #ddd;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  th, td {
+    padding: 6px 12px;
+    border-bottom: 2px solid #ddd;
+    border-right: 2px solid #ddd;
+    color: #666;
+  }
+
+  th {
+    border-top: 2px solid #ddd;
+    text-align: center;
+    font-weight: bold;
+    background-color: #f3f5f7;
+  }
+}
+
+.post-body {
+  ul[data-type="todo_list"] {
+    padding-left: 0;
+  }
+
+  li[data-type="todo_item"] {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .todo-checkbox {
+    border: 2px solid black;
+    height: 0.9em;
+    width: 0.9em;
+    box-sizing: border-box;
+    margin-right: 10px;
+    margin-top: 0.4rem;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: pointer;
+    border-radius: 0.2em;
+    background-color: transparent;
+    transition: 0.4s background;
+  }
+
+  .todo-content {
+    flex: 1;
+
+    > p:last-of-type {
+      margin-bottom: 0;
+    }
+
+    > ul[data-type="todo_list"] {
+      margin: .5rem 0;
+    }
+  }
+
+  li[data-done="true"] {
+    > .todo-content {
+      > p {
+        text-decoration: line-through;
+      }
+    }
+
+    > .todo-checkbox {
+      background-color: black;
+    }
+  }
+
+  li[data-done="false"] {
+    text-decoration: none;
+  }
+}

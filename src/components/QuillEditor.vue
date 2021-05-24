@@ -6,7 +6,6 @@
 
 <script>
   import Quill from 'quill';
-  import 'quill/dist/quill.snow.css';
   import ImageUpload from './ImageUpload';
 
   window.katex = require('katex');
@@ -36,7 +35,7 @@
   };
 
   export default {
-    data () {
+    data() {
       return {
         imageUploadVisible: false,
         content: '',
@@ -59,7 +58,7 @@
       },
       image: {
         type: Object,
-        default () {
+        default() {
           return {};
         }
       }
@@ -67,16 +66,16 @@
 
     components: { ImageUpload },
 
-    mounted () {
+    mounted() {
       this.initialize();
     },
 
-    beforeDestroy () {
+    beforeDestroy() {
       this.quill = null;
     },
 
     methods: {
-      initialize () {
+      initialize() {
         if (this.$el) {
           const quill = this.quill = new Quill(this.$refs.editor, options);
 
@@ -96,7 +95,7 @@
         }
       },
 
-      uploadSuccess (res) {
+      uploadSuccess(res) {
         const url = this.image.uploadHandler(res);
         const quill = this.quill;
         quill.focus();
@@ -105,7 +104,7 @@
     },
 
     watch: {
-      value (newVal) {
+      value(newVal) {
         if (this.quill && newVal !== this.content) {
           this.quill.pasteHTML(newVal || '');
         }

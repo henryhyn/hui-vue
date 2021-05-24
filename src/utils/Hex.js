@@ -10,11 +10,28 @@ axios.defaults.headers.common['Accept'] = 'application/json';
 
 const Hex = {};
 
-Hex.toQuery = (object) => Object.keys(object)
-  .filter(key => Hex.validAny(object[key]))
-  .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(object[key])}`)
-  .join('&');
+// 浏览器检测
+Hex.getExplore = () => {
+  const sys = Object.create(null);
+  const ua = navigator.userAgent.toLowerCase();
+  /* eslint-disable */
+  let s;
+  (s = ua.match(/rv:([\d.]+)\) like gecko/)) ? sys.ie = s[1] :
+    (s = ua.match(/msie ([\d.]+)/)) ? sys.ie = s[1] :
+      (s = ua.match(/edge\/([\d.]+)/)) ? sys.edge = s[1] :
+        (s = ua.match(/firefox\/([\d.]+)/)) ? sys.firefox = s[1] :
+          (s = ua.match(/(?:opera|opr).([\d.]+)/)) ? sys.opera = s[1] :
+            (s = ua.match(/chrome\/([\d.]+)/)) ? sys.chrome = s[1] :
+              (s = ua.match(/version\/([\d.]+).*safari/)) ? sys.safari = s[1] : 0;
+  /* eslint-enable */
+  return sys;
+};
 
+// 基于 axios 的 Restful 请求
+Hex.toQuery = params => Object.keys(params)
+  .filter(key => Hex.validAny(params[key]))
+  .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+  .join('&');
 Hex.get = (url, params, cb) => {
   if (cb === undefined) {
     cb = params;
@@ -23,28 +40,11 @@ Hex.get = (url, params, cb) => {
   if (params !== undefined) {
     url = url + '?' + Hex.toQuery(params);
   }
-  axios.get(url).then(res => {
-    cb(res.data);
-  });
+  axios.get(url).then(({ data }) => cb(data));
 };
-
-Hex.post = (url, params, cb) => {
-  axios.post(url, params).then(res => {
-    cb(res.data);
-  });
-};
-
-Hex.put = (url, params, cb) => {
-  axios.put(url, params).then(res => {
-    cb(res.data);
-  });
-};
-
-Hex.delete = (url, cb) => {
-  axios.delete(url).then(res => {
-    cb(res.data);
-  });
-};
+Hex.post = (url, params, cb) => axios.post(url, params).then(({ data }) => cb(data));
+Hex.put = (url, params, cb) => axios.put(url, params).then(({ data }) => cb(data));
+Hex.delete = (url, cb) => axios.delete(url).then(({ data }) => cb(data));
 
 Hex.px = n => /^\d+$/.test(n) ? `${n}px` : n;
 
@@ -59,6 +59,7 @@ Hex.isPhoneNum = str => /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14
 Hex.isUrl = str => /[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/i.test(str);
 
 Hex.validAny = any => any !== null && any !== undefined;
+Hex.validArray = arr => Array.isArray(arr) && arr.length > 0;
 Hex.validString = str => Hex.validAny(str) && str && str.toLowerCase() !== 'null' && str.toLowerCase() !== 'undefined' && str.trim().length > 0;
 Hex.validNumber = num => Hex.validAny(num);
 Hex.validId = num => Hex.validAny(num) && num > 0;
@@ -68,10 +69,24 @@ Hex.toString = (idx, lst) => lst[idx];
 Hex.empty = () => {
 };
 
+Hex.dateNow = () => dayjs().format('YYYY-MM-DD dddd');
 Hex.fromNow = val => dayjs(val).fromNow();
 Hex.formatDate = val => dayjs(val).format('YYYY-MM-DD');
+Hex.formatWeek = val => dayjs(val).format('YYYY-MM-DD dddd');
 Hex.format = val => dayjs(val).format('YYYY-MM-DD HH:mm:ss');
 Hex.diff = (val1, val2, unit) => dayjs(val1).diff(val2, unit);
+Hex.formatNumber = num => {
+  if (num >= 1e7) {
+    return `${(num / 1e7).toFixed(0)}kw+`;
+  }
+  if (num >= 1e4) {
+    return `${(num / 1e4).toFixed(0)}w+`;
+  }
+  if (num >= 1e3) {
+    return `${(num / 1e3).toFixed(0)}k+`;
+  }
+  return num;
+};
 
 Hex.capitalize = val => {
   if (!val) {
@@ -88,5 +103,48 @@ Hex.pluck = (lst = [], key = '') => (lst || []).map(obj => obj[key]);
 
 // 字符串拆分的加强版, 仅保留有效的字符串
 Hex.split = (text, regex = /[ ,，、；;\t\r\n]/) => (text || '').split(regex).map(i => i.trim()).filter(Hex.validString);
+
+Hex.toMap = (arr, key, val, init = Object.create(null)) => (arr || []).reduce((dict, item) => {
+  dict[item[key]] = item[val];
+  return dict;
+}, init);
+
+// 计算累和
+Hex.sum = arr => (arr || []).reduce((total, value) => total + value, 0);
+Hex.sumBy = (arr, key) => (arr || []).reduce((total, item) => total + item[key], 0);
+Hex.max = arr => (arr || []).reduce((t, v) => t > v ? t : v);
+Hex.min = arr => (arr || []).reduce((t, v) => t < v ? t : v);
+Hex.map = (arr, key) => (arr || []).map(item => item[key]);
+Hex.groupBy = (arr, key) => (arr || []).reduce((dict, item) => {
+  const k = item[key];
+  dict[k] || (dict[k] = []);
+  dict[k].push(item);
+  return dict;
+}, Object.create(null));
+Hex.keyBy = (arr, key) => (arr || []).reduce((dict, item) => {
+  const k = item[key];
+  dict[k] = item;
+  return dict;
+}, Object.create(null));
+Hex.mergeBy = (path, ...data) => {
+  const obj = [].concat(...data).reduce((dict, item) => {
+    const key = item[path];
+    dict[key] || (dict[key] = []);
+    dict[key].push(item);
+    return dict;
+  }, Object.create(null));
+  return Object.values(obj).map(arr => Object.assign({}, ...arr));
+};
+
+Hex.sortedCategory = (categories, comparator, cb) => {
+  if (!Hex.validArray(categories)) {
+    return;
+  }
+  categories.sort(comparator);
+  categories.forEach(category => {
+    cb(category);
+    Hex.sortedCategory(category.children, comparator, cb);
+  });
+};
 
 export default Hex;
