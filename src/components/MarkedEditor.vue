@@ -69,7 +69,7 @@
         selection: null,
         session: null,
         toolbar: functions.toolbar || [],
-        _content: '',
+        innerVal: '',
         content: ''
       };
     },
@@ -100,7 +100,7 @@
         if (!this.marked) {
           return '';
         }
-        this.marked.options.wxFmt = !!this.wxStyleKey;
+        // this.marked.options.wxFmt = !!this.wxStyleKey;
         let html = this.marked.convert(this.content || '');
         if (this.wxStyleKey) {
           const custom = this.wxStyleMap[this.wxStyleKey];
@@ -162,7 +162,7 @@
       },
 
       inputHandler(val) {
-        this._content = val;
+        this.innerVal = val;
         this.$emit('input', val);
       },
 
@@ -181,7 +181,7 @@
 
     watch: {
       value(newVal) {
-        if (newVal !== this._content) {
+        if (newVal !== this.innerVal) {
           this.content = newVal || '';
         }
       }

@@ -36,7 +36,7 @@
     },
 
     watch: {
-      '$route': function () {
+      $route: function () {
         this.initialize();
       }
     },

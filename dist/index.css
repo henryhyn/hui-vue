@@ -7473,8 +7473,6 @@ body {
   content: "\e260";
 }
 .post-body {
-  font-family: "Salesforce Sans Web", Helvetica, sans-serif, "Quip Glyphs";
-  font-size: 16px;
   line-height: 1.8;
 }
 .post-body h2 {
