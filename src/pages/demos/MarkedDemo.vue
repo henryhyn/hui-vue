@@ -1,5 +1,5 @@
 <template lang='pug'>
-  marked-editor(height=1200 v-model='MarkedSource')
+  marked-editor(stretch v-model='MarkedSource')
 </template>
 
 <script>

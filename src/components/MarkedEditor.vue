@@ -2,8 +2,10 @@
   .hui-marked-editor(:style='styleObject')
     ul.list-inline
       li: slot(name='prepend')
-      li(v-for='item in toolbar' :key='item.name'): el-tooltip(:content='item.win')
-        el-button(@click='execute(item.action)') {{item.name}}
+      li(v-for='item in toolbar' :key='item.name'): el-tooltip(:content='`${item.name} (${item.win})`')
+        el-button(@click='execute(item.action)')
+          i.fas(v-if='item.icon' :class='`fa-${item.icon}`')
+          span(v-else) {{item.name}}
       li: clipboard(:value='content')
       li: el-autocomplete(v-model='wxStyleKey' placeholder='导出富文本' :fetch-suggestions='querySearch' clearable)
         el-button(slot='append' icon='el-icon-document-copy' @click='exportHandler')
@@ -168,7 +170,7 @@
 
       changeHandler: _.debounce(function (val) {
         this.content = val;
-      }, 500)
+      }, 800)
     },
 
     mounted() {
