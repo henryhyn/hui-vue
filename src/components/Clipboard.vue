@@ -1,6 +1,6 @@
 <template lang='pug'>
-  el-button(:data-clipboard-text='value' icon='el-icon-tickets' :type='type' v-if='!!label') {{label}}
-  el-button(:data-clipboard-text='value' icon='el-icon-tickets' :type='type' v-else)
+  el-button(:data-clipboard-text='value' icon='el-icon-copy-document' :type='type' v-if='!!label') {{label}}
+  el-button(:data-clipboard-text='value' icon='el-icon-copy-document' :type='type' v-else)
 </template>
 
 <script>

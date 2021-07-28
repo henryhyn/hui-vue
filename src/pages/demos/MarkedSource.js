@@ -34,7 +34,7 @@ export default `
 
 ## 插图
 
-![](https://res.wx.qq.com/mpres/zh_CN/htmledition/pages/login/loginpage/images/bg_banner4273fb.png)
+![](https://pic-gino-prod.oss-cn-qingdao.aliyuncs.com/henry/20210721110100989-2021-07-21_11-00-10.png)
 
 ## 超级链接
 

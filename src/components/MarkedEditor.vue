@@ -6,13 +6,19 @@
         el-button(@click='execute(item.action)')
           i.fas(v-if='item.icon' :class='`fa-${item.icon}`')
           span(v-else) {{item.name}}
-      li: clipboard(:value='content')
-      li: el-autocomplete(v-model='wxStyleKey' placeholder='导出富文本' :fetch-suggestions='querySearch' clearable)
+      li: el-tooltip(content='快捷键列表'): el-button(@click='showKeyBindings' icon='el-icon-menu')
+      li: el-tooltip(content='复制 Markdown'): clipboard(:value='content')
+      li: el-tooltip(content='实时预览'): el-switch(v-model='renderVisible' @change='changeHandler(innerVal)')
+      li: el-autocomplete(v-model='wxStyleKey' placeholder='导出富文本' :fetch-suggestions='querySearch' @select='selectHandler' clearable)
         el-button(slot='append' icon='el-icon-document-copy' @click='exportHandler')
     .editor: .inner(ref='editor')
       ace-editor.input(:value='content' @input='inputHandler' @change='changeHandler' @init='initHandler')
-      .output.post-body(v-html='compiledMarkdown' ref='output')
+      .output.post-body(v-if='renderVisible' v-html='compiledMarkdown' ref='output')
     image-upload(v-model='imageUploadVisible' :url='image.upload.url' :field='image.upload.fieldName' :params='image.upload.params' @crop-upload-success='uploadSuccess')
+    el-dialog(title='快捷键列表' :visible.sync='keyBindingsVisible')
+      el-table(:data='keyBindings' stripe size='mini')
+        el-table-column(prop='name' label='功能')
+        el-table-column(prop='bindKey' label='快捷键')
 </template>
 
 <script>
@@ -65,7 +71,10 @@
       return {
         wxStyleKey: null,
         wxStyleMap: Hex.toMap(wxStyles, 'value', 'wxStyle'),
+        renderVisible: true,
         imageUploadVisible: false,
+        keyBindings: [],
+        keyBindingsVisible: false,
         marked: null,
         editor: null,
         selection: null,
@@ -102,7 +111,7 @@
         if (!this.marked) {
           return '';
         }
-        // this.marked.options.wxFmt = !!this.wxStyleKey;
+
         let html = this.marked.convert(this.content || '');
         if (this.wxStyleKey) {
           const custom = this.wxStyleMap[this.wxStyleKey];
@@ -142,8 +151,21 @@
         });
       },
 
+      showKeyBindings() {
+        const { commands, platform } = this.editor.getKeyboardHandler();
+        this.keyBindings = Object.values(commands).map(({ name, bindKey }) => ({
+          name,
+          bindKey: (bindKey || {})[platform]
+        }));
+        this.keyBindingsVisible = true;
+      },
+
       querySearch(query, cb) {
         cb(wxStyles);
+      },
+
+      selectHandler() {
+        this.marked.options.wxFmt = !!this.wxStyleKey;
       },
 
       exportHandler() {
@@ -169,8 +191,10 @@
       },
 
       changeHandler: _.debounce(function (val) {
-        this.content = val;
-      }, 800)
+        if (this.renderVisible) {
+          this.content = val;
+        }
+      }, 500)
     },
 
     mounted() {
