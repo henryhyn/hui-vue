@@ -4,7 +4,7 @@
 
 <script>
   import MarkedEditor from '@/components/MarkedEditor';
-  import MarkedSource from './MarkedSource';
+  import MarkedSource from '@/../test/utils/test.md';
 
   export default {
     data() {

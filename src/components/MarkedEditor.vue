@@ -8,7 +8,7 @@
           span(v-else) {{item.name}}
       li: el-tooltip(content='快捷键列表'): el-button(@click='showKeyBindings' icon='el-icon-menu')
       li: el-tooltip(content='复制 Markdown'): clipboard(:value='content')
-      li: el-tooltip(content='实时预览'): el-switch(v-model='renderVisible' @change='changeHandler(innerVal)')
+      li: el-tooltip(content='实时预览'): el-switch(v-model='renderVisible' @change='resizeHandler(innerVal)')
       li: el-autocomplete(v-model='wxStyleKey' placeholder='导出富文本' :fetch-suggestions='querySearch' @select='selectHandler' clearable)
         el-button(slot='append' icon='el-icon-document-copy' @click='exportHandler')
     .editor: .inner(ref='editor')
@@ -71,7 +71,7 @@
       return {
         wxStyleKey: null,
         wxStyleMap: Hex.toMap(wxStyles, 'value', 'wxStyle'),
-        renderVisible: true,
+        renderVisible: JSON.parse(localStorage.getItem('render') || 'true'),
         imageUploadVisible: false,
         keyBindings: [],
         keyBindingsVisible: false,
@@ -190,11 +190,19 @@
         this.$emit('input', val);
       },
 
+      resizeHandler: _.debounce(function (val) {
+        this.editor.resize();
+        localStorage.setItem('render', this.renderVisible);
+        if (this.renderVisible) {
+          this.content = val;
+        }
+      }, 1),
+
       changeHandler: _.debounce(function (val) {
         if (this.renderVisible) {
           this.content = val;
         }
-      }, 500)
+      }, 800)
     },
 
     mounted() {

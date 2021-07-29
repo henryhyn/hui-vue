@@ -59,6 +59,9 @@ module.exports = {
     }, {
       test: /\.(png|jpg|gif|svg)$/,
       type: 'asset/inline'
+    }, {
+      test: /\.(md|txt|snippets)$/,
+      type: 'asset/source'
     }]
   },
 
