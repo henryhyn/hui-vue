@@ -1,5 +1,5 @@
 import '@/style/main.less';
-import Marked from './utils/marked';
+import Marked from './utils/marked_v2';
 
 const mdRender = new Marked();
 
