@@ -45,7 +45,7 @@
       },
 
       showHandler(idx) {
-        this.terms.forEach(term => term.visible = false);
+        this.terms.forEach(term => (term.visible = false));
         this.terms[idx].visible = true;
       },
 

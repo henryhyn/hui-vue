@@ -1,20 +1,21 @@
 <template lang='pug'>
-  #app
+  el-container#app
     sider
-    #main-body
-      header
-        ul#headbar.list-inline.hui-flex-box
+    el-container
+      el-header#header
+        ul#headbar.list-inline
           li: hamburger.large.strong(@toggle='toggleCollapse' :active='settings.isCollapsed')
           li: router-link.link-muted.large.strong(to='/') {{ projectName }}
-          li.hui-flex-fill
+          li.fill
           li: router-link(v-for='item in settings.visitedViews' :key='item.name' :to='item.fullPath'): el-tag.hui-hspace(:type="$route.fullPath === item.fullPath ? 'success' : 'default'") {{item.name}}
           li(v-for='item in links' :key='item.href'): a.link-muted(:href='item.href' target='blank') {{item.name}}
           li: el-dropdown
             span.el-dropdown-link {{ currentUser.userName }}<i class='el-icon-arrow-down el-icon--right'/>
             el-dropdown-menu(slot='dropdown')
               a.link-muted(href='/logout'): el-dropdown-item 登出
-      article: transition(name='el-fade-in-linear' mode='out-in')
+      el-main#main-body: transition(name='el-fade-in-linear' mode='out-in')
         router-view
+      el-backtop(target='#main-body'): i.el-icon-caret-top
 </template>
 
 <script>
@@ -47,41 +48,28 @@
 
 <style lang='less'>
   #app {
-    display: flex;
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
 
-    > #main-body {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+    #header {
+      background-color: #eef1f6;
+    }
 
-      > header {
-        background-color: #eef1f6;
-      }
-
-      > article {
-        flex: 1;
-        overflow-y: scroll;
-        padding: 16px;
-        position: relative;
-      }
+    #main-body {
+      position: relative;
     }
   }
 
   #headbar {
     height: 60px;
+    display: flex;
     align-items: center;
 
-    li {
-      margin-right: 16px;
-
-      &:first-child {
-        margin-left: 16px;
-      }
+    .fill {
+      flex: 1;
     }
   }
 </style>

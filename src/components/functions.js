@@ -1,25 +1,24 @@
 import screenfull from 'screenfull';
 import { Hex } from '../index';
 
-const Command = 'Cmd';
+const Command = 'Command';
 const Shift = 'Shift';
-const Alt = 'Alt';
 
 export default {
   toolbar: [
-    { name: 'Save', key: [Command, 'S'], action: 'toggleSave' },
-    { name: 'Bold', key: [Command, 'B'], action: 'toggleBold' },
-    { name: 'Italic', key: [Command, 'I'], action: 'toggleItalic' },
-    { name: 'StrikeThrough', key: [Command, 'M'], action: 'toggleStrikeThrough' },
-    { name: 'UnorderedList', key: [Command, 'L'], action: 'toggleUnorderedList' },
-    { name: 'OrderedList', key: [Alt, Command, 'L'], action: 'toggleOrderedList' },
-    { name: 'Heading', key: [Command, 'H'], action: 'toggleHeading' },
-    { name: 'Date', key: ['F5'], action: 'toggleDate' },
-    { name: 'Image', key: ['F6'], action: 'insertImage' },
-    { name: 'FullScreen', key: [Shift, Command, 'H'], action: 'toggleFullScreen' }
+    { name: '保存', key: [Command, 'S'], action: 'toggleSave', icon: 'save' },
+    { name: '加粗', key: [Command, 'B'], action: 'toggleBold', icon: 'bold' },
+    { name: '斜体', key: [Command, 'I'], action: 'toggleItalic', icon: 'italic' },
+    { name: '中划线', key: [Command, 'M'], action: 'toggleStrikeThrough', icon: 'strikethrough' },
+    { name: '无序列表', key: [Command, 'U'], action: 'toggleUnorderedList', icon: 'list-ul' },
+    { name: '有序列表', key: [Shift, Command, 'O'], action: 'toggleOrderedList', icon: 'list-ol' },
+    { name: '标题', key: [Command, 'H'], action: 'toggleHeading', icon: 'heading' },
+    { name: '插入日期', key: ['F5'], action: 'toggleDate', icon: 'calendar' },
+    { name: '插入图片', key: ['F6'], action: 'insertImage', icon: 'image' },
+    { name: '全屏', key: [Shift, Command, 'H'], action: 'toggleFullScreen', icon: 'expand' }
   ].map(i => {
     const mac = i.key.join('-');
-    const win = mac.replace('Cmd', 'Ctrl');
+    const win = mac.replace('Command', 'Ctrl');
     return { ...i, mac, win };
   }),
 
@@ -80,7 +79,7 @@ export default {
         end: { row, column: length }
       };
       if (index <= 0) {
-        this.session.replace(range, '-\t' + lineText);
+        this.session.replace(range, '- ' + lineText);
       } else {
         this.session.replace(range, lineText.replace(/^\s*-\s+/, ''));
       }
@@ -97,7 +96,7 @@ export default {
         end: { row, column: length }
       };
       if (index <= 0) {
-        this.session.replace(range, '1.\t' + lineText);
+        this.session.replace(range, '1. ' + lineText);
       } else {
         this.session.replace(range, lineText.replace(/^\s*\d+\.\s+/, ''));
       }
@@ -131,8 +130,8 @@ export default {
     },
 
     toggleFullScreen() {
-      if (screenfull.enabled) {
-        screenfull.toggle(this.$refs.editor);
+      if (screenfull.isEnabled) {
+        screenfull.request(this.$refs.editor);
       }
     }
   }

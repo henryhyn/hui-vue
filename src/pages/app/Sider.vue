@@ -1,13 +1,13 @@
 <template lang='pug'>
-  aside
-    nav: el-menu(router unique-opened :default-active='active' :collapse='settings.isCollapsed' background-color='#545c64' text-color='#fff' active-text-color='#ffd04b')
+  el-aside#aside(:width="settings.isCollapsed ? '64px' : '200px'")
+    el-menu(router unique-opened :default-active='active' :collapse='settings.isCollapsed' background-color='#545c64' text-color='#fff' active-text-color='#ffd04b')
       el-submenu(v-for='menu in menus' :key='menu.index' :index='menu.index')
         template(slot='title')
-          i(:class='`glyphicon glyphicon-${menu.icon} hui-hspace`')
+          i(:class='`el-icon-${menu.icon}`')
           span {{menu.name}}
         el-menu-item(v-for='item in menu.children' :key='item.index' :index='item.index')
           template(slot='title')
-            i(:class='`glyphicon glyphicon-${item.icon} hui-hspace`')
+            i(:class='`el-icon-${item.icon}`')
             span {{item.name}}
 </template>
 
@@ -36,31 +36,24 @@
     },
 
     watch: {
-      '$route': function () {
-        this.initialize();
+      $route: {
+        handler: 'initialize',
+        immediate: true
       }
-    },
-
-    mounted() {
-      this.$nextTick(this.initialize);
     }
   };
 </script>
 
-<style lang='less' scoped>
-  aside {
+<style lang='less'>
+  #aside {
     background-color: #545c64;
-  }
 
-  .el-menu {
-    border-right: none;
+    .el-menu {
+      border-right: none;
 
-    &:not(.el-menu--collapse) {
-      width: 200px;
-    }
-
-    i.glyphicon {
-      font-size: 16px;
+      &:not(.el-menu--collapse) {
+        width: 200px;
+      }
     }
   }
 </style>

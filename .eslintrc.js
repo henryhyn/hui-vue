@@ -3,14 +3,17 @@ module.exports = {
     browser: true,
     node: true,
     commonjs: true,
-    es6: true
+    es2021: true
   },
-  extends: ['standard', 'eslint:recommended'],
+  extends: [
+    'plugin:vue/essential',
+    'eslint:recommended',
+    'standard'
+  ],
   root: true,
-  parser: 'babel-eslint',
   parserOptions: {
+    ecmaVersion: 12,
     sourceType: 'module',
-    ecmaVersion: 6,
     ecmaFeatures: {
       impliedStrict: true,
       experimentalObjectRestSpread: true
@@ -20,6 +23,10 @@ module.exports = {
     'html', 'vue'
   ],
   rules: {
+    indent: 0,
+    semi: [2, 'always'],
+    'space-before-function-paren': 0,
+    'object-property-newline': 0,
     'array-bracket-spacing': 2,
     'arrow-body-style': 2,
     'callback-return': 0,
@@ -55,9 +62,7 @@ module.exports = {
     camelcase: 2,
     eqeqeq: 2,
     curly: 2,
-    indent: [2, 2],
     quotes: [2, 'single'],
-    semi: [2, 'always'],
     'space-infix-ops': 2,
     'comma-dangle': 1,
     'no-undef': 1,

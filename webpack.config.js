@@ -6,10 +6,10 @@ const SRC_PATH = path.resolve(ROOT_PATH, 'src');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist');
 const TEM_PATH = path.resolve(ROOT_PATH, 'templates');
 
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   // 项目入口. 可以直接用文件夹名称, 默认会找 index.js; 也可以确定是哪个文件名字
@@ -49,26 +49,19 @@ module.exports = {
       exclude: /node_modules/
     }, {
       test: /\.css$/,
-      use: [{
-        loader: MiniCssExtractPlugin.loader,
-        options: {
-          hmr: process.env.NODE_ENV === 'development'
-        }
-      }, 'css-loader', 'postcss-loader']
+      use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
     }, {
       test: /\.less$/,
-      use: [{
-        loader: MiniCssExtractPlugin.loader,
-        options: {
-          hmr: process.env.NODE_ENV === 'development'
-        }
-      }, 'css-loader', 'postcss-loader', 'less-loader']
+      use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader']
     }, {
       test: /\.(ttf|eot|woff|woff2)$/,
-      loader: 'url-loader?limit=90000'
+      type: 'asset/inline'
     }, {
       test: /\.(png|jpg|gif|svg)$/,
-      loader: 'url-loader?limit=20000'
+      type: 'asset/inline'
+    }, {
+      test: /\.(md|txt|snippets)$/,
+      type: 'asset/source'
     }]
   },
 
@@ -80,11 +73,11 @@ module.exports = {
     }
   },
 
-  devtool: '#eval-source-map',
+  devtool: 'eval-source-map',
 
   plugins: [
     new VueLoaderPlugin(),
-    new MiniCssExtractPlugin('[name].css'),
+    new MiniCssExtractPlugin({ filename: '[name].css' }),
     new CleanWebpackPlugin(),
     // 添加我们的插件会自动生成一个 html 文件
     new HtmlWebpackPlugin({

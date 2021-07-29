@@ -5,7 +5,7 @@
 ## 安装
 
 ```
-npm install hui-vue
+npm install hui-vue --save
 ```
 
 ## 开发

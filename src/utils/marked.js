@@ -1333,7 +1333,7 @@ class Marked {
       gfm: true,
       headerIds: true,
       headerPrefix: '',
-      highlight: (code, lang) => lang ? hljs.highlight(lang, code).value : hljs.highlightAuto(code).value,
+      highlight: (code, language) => language ? hljs.highlight(code, { language }).value : hljs.highlightAuto(code).value,
       langPrefix: 'language-',
       mangle: false,
       pedantic: false,

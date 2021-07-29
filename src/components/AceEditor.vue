@@ -3,11 +3,16 @@
 </template>
 
 <script>
-  import ace from 'brace';
-  import 'brace/mode/markdown';
-  import 'brace/mode/mysql';
-  import 'brace/mode/json';
-  import 'brace/theme/monokai';
+  import ace from 'ace-builds/src-noconflict/ace';
+  import 'ace-builds/src-noconflict/mode-markdown';
+  import 'ace-builds/src-noconflict/mode-mysql';
+  import 'ace-builds/src-noconflict/mode-json';
+  import 'ace-builds/src-noconflict/theme-monokai';
+  import 'ace-builds/src-noconflict/ext-searchbox';
+  import 'ace-builds/src-noconflict/ext-settings_menu';
+  import 'ace-builds/src-noconflict/ext-prompt';
+  import 'ace-builds/src-noconflict/ext-language_tools';
+  import './snippets/markdown';
 
   export default {
     data() {
@@ -53,7 +58,11 @@
           editor.getSession().setMode(`ace/mode/${this.mode}`);
           editor.setTheme('ace/theme/monokai');
           editor.setOptions(options);
+          editor.setOption('enableBasicAutocompletion', true);
+          editor.setOption('enableLiveAutocompletion', true);
+          editor.setOption('enableSnippets', true);
           editor.setHighlightActiveLine(true);
+          editor.setShowPrintMargin(false);
           editor.setReadOnly(this.readOnly);
           editor.clearSelection();
 
