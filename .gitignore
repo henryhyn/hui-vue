@@ -4,3 +4,4 @@ node_modules
 npm-debug.log
 dist/admin.*
 dist/index.html
+package-lock.json

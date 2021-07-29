@@ -24,7 +24,7 @@
 <script>
   import _ from 'lodash';
   import juice from 'juice';
-  import Marked from '../utils/marked';
+  import Marked from '../utils/marked_v2';
   import AceEditor from './AceEditor';
   import ImageUpload from './ImageUpload';
   import Clipboard from './Clipboard';
