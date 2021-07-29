@@ -228,6 +228,12 @@
     display: flex;
     flex-direction: column;
 
+    ul.list-inline {
+      .el-button {
+        border: none;
+      }
+    }
+
     .editor {
       flex: 1;
       position: relative;
