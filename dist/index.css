@@ -7549,6 +7549,7 @@ body {
   border-left-width: 5px;
   border-left-style: solid;
   border-left-color: #42b983;
+  border-radius: 5px;
   background-color: #f0f4f8;
   padding: 1px 20px;
   margin-left: 0;
@@ -7672,16 +7673,24 @@ body {
 .post-body li[data-done="false"] {
   text-decoration: none;
 }
+.post-body .custom-block {
+  border-radius: 5px;
+  margin: 1em 0;
+}
 .post-body .custom-block .custom-block-title {
   font-weight: bold;
+  padding-top: 8px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.post-body .custom-block .custom-block-body {
+  padding: 0 20px 1px 20px;
 }
 .post-body .custom-block.tip,
 .post-body .custom-block.warning,
 .post-body .custom-block.danger {
-  padding: 1px 20px;
   border-left-width: 5px;
   border-left-style: solid;
-  margin: 1em 0;
 }
 .post-body .custom-block.tip {
   background-color: #f0f4f8;
@@ -7705,9 +7714,12 @@ body {
 }
 .post-body .custom-block.theorem {
   background-color: #f0f4f8;
-  border-radius: 5px;
-  padding: 1px 20px;
-  margin: 1em 0;
+}
+.post-body .custom-block.theorem .custom-block-title {
+  background-color: #42b983;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding-bottom: 8px;
 }
 body {
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial;

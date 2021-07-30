@@ -6,7 +6,7 @@ import marked from 'marked';
 const block = {
   container: /^(:{3,})\s*(\w+)([^\n]*)\n([\s\S]+?)\n\1(?:\n|$)/,
   math: /^(\${2,})([\s\S]+?)\1(?:\n|$)/,
-  aligntext: /^\[([\s\S]+?)(\]+)(?:\n|$)/
+  aligntext: /^\[([^\n]+?|[^\]]+?)(\]+)(?:\n|$)/
 };
 
 const inline = {
@@ -54,7 +54,7 @@ const container = {
     }
   },
   renderer(token) {
-    const content = this.parse(token.tokens);
+    const content = `<div class="custom-block-body">\n${this.parse(token.tokens)}</div>\n`;
     const info = token.info ? `\n<p class="custom-block-title">${token.info}</p>` : '';
     return `<div class="custom-block ${token.genre}">${info}\n${content}</div>\n`;
   }
