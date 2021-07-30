@@ -7549,9 +7549,9 @@ body {
 .post-body blockquote {
   border-left-width: 5px;
   border-left-style: solid;
-  border-left-color: #1abc9c;
-  background-color: #f3f5f7;
-  color: #666;
+  border-left-color: #42b983;
+  border-radius: 5px;
+  background-color: #f0f4f8;
   padding: 1px 20px;
   margin-left: 0;
   margin-right: 0;
@@ -7583,7 +7583,7 @@ body {
   display: block;
   margin: 0 auto;
   border: 0;
-  border-radius: 3px;
+  border-radius: 5px;
   max-width: 100% !important;
   height: auto !important;
 }
@@ -7674,8 +7674,56 @@ body {
 .post-body li[data-done="false"] {
   text-decoration: none;
 }
+.post-body .custom-block {
+  border-radius: 5px;
+  margin: 1em 0;
+}
+.post-body .custom-block .custom-block-title {
+  font-weight: bold;
+  padding-top: 8px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.post-body .custom-block .custom-block-body {
+  padding: 0 20px 1px 20px;
+}
+.post-body .custom-block.tip,
+.post-body .custom-block.warning,
+.post-body .custom-block.danger {
+  border-left-width: 5px;
+  border-left-style: solid;
+}
+.post-body .custom-block.tip {
+  background-color: #f0f4f8;
+  border-color: #42b983;
+}
+.post-body .custom-block.warning {
+  background-color: rgba(255, 229, 100, 0.3);
+  border-color: #b19300;
+  color: #000000;
+}
+.post-body .custom-block.warning .custom-block-title {
+  color: #645300;
+}
+.post-body .custom-block.danger {
+  background-color: #ffe6e6;
+  border-color: #990000;
+  color: #000000;
+}
+.post-body .custom-block.danger .custom-block-title {
+  color: #330000;
+}
+.post-body .custom-block.theorem {
+  background-color: #f0f4f8;
+}
+.post-body .custom-block.theorem .custom-block-title {
+  background-color: #42b983;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding-bottom: 8px;
+}
 body {
-  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-family: "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial;
   font-size: 14px;
 }
 .hui-hspace {
@@ -8670,6 +8718,9 @@ a.link-primary {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+}
+.hui-marked-editor ul.list-inline .el-button {
+  border: none;
 }
 .hui-marked-editor .editor {
   -webkit-box-flex: 1;
