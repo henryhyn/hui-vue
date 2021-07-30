@@ -4,15 +4,61 @@ import macros from './macros';
 import marked from 'marked';
 
 const block = {
-  math: /^(\${2,})([\s\S]+?)\1\n?/,
-  aligntext: /^\[([^\]]+?)(\]?)\]\n/
+  container: /^(:{3,})\s*(\w+)([^\n]*)\n([\s\S]+?)\n\1(?:\n|$)/,
+  math: /^(\${2,})([\s\S]+?)\1(?:\n|$)/,
+  aligntext: /^\[([\s\S]+?)(\]+)(?:\n|$)/
 };
 
 const inline = {
   math: /^(\$+)([^$]|[^$][\s\S]*?[^$])\1(?!\$)/
 };
 
+const renderer = {
+  heading(text, level, raw, slugger) {
+    const content = this.options.wxFmt ? `<span>${text}</span>` : text;
+    const id = this.options.headerIds ? ` id="${this.options.headerPrefix}${slugger.slug(raw)}"` : '';
+    return `<h${level}${id}>${content}</h${level}>\n`;
+  }
+};
+
 /* eslint-disable consistent-return */
+
+const genreMap = { tip: '提示', warning: '警告', danger: '危险' };
+
+const container = {
+  name: 'container',
+  level: 'block',
+  start(src) {
+    return src.match(block.container)?.index;
+  },
+  tokenizer(src) {
+    const match = block.container.exec(src);
+    if (match) {
+      const text = (match[4] || '').trim();
+      const blocks = this.blockTokens(text);
+      blocks.forEach(block => {
+        if (!block.tokens) {
+          block.tokens = this.inlineTokens(block.text);
+        }
+      });
+      const tok = {
+        type: 'container',
+        raw: match[0],
+        text,
+        genre: (match[2] || '').trim(),
+        info: (match[3] || '').trim(),
+        tokens: blocks
+      };
+      tok.info = tok.info ? tok.info : (genreMap[tok.genre] || tok.genre);
+      return tok;
+    }
+  },
+  renderer(token) {
+    const content = this.parse(token.tokens);
+    const info = token.info ? `\n<p class="custom-block-title">${token.info}</p>` : '';
+    return `<div class="custom-block ${token.genre}">${info}\n${content}</div>\n`;
+  }
+};
 
 const aligntext = {
   name: 'aligntext',
@@ -27,7 +73,7 @@ const aligntext = {
         type: 'aligntext',
         raw: match[0],
         tokens: this.inlineTokens((match[1] || '').trim()),
-        right: match[2].length > 0
+        right: match[2].length > 1
       };
     }
   },
@@ -102,13 +148,14 @@ class Marked {
       smartLists: false,
       smartypants: true,
       xhtml: false,
+      wxFmt: false,
       ...options
     };
   }
 
   convert(src) {
     try {
-      marked.use({ extensions: [aligntext, math, mathspan] });
+      marked.use({ renderer, extensions: [container, aligntext, math, mathspan] });
       return marked(src, this.options);
     } catch (e) {
       return `<p>An error occurred:</p><pre>${escape(e.message + '', true)}</pre><small>${new Date()}</small>`;
