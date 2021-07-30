@@ -2,6 +2,8 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { Buffer } from 'buffer';
+import CryptoJS from 'crypto-js';
 
 dayjs.locale('zh-cn');
 dayjs.extend(relativeTime);
@@ -134,6 +136,11 @@ Hex.mergeBy = (path, ...data) => {
     return dict;
   }, Object.create(null));
   return Object.values(obj).map(arr => Object.assign({}, ...arr));
+};
+
+Hex.gitHashObject = text => {
+  const len = Buffer.from(text).length;
+  return CryptoJS.SHA1(`blob ${len}\0${text}`).toString(CryptoJS.enc.Hex);
 };
 
 Hex.sortedCategory = (categories, comparator, cb) => {

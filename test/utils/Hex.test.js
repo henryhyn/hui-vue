@@ -48,3 +48,10 @@ test('分组', () => {
   expect(Hex.sumBy(arr, 'age')).toEqual(Hex.sum(Hex.map(arr, 'age')));
   expect(Hex.groupBy(arr, 'area')[undefined]).toEqual([{ name: 'YZW', age: 27 }, { name: 'AAA', age: 23 }]);
 });
+
+test('git-hash-object', () => {
+  const text = '# MySQL 常用代码片段\n' +
+    '\n' +
+    '正文...\n';
+  expect(Hex.gitHashObject(text)).toEqual('a6353768b3acddfc34655befa6bf9088582c008a');
+});

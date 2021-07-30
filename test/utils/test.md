@@ -1,18 +1,22 @@
 # Marked 测试文件
 
-## 造轮子
-
 不只是想造轮子,
 还想造个好轮子.
+
+## 列表
 
 - 好用
 - 强大
 - 代码易于维护
 
-
-> 我算是跟 Markdown 杠上了.
-
 ---
+
+1. 3
+3. df
+
+- [ ] 待排期
+- [x] 已完成
+- [ ] 待开发
 
 ## 二级标题
 
@@ -31,6 +35,22 @@
 [诗歌排版需要右对齐
 --- By Henry]]
 
+## 容器
+
+> 我算是跟 Markdown 杠上了.
+
+::: tip
+`@vuepress/theme-default` 的提示容器
+:::
+
+::: theorem 牛顿第一定律
+假若施加于某物体的外力为零，则该物体的运动速度不变。
+
+[来自 [维基百科](https://zh.wikipedia.org/wiki/%E7%89%9B%E9%A1%BF%E8%BF%90%E5%8A%A8%E5%AE%9A%E5%BE%8B)]]
+:::
+
+参见 [vuepress-plugin-container](https://vuepress-community.netlify.app/zh/plugins/container)
+
 ## 插图
 
 ![](https://pic-gino-prod.oss-cn-qingdao.aliyuncs.com/henry/20210721110100989-2021-07-21_11-00-10.png)
@@ -46,10 +66,6 @@
 - 加粗**加粗**
 - 斜体*斜体*
 - 删除~~删除~~
-
-
-1. 3
-3. df
 
 ## 代码
 
