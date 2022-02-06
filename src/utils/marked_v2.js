@@ -1,7 +1,7 @@
 import hljs from 'highlight.js';
 import katex from 'katex';
 import macros from './macros';
-import marked from 'marked';
+import { marked } from 'marked';
 
 const block = {
   container: /^(:{3,})\s*(\w+)([^\n]*)\n([\s\S]+?)\n\1(?:\n|$)/,
@@ -35,10 +35,10 @@ const container = {
     const match = block.container.exec(src);
     if (match) {
       const text = (match[4] || '').trim();
-      const blocks = this.blockTokens(text);
+      const blocks = this.lexer.blockTokens(text);
       blocks.forEach(block => {
         if (!block.tokens) {
-          block.tokens = this.inlineTokens(block.text);
+          block.tokens = this.lexer.inlineTokens(block.text);
         }
       });
       const tok = {
@@ -54,7 +54,7 @@ const container = {
     }
   },
   renderer(token) {
-    const content = `<div class="custom-block-body">\n${this.parse(token.tokens)}</div>\n`;
+    const content = `<div class="custom-block-body">\n${this.parser.parse(token.tokens)}</div>\n`;
     const info = token.info ? `\n<p class="custom-block-title">${token.info}</p>` : '';
     return `<div class="custom-block ${token.genre}">${info}\n${content}</div>\n`;
   }
@@ -72,14 +72,14 @@ const aligntext = {
       return {
         type: 'aligntext',
         raw: match[0],
-        tokens: this.inlineTokens((match[1] || '').trim()),
+        tokens: this.lexer.inlineTokens((match[1] || '').trim()),
         right: match[2].length > 1
       };
     }
   },
   renderer(token) {
     const direction = token.right ? 'right' : 'center';
-    const content = this.parseInline(token.tokens).replace(/\s*\r?\n/g, '<br/>');
+    const content = this.parser.parseInline(token.tokens).replace(/\s*\r?\n/g, '<br/>');
     return `<p style='text-align: ${direction}'>${content}</p>\n`;
   }
 };
