@@ -2,6 +2,9 @@ import hljs from 'highlight.js';
 import katex from 'katex';
 import macros from './macros';
 import { marked } from 'marked';
+import mermaid from 'mermaid';
+
+mermaid.initialize({ startOnLoad: false });
 
 const block = {
   container: /^(:{3,})\s*(\w+)([^\n]*)\n([\s\S]+?)\n\1(?:\n|$)/,
@@ -18,6 +21,30 @@ const renderer = {
     const content = this.options.wxFmt ? `<span>${text}</span>` : text;
     const id = this.options.headerIds ? ` id="${this.options.headerPrefix}${slugger.slug(raw)}"` : '';
     return `<h${level}${id}>${content}</h${level}>\n`;
+  },
+
+  code(code, infostring, escaped) {
+    const lang = (infostring || '').match(/\S*/)[0];
+    if (lang === 'mermaid') {
+      const id = `mermaid-${Date.now()}`;
+      return `<div class="mermaid" data-processed="true">${mermaid.render(id, code)}</div>`;
+    }
+
+    if (this.options.highlight) {
+      const out = this.options.highlight(code, lang);
+      if (out !== null && out !== code) {
+        escaped = true;
+        code = out;
+      }
+    }
+
+    code = code.replace(/\n$/, '') + '\n';
+
+    if (!lang) {
+      return `<pre><code>${escaped ? code : escape(code, true)}</code></pre>\n`;
+    }
+
+    return `<pre><code class="${this.options.langPrefix}${escape(lang, true)}">${escaped ? code : escape(code, true)}</code></pre>\n`;
   }
 };
 
