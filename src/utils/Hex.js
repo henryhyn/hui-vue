@@ -66,6 +66,77 @@ Hex.validString = str => Hex.validAny(str) && str && str.toLowerCase() !== 'null
 Hex.validNumber = num => Hex.validAny(num);
 Hex.validId = num => Hex.validAny(num) && num > 0;
 
+Hex.validateName = (rule, value, cb) => {
+  if (!Hex.validString(value)) {
+    cb(new Error('请填写用户名'));
+  } else if (!/^[a-zA-Z0-9_]+$/.test(value)) {
+    cb(new Error('只允许使用字母、数字和下划线'));
+  } else {
+    cb();
+  }
+};
+
+Hex.validatePhone = (rule, value, cb) => {
+  if (!Hex.validString(value)) {
+    cb(new Error('请填写手机号码'));
+  } else if (!Hex.isPhoneNum(value)) {
+    cb(new Error('请填写正确的手机号码!'));
+  } else {
+    cb();
+  }
+};
+
+Hex.validateFileName = (rule, value, cb) => {
+  if (!Hex.validString(value)) {
+    cb(new Error('请填写文件名'));
+  } else if (!/^[a-z_-][a-z0-9_/-]{3,19}/.test(value)) {
+    cb(new Error('文件名由小写英文字母、数字、下划线和中划线组成，不能使用数字开头, 长度4~20个字符.'));
+  } else {
+    cb();
+  }
+};
+
+Hex.validateConfirmPass = pass =>
+  (rule, value, callback) => {
+    if (value === '') {
+      callback(new Error('请再次输入密码'));
+    } else if (value !== pass) {
+      callback(new Error('两次输入密码不一致!'));
+    } else {
+      callback();
+    }
+  };
+
+Hex.validataZhLength = (min, max) =>
+  (rule, value, cb) => {
+    value = value || '';
+    const doubleCharLength = value.replace(/\p{Unified_Ideograph}/ug, 'aa').length;
+    if (doubleCharLength < min * 2 || doubleCharLength > max * 2) {
+      cb(new Error(`长度在${min}到${max}之间`));
+    } else {
+      cb();
+    }
+  };
+
+Hex.validataLink = (rule, value, cb) => {
+  value = value || '';
+  if (!value) {
+    cb();
+    return;
+  }
+
+  // 不可以包含汉字（汉字应提前被转码）
+  if (/\p{Unified_Ideograph}/ug.test(value)) {
+    cb(new Error('不可以包含中文字符！'));
+    return;
+  } else if (!/^\w+:\/\/\S+$/.test(value)) {
+    cb(new Error('不符合链接格式！'));
+    return;
+  }
+
+  cb();
+};
+
 Hex.toString = (idx, lst) => lst[idx];
 
 Hex.empty = () => {
