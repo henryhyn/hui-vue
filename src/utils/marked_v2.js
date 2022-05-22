@@ -56,7 +56,8 @@ const container = {
   name: 'container',
   level: 'block',
   start(src) {
-    return src.match(block.container)?.index;
+    const m = src.match(block.container);
+    return m === null ? undefined : m.index;
   },
   tokenizer(src) {
     const match = block.container.exec(src);
@@ -91,7 +92,8 @@ const aligntext = {
   name: 'aligntext',
   level: 'block',
   start(src) {
-    return src.match(block.aligntext)?.index;
+    const m = src.match(block.aligntext);
+    return m === null ? undefined : m.index;
   },
   tokenizer(src) {
     const match = block.aligntext.exec(src);
@@ -115,7 +117,8 @@ const math = {
   name: 'math',
   level: 'block',
   start(src) {
-    return src.match(block.math)?.index;
+    const m = src.match(block.math);
+    return m === null ? undefined : m.index;
   },
   tokenizer(src) {
     const match = block.math.exec(src);
@@ -138,7 +141,8 @@ const mathspan = {
   name: 'mathspan',
   level: 'inline',
   start(src) {
-    return src.match(/\$/)?.index;
+    const m = src.match(/\$/);
+    return m === null ? undefined : m.index;
   },
   tokenizer(src) {
     const match = inline.math.exec(src);
