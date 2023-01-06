@@ -52,6 +52,7 @@ Hex.px = n => /^\d+$/.test(n) ? `${n}px` : n;
 
 // 参考: https://segmentfault.com/a/1190000011966867
 // 判断是否为邮箱地址
+// https://github.com/manishsaraan/email-validator/blob/master/index.js
 Hex.isEmail = str => /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/.test(str);
 // 判断是否为身份证号
 Hex.isIdCard = str => /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/.test(str);
