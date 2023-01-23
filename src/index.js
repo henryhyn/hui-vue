@@ -1,4 +1,5 @@
 import '@/style/main.less';
+import 'marked-admonition-extension/dist/index.css';
 import Marked from './utils/marked_v2';
 
 const mdRender = new Marked();

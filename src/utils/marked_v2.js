@@ -50,7 +50,24 @@ const renderer = {
 
 /* eslint-disable consistent-return */
 
-const genreMap = { tip: '提示', warning: '警告', danger: '危险' };
+const genreMap = {
+  quote: '引用',
+  abstract: '摘要',
+  note: '笔记',
+  question: '问题',
+  example: '例',
+  failure: '失败',
+  success: '成功',
+  tip: '建议',
+  hint: '提示',
+  info: '信息',
+  attention: '注意',
+  warning: '警告',
+  caution: '警告',
+  danger: '危险',
+  bug: '故障',
+  error: '错误'
+};
 
 const container = {
   name: 'container',
@@ -82,9 +99,9 @@ const container = {
     }
   },
   renderer(token) {
-    const content = `<div class="custom-block-body">\n${this.parser.parse(token.tokens)}</div>\n`;
-    const info = token.info ? `\n<p class="custom-block-title">${token.info}</p>` : '';
-    return `<div class="custom-block ${token.genre}">${info}\n${content}</div>\n`;
+    const content = `<div class="admonition-body">\n${this.parser.parse(token.tokens)}</div>\n`;
+    const info = token.info ? `\n<div class="admonition-title">${token.info}</div>` : '';
+    return `<div class="admonition admonition-${token.genre}">${info}\n${content}</div>\n`;
   }
 };
 
