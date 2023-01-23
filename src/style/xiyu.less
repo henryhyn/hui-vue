@@ -2,7 +2,7 @@
 // 参考: https://github.com/sofish/typo.css
 @monospace-font: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace; // Github Markdown CSS
 @line-space: 22px;
-@color-primary: #07c160; // 微信主题色
+@color-primary: #1abc9c;
 @shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.05), 0 0 0 0.05rem rgba(0, 0, 0, 0.1); // marked admonition
 
 .post-body {
@@ -10,7 +10,6 @@
   line-height: 1.75;
   font-weight: 400;
   font-size: 16px;
-  overflow-x: hidden;
 
   h1,
   h2,
@@ -112,7 +111,8 @@
     background-color: #f8f8f8;
     border-radius: 8px;
     box-shadow: @shadow;
-
+    margin-top: @line-space;
+    margin-bottom: @line-space;
 
     &:before {
       content: "";
@@ -125,7 +125,7 @@
     }
 
     > code {
-      font-size: 12px;
+      font-size: 14px;
       padding: 15px 12px;
       margin: 0;
       word-break: normal;
