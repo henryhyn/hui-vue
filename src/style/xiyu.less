@@ -97,7 +97,7 @@
     word-break: break-word;
     border-radius: 2px;
     overflow-x: auto;
-    background-color: #f8f8f8;
+    background-color: #f5f2f0; // Prism default theme
     color: @color-primary;
     font-size: 0.87em;
     padding: 0.065em 0.4em;
@@ -108,7 +108,7 @@
     overflow: auto;
     position: relative;
     line-height: 1.75;
-    background-color: #f8f8f8;
+    background-color: #f5f2f0;
     border-radius: 8px;
     box-shadow: @shadow;
     margin-top: @line-space;
@@ -124,15 +124,23 @@
       background-size: 40px;
     }
 
+    > .copy-code-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      border: none;
+      color: #666;
+      cursor: pointer;
+    }
+
     > code {
       font-size: 14px;
-      padding: 15px 12px;
+      padding: 8px 12px;
       margin: 0;
       word-break: normal;
       display: block;
       overflow-x: auto;
       color: #333;
-      background-color: #f8f8f8;
     }
   }
 
@@ -182,7 +190,7 @@
     }
 
     & > p {
-      margin: 10px 0;
+      margin: 12px 0;
     }
   }
 

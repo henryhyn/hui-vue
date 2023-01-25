@@ -24,6 +24,7 @@ const renderer = {
   },
 
   code(code, infostring, escaped) {
+    const origin = code;
     const lang = (infostring || '').match(/\S*/)[0];
     if (lang === 'mermaid') {
       const id = `mermaid-${Date.now()}`;
@@ -41,10 +42,10 @@ const renderer = {
     code = code.replace(/\n$/, '') + '\n';
 
     if (!lang) {
-      return `<pre><code>${escaped ? code : escape(code, true)}</code></pre>\n`;
+      return `<pre><button class='copy-code-btn' data-clipboard-text='${origin}'>copy</button><code>${code}</code></pre>\n`;
     }
 
-    return `<pre><code class="${this.options.langPrefix}${escape(lang, true)}">${escaped ? code : escape(code, true)}</code></pre>\n`;
+    return `<pre><button class='copy-code-btn' data-clipboard-text='${origin}'>copy</button><code class="${this.options.langPrefix}${escape(lang)}">${code}</code></pre>\n`;
   }
 };
 
