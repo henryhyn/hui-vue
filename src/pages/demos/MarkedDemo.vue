@@ -19,10 +19,17 @@
 
     methods: {
       initialize() {
-        const clipboard = this.clipboard = new Clipboard('.copy-code-btn');
+        const clipboard = this.clipboard = new Clipboard('.copy-code-btn', {
+          text: function (trigger) {
+            return unescape(trigger.getAttribute('data-clipboard-text'));
+          }
+        });
         clipboard.on('success', e => {
-          this.$message.success('复制成功!');
+          e.trigger.innerHTML = 'Copied!';
           e.clearSelection();
+          setTimeout(() => {
+            e.trigger.innerHTML = 'copy';
+          }, 1000);
         });
       }
     },

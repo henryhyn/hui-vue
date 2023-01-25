@@ -42,10 +42,10 @@ const renderer = {
     code = code.replace(/\n$/, '') + '\n';
 
     if (!lang) {
-      return `<pre><button class='copy-code-btn' data-clipboard-text='${origin}'>copy</button><code>${code}</code></pre>\n`;
+      return `<pre><button class='copy-code-btn' data-clipboard-text='${escape(origin)}'>copy</button><code>${code}</code></pre>\n`;
     }
 
-    return `<pre><button class='copy-code-btn' data-clipboard-text='${origin}'>copy</button><code class="${this.options.langPrefix}${escape(lang)}">${code}</code></pre>\n`;
+    return `<pre><button class='copy-code-btn' data-clipboard-text='${escape(origin)}'>copy</button><code class="${this.options.langPrefix}${escape(lang)}">${code}</code></pre>\n`;
   }
 };
 
