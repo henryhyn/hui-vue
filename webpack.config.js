@@ -7,7 +7,6 @@ const DIST_PATH = path.resolve(ROOT_PATH, 'dist');
 const TEM_PATH = path.resolve(ROOT_PATH, 'templates');
 
 const { VueLoaderPlugin } = require('vue-loader');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -20,6 +19,7 @@ module.exports = {
 
   // 项目出口. 让 webpack 把处理完成的文件放在哪里
   output: {
+    clean: true,
     path: DIST_PATH,
     libraryTarget: 'umd',
     filename: '[name].js'
@@ -78,7 +78,6 @@ module.exports = {
   plugins: [
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({ filename: '[name].css' }),
-    new CleanWebpackPlugin(),
     // 添加我们的插件会自动生成一个 html 文件
     new HtmlWebpackPlugin({
       template: path.resolve(TEM_PATH, 'index.html'),

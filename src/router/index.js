@@ -9,6 +9,7 @@ import AceDemo from '@/pages/demos/AceDemo';
 import QuillDemo from '@/pages/demos/QuillDemo';
 import TiptapDemo from '@/pages/demos/TiptapDemo';
 import MarkedDemo from '@/pages/demos/MarkedDemo';
+import RenderDemo from '@/pages/demos/RenderDemo';
 import SequenceDemo from '@/pages/demos/SequenceDemo';
 import Home from '@/pages/commons/Home';
 import About from '@/pages/commons/About';
@@ -32,6 +33,7 @@ export default new Router({
         { path: '/ace', name: 'AceDemo', component: AceDemo },
         { path: '/quill', name: 'QuillDemo', component: QuillDemo },
         { path: '/marked', name: 'MarkedDemo', component: MarkedDemo },
+        { path: '/render', name: 'RenderDemo', component: RenderDemo },
         { path: '/sequence', name: 'SequenceDemo', component: SequenceDemo },
         { path: '/about', name: 'About', component: About },
         { path: '/contact', name: 'Contact', component: Contact },

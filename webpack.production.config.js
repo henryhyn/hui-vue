@@ -1,17 +1,20 @@
-const webpack = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const config = require('./webpack.config.js');
 
 config.devtool = false;
 
-config.plugins = (config.plugins || []).concat([
-  new webpack.DefinePlugin({
-    'process.env': {
-      NODE_ENV: '"production"'
-    }
-  }),
-  new webpack.LoaderOptionsPlugin({
-    minimize: true
-  })
-]);
+config.optimization = {
+  minimize: true,
+  minimizer: [
+    new TerserPlugin({
+      extractComments: false
+    }),
+    new CssMinimizerPlugin()
+  ],
+  splitChunks: {
+    minChunks: 2
+  }
+};
 
 module.exports = config;
