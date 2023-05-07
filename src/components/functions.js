@@ -13,6 +13,7 @@ export default {
     { name: '无序列表', key: [Command, 'U'], action: 'toggleUnorderedList', icon: 'list-ul' },
     { name: '有序列表', key: [Shift, Command, 'O'], action: 'toggleOrderedList', icon: 'list-ol' },
     { name: '标题', key: [Command, 'H'], action: 'toggleHeading', icon: 'heading' },
+    { name: '自动格式化', key: [Shift, Command, 'L'], action: 'toggleFormat', icon: 'remove-format' },
     { name: '插入日期', key: ['F5'], action: 'toggleDate', icon: 'calendar' },
     { name: '插入图片', key: ['F6'], action: 'insertImage', icon: 'image' },
     { name: '全屏', key: [Shift, Command, 'H'], action: 'toggleFullScreen', icon: 'expand' }
@@ -117,6 +118,12 @@ export default {
         end: { row, column: length }
       };
       this.session.replace(range, heading + lineText);
+      this.editor.focus();
+    },
+
+    toggleFormat() {
+      const text = this.session.getValue();
+      this.session.setValue(Hex.refine(text));
       this.editor.focus();
     },
 
