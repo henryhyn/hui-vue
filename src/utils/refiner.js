@@ -12,7 +12,7 @@ class Refiner {
   }
 
   spacing(text) {
-    let newText = text;
+    let newText = (text || '').trim();
     newText = newText.replace(CRLF_LF, '\n');
     newText = newText.replace(CJK_ANS, '$1 $2');
     newText = newText.replace(ANS_CJK, '$1 $2');
