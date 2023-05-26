@@ -173,6 +173,16 @@ Hex.capitalize = val => {
   return value.charAt(0).toUpperCase() + value.slice(1);
 };
 
+Hex.ellipsis = (val, maxLen = 10) => {
+  if (!Hex.validString(val)) {
+    return '';
+  }
+  if (val.length <= maxLen) {
+    return val;
+  }
+  return val.slice(0, maxLen).concat('...');
+};
+
 Hex.uniq = (lst = []) => Array.from(new Set(lst));
 
 // Array.map 的简易版本: 提取一个集合里指定的属性值

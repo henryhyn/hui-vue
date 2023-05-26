@@ -16,7 +16,7 @@ class Refiner {
     newText = newText.replace(CRLF_LF, '\n');
     newText = newText.replace(CJK_ANS, '$1 $2');
     newText = newText.replace(ANS_CJK, '$1 $2');
-    return newText;
+    return newText + '\n';
   }
 }
 
