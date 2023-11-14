@@ -5,7 +5,7 @@ const BRACKET = /（(.+?)）/gu;
 const CJK_BRACKET = /(\p{Unified_Ideograph}\*{0,2})([$(])/gu;
 const BRACKET_CJK = /([$)])(\p{Unified_Ideograph})/gu;
 
-const PUNCT = /(\p{Unified_Ideograph})([,.?:])[ ]*/gu;
+const PUNCT = /(\p{Unified_Ideograph})([,.?!;:])[ ]*/gu;
 const PUNCT_MAP = {
   ',': '，',
   '.': '。',
