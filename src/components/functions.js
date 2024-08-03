@@ -14,6 +14,7 @@ export default {
     { name: '有序列表', key: [Shift, Command, 'O'], action: 'toggleOrderedList', icon: 'list-ol' },
     { name: '标题', key: [Command, 'H'], action: 'toggleHeading', icon: 'heading' },
     { name: '自动格式化', key: [Shift, Command, 'L'], action: 'toggleFormat', icon: 'remove-format' },
+    { name: 'AI辅助', key: [Shift, Command, 'K'], action: 'writeMate', icon: 'magic' },
     { name: '插入日期', key: ['F5'], action: 'toggleDate', icon: 'calendar' },
     { name: '插入图片', key: ['F6'], action: 'insertImage', icon: 'image' },
     { name: '全屏', key: [Shift, Command, 'H'], action: 'toggleFullScreen', icon: 'expand' }
@@ -130,6 +131,61 @@ export default {
     toggleDate() {
       this.editor.insert(`#### ${Hex.dateNow()}\n`);
       this.editor.focus();
+    },
+
+    writeMate() {
+      if (this.selection.isEmpty()) {
+        return;
+      }
+
+      const range = this.selection.getRange();
+      const text = this.session.getTextRange(range);
+      const { row, column } = range.end;
+      this.selection.clearSelection();
+      this.editor.moveCursorTo(row, column);
+      this.editor.focus();
+      if (!/\/[a-z]+$/.test(text)) {
+        return;
+      }
+
+      fetch('/api/sse', {
+        method: 'POST',
+        body: text
+      }).then(response => response.text())
+        .then(responseText => this.writeGenie(responseText));
+    },
+
+    writeGenie(key) {
+      const mode = this.session.getMode();
+      const es = new EventSource(`/api/sse/${key}`);
+      es.onmessage = e => {
+        if (/^\[START\]/.test(e.data)) {
+          this.session.setMode('');
+          this.editor.insert('\n\n');
+        } else if (/^\[DONE\]/.test(e.data)) {
+          e.target.close();
+          this.editor.insert('\n');
+          this.editor.focus();
+          this.session.setMode(mode);
+        } else if (/^\[FAIL\]/.test(e.data)) {
+          e.target.close();
+          this.editor.focus();
+          this.session.setMode(mode);
+        } else {
+          const { content } = JSON.parse(e.data);
+          this.editor.insert(content);
+          if (content === '\n') {
+            const { row } = this.selection.getCursor();
+            const lineText = this.session.getLine(row);
+            const length = lineText.length;
+            const range = {
+              start: { row, column: 0 },
+              end: { row, column: length }
+            };
+            this.session.replace(range, '');
+          }
+        }
+      };
     },
 
     insertImage() {
