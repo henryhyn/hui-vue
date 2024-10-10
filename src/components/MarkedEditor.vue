@@ -251,10 +251,10 @@
         }
 
         .output {
-          width: 620px;
+          width: 652px;
           overflow: scroll;
           border: 1px solid #e6e6e6;
-          padding: 40px;
+          padding: 24px;
           background-color: white;
         }
       }
