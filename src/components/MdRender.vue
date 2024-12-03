@@ -3,7 +3,7 @@
 </template>
 
 <script>
-  import Marked from '../utils/marked_v2';
+  import Marked from '../utils/marked_v3';
   import Clipboard from 'clipboard';
 
   export default {
