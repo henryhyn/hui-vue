@@ -8,6 +8,7 @@
           i.el-icon-upload
           .el-upload__text 将文件拖到此处，或<em>点击上传</em>
     div(slot='footer')
+      el-button(@click='pasteHandler') 粘贴板
       el-button(@click='imageUploadVisible=false') 取消
       el-button(@click='uploadHandler' type='primary') 确定
 </template>
@@ -32,6 +33,22 @@
     },
 
     methods: {
+      async pasteHandler() {
+        const items = await navigator.clipboard.read();
+        for (const item of items) {
+          const { types } = item;
+          for (const type of types) {
+            if (!type.startsWith('image/')) {
+              continue;
+            }
+            const blob = await item.getType(type);
+            const url = URL.createObjectURL(blob);
+            this.fileList.push({ url });
+            return;
+          }
+        }
+      },
+
       uploadHandler() {
         if (this.imageUrl) {
           this.uploadSuccess({ data: this.imageUrl });
