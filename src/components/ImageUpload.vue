@@ -41,9 +41,13 @@
             if (!type.startsWith('image/')) {
               continue;
             }
+            const ext = type.split('/')[1];
+            const name = `paste.${ext}`;
             const blob = await item.getType(type);
             const url = URL.createObjectURL(blob);
-            this.fileList.push({ url });
+            const raw = new File([blob], name, { type });
+            raw.uid = Date.now();
+            this.fileList.push({ name, url, raw, uid: raw.uid, status: 'ready' });
             return;
           }
         }
