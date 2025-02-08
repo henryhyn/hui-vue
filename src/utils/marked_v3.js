@@ -1,4 +1,4 @@
-import { marked } from 'marked';
+import { Marked as BaseMarked } from 'marked';
 import { markedSmartypants } from 'marked-smartypants';
 import { gfmHeadingId } from 'marked-gfm-heading-id';
 import hljs from 'highlight.js';
@@ -176,15 +176,16 @@ class Marked {
       silent: true,
       ...options
     };
-    marked.use(this.options);
-    marked.use(gfmHeadingId());
-    marked.use(markedSmartypants());
-    marked.use({ renderer, extensions: [container, aligntext, math, mathspan] });
+    this.marked = new BaseMarked();
+    this.marked.use(this.options);
+    this.marked.use(gfmHeadingId());
+    this.marked.use(markedSmartypants());
+    this.marked.use({ renderer, extensions: [container, aligntext, math, mathspan] });
   }
 
   convert(src) {
     try {
-      return marked.parse(src);
+      return this.marked.parse(src);
     } catch (e) {
       return `<p>An error occurred:</p><pre>${escape(e.message + '', true)}</pre><small>${new Date()}</small>`;
     }
