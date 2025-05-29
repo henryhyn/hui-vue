@@ -4,7 +4,7 @@ import 'dayjs/locale/zh-cn';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { Buffer } from 'buffer';
 import CryptoJS from 'crypto-js';
-import refiner from './refiner';
+import MDF from 'markdown-formatter';
 
 dayjs.locale('zh-cn');
 dayjs.extend(relativeTime);
@@ -141,7 +141,7 @@ Hex.validataLink = (rule, value, cb) => {
 
 Hex.toString = (idx, lst) => lst[idx];
 
-Hex.refine = text => refiner.refine(text);
+Hex.refine = text => MDF.refine(text);
 
 Hex.empty = () => {
 };
