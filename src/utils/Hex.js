@@ -65,7 +65,7 @@ Hex.isUrl = str => /[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.
 Hex.validAny = any => any !== null && any !== undefined;
 Hex.validArray = arr => Array.isArray(arr) && arr.length > 0;
 Hex.validString = str => Hex.validAny(str) && str && str.toLowerCase() !== 'null' && str.toLowerCase() !== 'undefined' && str.trim().length > 0;
-Hex.validNumber = num => Hex.validAny(num);
+Hex.validNumber = num => typeof num === 'number' && Number.isFinite(num);
 Hex.validId = num => Hex.validAny(num) && num > 0;
 
 Hex.validateName = (rule, value, cb) => {
