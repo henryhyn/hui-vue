@@ -124,7 +124,7 @@ export default {
 
     toggleFormat() {
       const text = this.session.getValue();
-      this.session.setValue(Hex.refine(text));
+      this.session.setValue(Hex.formatMarkdown(text));
       this.editor.focus();
     },
 

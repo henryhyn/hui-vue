@@ -142,6 +142,7 @@ Hex.validataLink = (rule, value, cb) => {
 Hex.toString = (idx, lst) => lst[idx];
 
 Hex.refine = text => MDF.refine(text);
+Hex.formatMarkdown = text => MDF.format(text);
 
 Hex.empty = () => {
 };

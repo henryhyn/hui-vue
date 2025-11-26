@@ -1,6 +1,6 @@
 {
   "name": "hui-vue",
-  "version": "2.2.9",
+  "version": "2.3.1",
   "description": "基于 Vue 的中后台 UI 组件库",
   "main": "dist/index.js",
   "scripts": {
@@ -46,7 +46,7 @@
     "juice": "^10.0.0",
     "katex": "^0.16.22",
     "lodash": "^4.17.21",
-    "markdown-formatter": "^1.0.7",
+    "markdown-formatter": "^1.1.0",
     "marked": "^15.0.12",
     "marked-gfm-heading-id": "^4.1.1",
     "marked-smartypants": "^1.1.9",
